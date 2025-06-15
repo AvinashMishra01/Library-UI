@@ -27,11 +27,17 @@
               }
             ],
             "styles": [
+<<<<<<< Updated upstream
               "src/styles.css",
               "@angular/material/prebuilt-themes/azure-blue.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [ "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
+=======
+              "src/styles.css"
+            ],
+            "scripts": []
+>>>>>>> Stashed changes
           },
           "configurations": {
             "production": {
@@ -87,7 +93,10 @@
               }
             ],
             "styles": [
+<<<<<<< Updated upstream
               "@angular/material/prebuilt-themes/azure-blue.css",
+=======
+>>>>>>> Stashed changes
               "src/styles.css"
             ],
             "scripts": []
@@ -95,8 +104,11 @@
         }
       }
     }
+<<<<<<< Updated upstream
   },
   "cli": {
     "analytics": "f642dc01-3256-4654-acb0-d8d3d9c7ee4b"
+=======
+>>>>>>> Stashed changes
   }
 }
