@@ -19,7 +19,7 @@ export class SidebarComponent {
       label: 'Dashboard',
     },
     {
-      routeLink: 'user-management',
+      routeLink: 'admin',
       icon: 'fa-solid fa-users',
       label: 'User Mgmt.',
     },
