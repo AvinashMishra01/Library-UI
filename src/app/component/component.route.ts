@@ -3,10 +3,8 @@ import { UserManagementComponent } from './user-management/user-management.compo
 
 
 export const routes: Routes = [
-  {path:'', component:UserManagementComponent}
-  
-
-    
+  {path:'', component:UserManagementComponent},
+  {path:'seat-management', loadComponent: () => import('./seat-management/seat-management.component').then((c) => c.SeatManagementComponent)}
 ];
 
 

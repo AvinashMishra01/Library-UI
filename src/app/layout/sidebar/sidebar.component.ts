@@ -24,7 +24,7 @@ export class SidebarComponent {
       label: 'User Mgmt.',
     },
     {
-      routeLink: 'seat-management',
+      routeLink: 'admin/seat-management',
       icon: 'fa-solid fa-chair',
       label: 'Seat Mgmt.',
     },

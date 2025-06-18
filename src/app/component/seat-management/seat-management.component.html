@@ -1,1 +1,38 @@
-<p>seat-management works!</p>
+<div class="settings-panel">
+  <h2>Configure Room</h2>
+  <div class="input-group">
+    <label>Room Width: <input type="number" [(ngModel)]="room.width" /></label>
+    <label>Room Height: <input type="number" [(ngModel)]="room.height" /></label>
+  </div>
+  <div class="input-group">
+    <label>Left Seats: <input type="number" [(ngModel)]="seatConfig.left" /></label>
+    <label>Right Seats: <input type="number" [(ngModel)]="seatConfig.right" /></label>
+    <label>Back Seats: <input type="number" [(ngModel)]="seatConfig.back" /></label>
+    <label>Entry Left: <input type="number" [(ngModel)]="seatConfig.entryLeft" /></label>
+    <label>Entry Right: <input type="number" [(ngModel)]="seatConfig.entryRight" /></label>
+  </div>
+  <button (click)="generateGrid()">Generate Room</button>
+  <button class="save" (click)="saveToDB()">Save</button>
+</div>
+
+<div
+  class="seat-grid"
+  [style.gridTemplateColumns]="'repeat(' + room.width + ', 30px)'"
+>
+  <ng-container *ngFor="let row of grid; let i = index">
+    <ng-container *ngFor="let cell of row; let j = index">
+      <div
+        class="seat-cell"
+        [ngClass]="{
+          'seat': cell,
+          'door': cell?.type === 'door',
+          'empty': !cell,
+        }"
+        (click)="onSeatMouseDown(i, j)"
+       
+      >
+     {{ cell?.id || (cell?.type === 'door' ? 'Door' : '') }}
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
