@@ -73,3 +73,8 @@ button.save {
   justify-content: center;
   align-items: center;
 }
+
+
+.room_wrapper{
+  gap:10px
+}
