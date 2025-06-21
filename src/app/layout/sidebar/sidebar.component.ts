@@ -29,9 +29,9 @@ export class SidebarComponent {
       label: 'Seat Mgmt.',
     },
     {
-      routeLink: 'products',
+      routeLink: 'admin/create-plan',
       icon: 'fa-brands fa-product-hunt',
-      label: 'Products',
+      label: 'Active Plan',
     },
     {
       routeLink: 'pages',

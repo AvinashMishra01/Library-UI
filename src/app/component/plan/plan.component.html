@@ -1,1 +1,150 @@
-<p>plan works!</p>
+<div class="container">
+    <h4 class="mb-2">Create Plan</h4>
+    <!-- form section  -->
+  
+    <div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-center mb-4">Add New Plan</h5>
+
+          <form [formGroup]="addPlanForm">
+            <div class="row justify-content-center">
+              <!-- Plan Type -->
+              <div class="col-md-5 mb-3">
+                <label for="planType">Plan Type <span class="text-danger">*</span></label>
+                <select
+                  formControlName="planType"
+                  class="form-select"
+                  [ngClass]="{
+                    'is-invalid':
+                      addPlanForm.get('planType')?.invalid &&
+                      (addPlanForm.get('planType')?.touched || addPlanForm.get('planType')?.dirty)
+                  }"
+                >
+                  <option value="">Select Type</option>
+                  @for (plan of planTypeArr; track $index) {
+                    <option [value]="plan?.value">{{ plan?.name }}</option>
+                  }
+                </select>
+                @if (
+                  addPlanForm.get('planType')?.invalid &&
+                  (addPlanForm.get('planType')?.touched || addPlanForm.get('planType')?.dirty)
+                ) {
+                  <small class="text-danger">Required.</small>
+                }
+              </div>
+
+              <!-- Plan Rate -->
+              <div class="col-md-5 mb-3">
+                <label for="planRate">Plan Rate <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  formControlName="planRate"
+                  class="form-control"
+                  placeholder="Enter Rate"
+                  [ngClass]="{
+                    'is-invalid':
+                      addPlanForm.get('planRate')?.invalid &&
+                      (addPlanForm.get('planRate')?.touched || addPlanForm.get('planRate')?.dirty)
+                  }"
+                />
+                @if (
+                  addPlanForm.get('planRate')?.invalid &&
+                  (addPlanForm.get('planRate')?.touched || addPlanForm.get('planRate')?.dirty)
+                ) {
+                  <small class="text-danger">Required</small>
+                }
+              </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="text-center mt-3">
+              <button type="button" class="btn btn-primary px-4" (click)="savePlan()">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- table  -->
+    <section class="mb-4">
+        <div class="userdata-table-wrapper mt-2 d-none d-sm-none d-md-block">
+            <div class="row g-0 position-relative">
+                <div class="col-12">
+                    <div class="table-responsive datatable-contaner table-scroll">
+                        <table class="table table-striped table-hover align-middle table-fixed no-wrap">
+                            <thead class="table_heading sticky-top">
+                                <tr>
+                                    @for (list of display_unshipped_columns; track $index; let index=$index) {
+                                    <th [ngClass]="{
+                              activeTab:!display_unshipped_columns[index].active, 'text-center':$last
+                            }">
+                                        {{ list?.displayName }}
+                                    </th>
+
+                                    }
+
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                @for (plan of planList.lists; track $index; let i=$index) {
+                                <tr>
+
+                                    <td class="name" [ngClass]="{
+                                activeTab: !display_unshipped_columns[0].active
+                              }">
+                                        <p>{{plan?.planType}}</p>
+                                    </td>
+                                    <td class="addrss" [ngClass]="{
+                                activeTab: !display_unshipped_columns[1].active
+                              }">
+                                        <p>{{plan?.planPrice}}</p>
+                                    </td>
+                                    <td class="name" [ngClass]="{
+                                activeTab: !display_unshipped_columns[2].active
+                              }">
+
+
+                                        <span class="badge"
+                                            [ngClass]="{'text-bg-success':plan?.status ,'text-bg-danger': !plan?.status  }">
+                                            {{ plan?.status ? 'Active' : 'Inactive' }}</span>
+
+                                    </td>
+                                    <td class="activity text-center" [ngClass]="{
+                                activeTab: !display_unshipped_columns[3].active 
+                              }">
+                                        <button type="button" class="btn btn-light rounded-circle"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                    </td>
+
+                                    }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Pagination -->
+        <div class="row g-0">
+            @if (planList.lists.length>0) {
+            <div class="col-md-12">
+                <mat-paginator [length]="planList.totalRecord" [pageIndex]="1" [pageSize]="10"
+                    [pageSizeOptions]="[10, 25, 100]" (page)="onPageChange($event)">
+                </mat-paginator>
+            </div>
+            }
+
+        </div>
+    </section>
+
+
+
+</div>

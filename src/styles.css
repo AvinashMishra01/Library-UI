@@ -7,6 +7,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 :root {
   --bg-white: #ffffff;
   --bg-success: #d4edda; /* define this too if you're using it */
+  --default-color:#012a5b;
 }
 
 .userdata-table-wrapper {
@@ -127,5 +128,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
   background: transparent !important;
 }
 
+label{
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--default-color);
+  margin-bottom: 0.5rem;
 
+}
 
