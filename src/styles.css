@@ -1,5 +1,131 @@
-/* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/azure-blue.css';
 
 html, body { height: 100%; overflow-x: hidden; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
+:root {
+  --bg-white: #ffffff;
+  --bg-success: #d4edda; /* define this too if you're using it */
+}
+
+.userdata-table-wrapper {
+  width: 100% !important;
+}
+
+/* Main container */
+.userdata-table-wrapper .datatable-contaner {
+  background-color: var(--bg-white) !important;
+  margin-bottom: 15px !important;
+}
+
+/* Fix the table background & override Bootstrap table-bg variable */
+.userdata-table-wrapper .datatable-contaner > table {
+  background-color: var(--bg-white) !important;
+  --bs-table-bg: var(--bg-white) !important;
+  border-collapse: collapse !important;
+}
+
+/* Table head */
+.userdata-table-wrapper .datatable-contaner > table > thead {
+  background-color: #5D75A6 !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+}
+
+/* Table head cells */
+.userdata-table-wrapper .datatable-contaner > table > thead > tr > th {
+  padding: 0.54rem 0.80rem !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 16px !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+  background-color: #5D75A6 !important;
+  color: #fff !important;
+}
+
+/* Table body cells */
+.userdata-table-wrapper .datatable-contaner > table > tbody > tr > td {
+  padding: 0.54rem 0.80rem !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  white-space: nowrap !important;
+  background-color: transparent !important;
+}
+
+/* Paragraph inside cells */
+.userdata-table-wrapper .datatable-contaner > table > tbody > tr > td p {
+  margin: 0px !important;
+  white-space: normal !important;
+}
+
+/* Links inside table */
+.userdata-table-wrapper .datatable-contaner > table > tbody > tr > td p a {
+  color: #0067DC !important;
+  font-weight: 600 !important;
+}
+
+/* Date/time class */
+.userdata-table-wrapper .datatable-contaner > table > tbody > tr > td p.datetimetext {
+  font-size: 12px !important;
+  color: #242424 !important;
+}
+
+/* Buttons inside table */
+.userdata-table-wrapper .datatable-contaner > table > tbody > tr > td .btn {
+  font-size: 0.85rem !important;
+}
+
+/* Success button */
+.userdata-table-wrapper .datatable-contaner > table > tbody > tr > td .btn-success {
+  background-color: var(--bg-success) !important;
+  border-color: #01b81a !important;
+}
+
+/* Bordered table override */
+.userdata-table-wrapper .datatable-contaner > table.table-bordered > :not(caption) > * > * {
+  border-width: 0 2px !important;
+  border-color: #fff !important;
+}
+
+/* Scroll wrapper */
+.table-scroll {
+  height: auto;
+  max-height: 75vh;
+  width: 100%;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  overflow-x: scroll;
+}
+
+/* Sticky header */
+.sticky-top {
+  z-index: 1 !important;
+  position: sticky !important;
+  top: 0 !important;
+}
+
+/* No wrap table cells */
+.no-wrap td,
+.no-wrap th {
+  white-space: nowrap !important;
+ border: 2px solid #FFFFFF !important;
+}
+
+/* Column toggle */
+.activeTab {
+  display: none !important;
+}
+
+/* Material paginator overrides */
+.mat-mdc-paginator-container {
+  justify-content: space-between !important;
+}
+
+.mat-paginator {
+  background: transparent !important;
+}
+
+
+

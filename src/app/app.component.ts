@@ -1,20 +1,19 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, computed, HostListener, input, output, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { FooterComponent } from './layout/footer/footer.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { MainComponent } from './layout/main/main.component';
-import { FooterComponent } from './layout/footer/footer.component';
-
-
 
 @Component({
   selector: 'app-root',
-  imports: [SidebarComponent, MainComponent,FooterComponent],
+  imports: [FooterComponent,SidebarComponent,MainComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'Library-Management';
-   isLeftSidebarCollapsed = signal<boolean>(false);
+
+  isLeftSidebarCollapsed = signal<boolean>(false);
   screenWidth = signal<number>(window.innerWidth);
 
   @HostListener('window:resize')

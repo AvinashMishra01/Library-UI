@@ -1,6 +1,5 @@
 
-
-  <app-sidebar
+<app-sidebar
   [isLeftSidebarCollapsed]="isLeftSidebarCollapsed()"
   (changeIsLeftSidebarCollapsed)="changeIsLeftSidebarCollapsed($event)"
 />
@@ -10,31 +9,5 @@
   [screenWidth]="screenWidth()"
 />
 
-
-
-
 <app-footer   [isLeftSidebarCollapsed]="isLeftSidebarCollapsed()"
   [screenWidth]="screenWidth()" ></app-footer>
-
-
-
-
-  <!-- <div class="d-flex flex-column min-vh-100">
-  <div class="d-flex flex-grow-1 min-h-0">
-    <app-sidebar
-      [isLeftSidebarCollapsed]="isLeftSidebarCollapsed()"
-      (changeIsLeftSidebarCollapsed)="changeIsLeftSidebarCollapsed($event)">
-    </app-sidebar>
-
-    <app-main
-      [isLeftSidebarCollapsed]="isLeftSidebarCollapsed()"
-      [screenWidth]="screenWidth()">
-    </app-main>
-  </div>
-
-    <app-footer [isLeftSidebarCollapsed]="isLeftSidebarCollapsed()"
-  [screenWidth]="screenWidth()" ></app-footer>
-</div> -->
-
-
-
