@@ -3,8 +3,20 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
+import { provideToastr } from 'ngx-toastr';
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideCharts(withDefaultRegisterables())]
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+     provideRouter(routes),
+      provideCharts(withDefaultRegisterables()),
+     provideAnimations(), 
+    provideToastr({
+      preventDuplicates:true,
+      timeOut:2500
+    }),
+    ]
 };
