@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ToastRef, ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationPopUpComponent } from '../../shared-component/confirmation-pop-up/confirmation-pop-up.component';
+
 
 @Component({
   selector: 'app-plan',
@@ -12,7 +15,7 @@ import { ToastRef, ToastrService } from 'ngx-toastr';
 })
 export class PlanComponent implements OnInit {
 
-constructor(private fb: FormBuilder, private toaster: ToastrService){}
+constructor(private fb: FormBuilder, private toaster: ToastrService, private modalService : NgbModal){}
 addPlanForm: any;
 planTypeArr: {name: string, value: string}[] = [
   {name: "Hourly", value:'hourly'},
@@ -87,10 +90,43 @@ console.log('event ', event);
 
 }
 
+openConfirmation()
+{
+ 
+const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'static', centered:true});
+  modalRef.componentInstance.confirmationMessage = {
+    mainHeading:'Confirmation',
+    heading: 'Status will be change!',
+    message: 'Do you really want to change the status?',
+    yesBtn: 'Yes',
+    noBtn: 'Cancel'
+  };
+
+ modalRef.result.then(
+    (result) => {
+      if (result) {
+        console.log('User confirmed');
+     
+      }
+    },
+    (dismissed) => {
+      console.log('User cancelled');
+    }
+  );
+
+
+}
+
+
+
+
 savePlan()
 {
  this.toaster.success('Avinash Its me ')
 }
+
+
+
 
 
 }

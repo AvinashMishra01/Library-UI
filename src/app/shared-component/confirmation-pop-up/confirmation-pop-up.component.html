@@ -1,0 +1,18 @@
+
+
+<div class="modal-header">
+{{ confirmationMessage.mainHeading }}
+  <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+</div>
+<div class="modal-body text-center">
+ <h4>{{ confirmationMessage.heading }}</h4>
+  <h5 class="mt-2 fw-light">{{ confirmationMessage.message }}</h5>
+  <div class="modal-buttons mt-4">
+    <button class="btn btn-primary me-2" (click)="confirm()">
+      {{ confirmationMessage.yesBtn }}
+    </button>
+    <button class="btn btn-danger" (click)="cancel()">
+      {{ confirmationMessage.noBtn }}
+    </button>
+  </div>
+</div>
