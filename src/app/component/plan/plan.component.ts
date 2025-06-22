@@ -90,8 +90,9 @@ console.log('event ', event);
 
 }
 
-openConfirmation()
+openConfirmation(data:any, index:number)
 {
+ console.log('data is ', data, index);
  
 const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'static', centered:true});
   modalRef.componentInstance.confirmationMessage = {
@@ -106,7 +107,8 @@ const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'s
     (result) => {
       if (result) {
         console.log('User confirmed');
-     
+        this.planList.lists[index].status= !data?.status
+     console.log('data is ', this.planList)
       }
     },
     (dismissed) => {
