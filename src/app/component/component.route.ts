@@ -4,8 +4,9 @@ import { UserManagementComponent } from './user-management/user-management.compo
 
 export const routes: Routes = [
   {path:'', component:UserManagementComponent},
-  {path:'seat-management', loadComponent: () => import('./seat-management/seat-management.component').then((c) => c.SeatManagementComponent)},
   {path:'create-plan', loadComponent: () => import('./plan/plan.component').then((c) => c.PlanComponent)},
+  {path:'seat-management', loadComponent: () => import('./seat-management/seat-management.component').then((c) => c.SeatManagementComponent)},
+  {path:'room-management', loadComponent:()=> import('./roomconfiguration/roomconfiguration.component').then((c)=>c.RoomconfigurationComponent)}
 ];
 
 

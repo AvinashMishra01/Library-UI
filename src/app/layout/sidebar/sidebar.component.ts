@@ -56,7 +56,7 @@ export class SidebarComponent {
        subLinks: [
       {
         name: 'Add Room',
-        path: 'admin/create-plan',
+        path: 'admin/room-management',
       },
       {
         name: 'Our Plan',

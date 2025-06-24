@@ -111,10 +111,7 @@
   color: #000;
   padding-left: 1.5rem;
 }
-.active .sidenav-nav-link:hover > .subnav-link-text {
-  background-color: #fff;
-  color: #000;
-}
+
 
 
 .sidenav-subnav .subnsv-link-item:hover > .sidenav-nav-link {
