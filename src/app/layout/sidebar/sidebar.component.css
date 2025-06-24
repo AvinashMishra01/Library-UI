@@ -58,6 +58,7 @@
   align-items: center;
   height: calc(100% - 3.65rem);
   cursor: pointer;
+  overflow-y:auto;
 }
 .sidenav-nav .sidenav-nav-item {
   width: 100%;
@@ -121,8 +122,26 @@
   transition: transform padding-left 0.4s ease-in-out
 }
 
-/* 
-.sidenav-subnav > .sidenav-nav-link:hover {
-  background-color: #fff;
-  color: #000;
-} */
+.scroll-custom {
+  overflow-y: auto;
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #5D75A6 #f0f0f0;
+}
+
+/* Chrome, Edge, Safari */
+.scroll-custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-custom::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.scroll-custom::-webkit-scrollbar-thumb {
+  background-color: #5D75A6;
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;
+}
+
+

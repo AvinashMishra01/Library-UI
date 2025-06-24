@@ -51,7 +51,7 @@
     }
   </div>
 
-  <div class="sidenav-nav">
+  <div class="sidenav-nav scroll-custom ">
     @for (item of items; track $index) {
       <li class="sidenav-nav-item">
         <a
@@ -60,8 +60,9 @@
           [class.has-dropdown]="item.subLinks.length"
           (click)="item.subLinks.length ? toggleDropdown(item) : null"
           routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
+          [routerLinkActiveOptions]="{ exact: false }"
+          >
+          <!-- [class.active]="isParentActive(item)" -->
           <i class="sidenav-link-icon" [class]="item.icon"></i>
           @if (!isLeftSidebarCollapsed()) {
             <span class="sidenav-link-text">{{ item.label }}</span>

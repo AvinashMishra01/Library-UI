@@ -9,6 +9,35 @@
 
 4. Email Verification Toggle </p>
 
+ <div class="orders_wrapper d-none d-sm-none d-md-block">
+      <div class="row g-0">
+        <div class="col-md-auto col-sm-12 com-xs-12">
+          <div class="navbar-container">
+            <ul
+              ngbNav
+              #nav="ngbNav"
+              [activeId]="active"
+              class="nav-tabs d-lg-flex"
+            >
+              <!-- <li [ngbNavItem]="tab.path" *ngFor="let tab of tabs"> -->
+              <li [ngbNavItem]="tab.path" *ngFor="let tab of tabs">
+                <a
+                  ngbNavLink
+                  class="bg-wrapper-blue nav-link"
+                  (click)="changeTab(tab)"
+                >
+                  {{ tab.name }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        </div>
+</div>
+
+
+
 
  <div
               class="userdata-table-wrapper mt-2 d-none d-sm-none d-md-block"
@@ -21,29 +50,23 @@
                     >
                       <thead class="table_heading sticky-top">
                         <tr>
-                        
-                          <th
-                            *ngFor="
-                              let list of display_unshipped_columns;
-                              let index = index
-                            "
-                            
-                            [ngClass]="{
-                              activeTab:
-                                !display_unshipped_columns[index].active
-                            }"
-                          >
-                            {{ list?.displayName }}
+                          @for (list of display_unshipped_columns; track $index; let index= $index) {
+
+                                <th [ngClass]="{ activeTab:!display_unshipped_columns[index].active, 'text-center':$last}" >
+                                  {{ list?.displayName }}
                           </th>
+                          }
+                        
+                      
                         </tr>
                       </thead>
                        <tbody>
- <tr
-                            *ngFor="
-                              let data of userList?.userData;
-                              let i = index
-                            "
-                          >
+
+                        @for (data of userList.userData; track $index; let i = $index) {
+
+
+                       
+                            <tr>
                         
                             <td
                               class="name"
@@ -67,7 +90,9 @@
                                 activeTab: !display_unshipped_columns[2].active
                               }"
                             >
-                             <p>{{data?.status}}</p>
+                                    <span class="badge"
+                                            [ngClass]="{'text-bg-success':data?.status ,'text-bg-danger': !data?.status  }">
+                                            {{ data?.status ? 'Active' : 'Inactive' }}</span>
                             </td>
                             <td
                               class="activity"
@@ -75,9 +100,18 @@
                                 activeTab: !display_unshipped_columns[3].active
                               }"
                             >
-                             <p>{{data?.currentStatus}}</p>
+                               <p>{{data?.currentStatus}}</p>
                             </td>
-
+                            <td
+                              class="action text-center"
+                              [ngClass]="{
+                                activeTab: !display_unshipped_columns[4].active
+                              }"
+                            >
+                              <button type="button" (click)="openConfirmation(data, i)" class="btn btn-light rounded-circle"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                            </td>
+                          }
                        </tbody>
                       </table>
                       </div>

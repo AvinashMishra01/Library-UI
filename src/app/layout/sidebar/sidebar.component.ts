@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,6 +12,8 @@ export class SidebarComponent {
  isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
   
+constructor(private router:Router){}
+
   items = [
     {
       routeLink: 'dashboard',
@@ -21,7 +23,7 @@ export class SidebarComponent {
       subLinks:[]
     },
     {
-      routeLink: 'admin',
+      routeLink: 'admin/user-management',
       icon: 'fa-solid fa-users',
       label: 'User Mgmt.',
       expanded:false,
@@ -84,7 +86,6 @@ export class SidebarComponent {
   {
     this.selectedSubLink= index;
   }
-
 
 
 }
