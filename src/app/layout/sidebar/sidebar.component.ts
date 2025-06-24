@@ -17,31 +17,52 @@ export class SidebarComponent {
       routeLink: 'dashboard',
       icon: 'fa-solid fa-house',
       label: 'Dashboard',
+      expanded:false,
+      subLinks:[]
     },
     {
       routeLink: 'admin',
       icon: 'fa-solid fa-users',
       label: 'User Mgmt.',
+      expanded:false,
+       subLinks:[]
     },
     {
       routeLink: 'admin/seat-management',
       icon: 'fa-solid fa-chair',
       label: 'Seat Mgmt.',
+      expanded:false,
+       subLinks:[]
     },
     {
       routeLink: 'admin/create-plan',
       icon: 'fa-brands fa-product-hunt',
       label: 'Active Plan',
+      expanded:false,
+       subLinks:[]
     },
     {
       routeLink: 'pages',
       icon: 'fa-solid fa-pager',
       label: 'Pages',
+      expanded:false,
+       subLinks:[]
     },
     {
       routeLink: 'settings',
-      icon: 'fal fa-cog',
+      icon: 'fa-solid fa-gear',
       label: 'Settings',
+      expanded:false,
+       subLinks: [
+      {
+        name: 'Add Room',
+        path: 'admin/create-plan',
+      },
+      {
+        name: 'Our Plan',
+        path: 'dashboard',
+      }
+    ]
     },
   ];
 
@@ -52,4 +73,18 @@ export class SidebarComponent {
   closeSidenav(): void {
     this.changeIsLeftSidebarCollapsed.emit(true);
   }
+  
+  toggleDropdown(item: any) {
+    item.expanded = !item.expanded;
+  }
+
+
+  selectedSubLink:number=-Infinity;
+  activeSublink(index:number)
+  {
+    this.selectedSubLink= index;
+  }
+
+
+
 }

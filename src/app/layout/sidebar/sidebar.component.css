@@ -82,7 +82,8 @@
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-text {
   margin-left: 1.5rem;
 }
-.sidenav-nav .sidenav-nav-item:hover .sidenav-nav-link {
+
+.sidenav-nav .sidenav-nav-item:hover > .sidenav-nav-link {
   background-color: #fff;
   color: #000;
 }
@@ -94,3 +95,37 @@
 .active .sidenav-link-text {
   color: #000;
 }
+/* Subnav UL styling */
+.sidenav-subnav {
+  list-style: none;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.sidenav-subnav .subnsv-link-item {
+  margin-bottom:  0.625rem;;
+}
+
+.active .subnav-link-text{
+  color: #000;
+  padding-left: 1.5rem;
+}
+.active .sidenav-nav-link:hover > .subnav-link-text {
+  background-color: #fff;
+  color: #000;
+}
+
+
+.sidenav-subnav .subnsv-link-item:hover > .sidenav-nav-link {
+  background-color: #fff;
+  color: #000;
+  padding-left: 2rem;
+  transition: transform padding-left 0.4s ease-in-out
+}
+
+/* 
+.sidenav-subnav > .sidenav-nav-link:hover {
+  background-color: #fff;
+  color: #000;
+} */
