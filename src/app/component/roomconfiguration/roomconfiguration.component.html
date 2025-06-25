@@ -15,15 +15,23 @@
 
   </div>
 
-  <button (click)="addRoom()">Add Room</button>
+  <button type="button" class="btn btn-primary" (click)="addRoom()">Add Room</button>
 
   <div class="row g-3">
-    
 
-     @for(room of rooms; track $index; let roomIndex= $index)
-     {
-<div class="col-auto text-center">
-      <h3>Room {{ roomIndex + 1 }}</h3>
+
+    @for(room of rooms; track $index; let roomIndex= $index)
+    {
+    <div class="col-auto text-center">
+      <div class="row align-items-center mb-2">
+           <div class="col-md-6"> <span class="fs-4">Room {{ roomIndex + 1 }}</span></div>
+         <div class="col-md-6 ms-auto text-end">
+        <button type="button" class="btn rounded-circle btn-outline-secondary btn-sm me-2" ><i class="fa-solid fa-pen-to-square" title="Edit"></i></button>
+        <button type="button" class="btn btn-outline-danger rounded-circle btn-sm" title="Delete"><i class="fa-solid fa-trash" ></i></button>
+      </div>
+      </div>
+     
+
       <div class="seat-grid" [style.gridTemplateColumns]="'repeat(' + room.width + ', 30px)'">
         @for ( row of room.grid; track $index; let i = $index) {
         @for(cell of row; track $index; let j= $index){
@@ -36,11 +44,11 @@
         </div>
         }
         }
-      </div> 
+      </div>
     </div>
- }
+    }
 
 
-   
+
   </div>
 </div>

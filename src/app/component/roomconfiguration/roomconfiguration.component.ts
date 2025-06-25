@@ -44,6 +44,8 @@ export class RoomconfigurationComponent {
     };
     newRoom.grid = this.generateGrid(newRoom);
     this.rooms.push(newRoom);
+   console.log('room grid dat is ', this.rooms);
+   
   }
 
   generateGrid(room: Room): any[][] {

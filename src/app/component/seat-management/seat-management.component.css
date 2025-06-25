@@ -1,0 +1,35 @@
+.seat-grid {
+  display: grid;
+  gap: 4px;
+  user-select: none;
+  margin-top: 1rem;
+}
+
+.seat-cell {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  line-height: 30px;
+}
+
+.seat-available {
+  background-color: #4ade80; /* Green */
+  color: black;
+}
+
+.seat-booked {
+  background-color: #f87171; /* Red */
+  color: white;
+}
+
+.door {
+  background-color: #facc15;
+  color: black;
+  font-weight: bold;
+}
+
+.empty {
+  background-color: #e5e7eb;
+}

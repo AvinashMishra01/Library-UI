@@ -1,1 +1,26 @@
-<p>Seat managemnt woringki </p>
+<div class="container">
+  <h2>Seat Management</h2>
+
+  <div class="row g-4">
+    <div class="col-md-auto" *ngFor="let room of rooms; let i = index">
+      <div class="card p-3 shadow-sm">
+        <h5 class="text-primary">Room {{ i + 1 }}</h5>
+
+        <div class="seat-grid" [style.gridTemplateColumns]="getGridStyle(room)">
+          <ng-container *ngFor="let row of room.grid; let rowIndex = index">
+            <ng-container *ngFor="let cell of row; let colIndex = index">
+              <div class="seat-cell" [ngClass]="{
+                'seat-available': cell?.status === 'available',
+                'seat-booked': cell?.status === 'booked',
+                'door': cell?.type === 'door',
+                'empty': !cell
+              }">
+                {{ cell?.id || (cell?.type === 'door' ? 'Door' : '') }}
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
