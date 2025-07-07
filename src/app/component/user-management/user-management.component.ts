@@ -17,7 +17,16 @@ export class UserManagementComponent implements OnInit {
   active: any;
   activeTabType:any;
   tabs = [
-   
+    // {
+    //   name: "Monthly Sub",
+    //   path: "monthly-subscription",
+    //   type:7
+    // },
+    // {
+    //   name: "Yearly Sub",
+    //   path: "yearly-subscription",
+    //   type:7
+    // },
     {
       name: "Active User",
       path: "active-user",
@@ -42,28 +51,38 @@ export class UserManagementComponent implements OnInit {
 display_unshipped_columns =[
 
       {
-      displayName : 'Sr. No', //1
-      columnName : 'srNo',
+      displayName : 'Details', //1
+      columnName : 'details',
       active: true
     },
       {
-      displayName : 'Details', //2
-      columnName : 'srNo',
+      displayName : 'Address', //2
+      columnName : 'address',
       active: true
     },
   
       {
-      displayName : 'Status', //3
-      columnName : 'srNo',
+      displayName : 'Plan', //3
+      columnName : 'plan',
       active: true
     },
       {
-      displayName : 'Activity', //4
-      columnName : 'actvity',
+      displayName : 'Last Paid', //4
+      columnName : 'lastPaidMonth',
       active: true
     },
       {
-      displayName : 'Action', //5
+      displayName : 'Status', //5
+      columnName : 'status',
+      active: true
+    },
+      {
+      displayName : 'Balance', //6
+      columnName : 'balance',
+      active: true
+    },
+      {
+      displayName : 'Action', //7
       columnName : 'action',
       active: true
     },
@@ -73,26 +92,38 @@ display_unshipped_columns =[
 pageSize='10';
 pageIndex='0'
 
-userList:{userData:{name:string, address:string, status:boolean, currentStatus:string}[], totalRecord:number} ={
+userList:{userData:{name:string,mobile:string, plan:string, address?:string,lastPaidMonth:string|null, status:string, balance?:number}[], totalRecord:number} ={
   userData:[
-  {name:'Avinash', address:'Mahuli', status:true ,currentStatus:'Log-In'},
-  {name:'Avinash-1', address:'Mahuli-1', status:true , currentStatus:'Log-In'},
-  {name:'Avinash-2', address:'Mahuli-2', status:true , currentStatus:'Log-In'},
-  {name:'Avinash-3', address:'Mahuli-3', status:false , currentStatus:'Log-In'},
-  {name:'Avinash-4', address:'Mahuli-4', status:true , currentStatus:'Log-In'},
-  {name:'Avinash-5', address:'Mahuli-5', status:true , currentStatus:'Log-In'},
-  {name:'Avinash-6', address:'Mahuli-6', status:false , currentStatus:'Log-In'},
-  {name:'Avinash-7', address:'Mahuli-7', status:true , currentStatus:'Log-In'},
-  {name:'Avinash-8', address:'Mahuli-8', status:true , currentStatus:'Log-In'},
-  {name:'Avinash-9', address:'Mahuli-9', status:false , currentStatus:'Log-In'},
-  {name:'Avinash-10', address:'Mahuli-10', status:true , currentStatus:'Log-In'},
-  {name:'Avinash-11', address:'Mahuli-11', status:true , currentStatus:'Log-In'},
-  {name:'Avinash-12', address:'Mahuli-12', status:true , currentStatus:'Log-In'},
+
+  { name: "Alice", mobile: "9876543211", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
+  { name: "John", mobile: "9876543212", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid", balance: 0.00 },
+  { name: "Priya", mobile: "9876543213", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: null,      status: "Due", balance: 50.00 },
+  { name: "Amit", mobile: "9876543214", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-04", status: "Due", balance: 100.00 },
+  { name: "Sara", mobile: "9876543215", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid", balance: 0.00 },
+  { name: "Ravi", mobile: "9876543216", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
+  { name: "Neha", mobile: "9876543217", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid", balance: 0.00 },
+  { name: "Karan", mobile: "9876543218", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-03", status: "Due", balance: 150.00 },
+  { name: "Divya", mobile: "9876543219", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: null,      status: "Due", balance: 50.00 },
+  { name: "Mohit", mobile: "9876543220", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
+  { name: "Tina", mobile: "9876543221", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid",balance: 0.00 },
+  { name: "Vikram", mobile: "9876543222", plan: "Monthly", address:'Mahuli-1',  lastPaidMonth: "2024-02", status: "Due", balance: 200.00 },
+  { name: "Sneha", mobile: "9876543223", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid",balance: 0.00 },
+  { name: "Rohit", mobile: "9876543224", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
+  { name: "Anjali", mobile: "9876543225", plan: "Monthly", address:'Mahuli-1',  lastPaidMonth: null,      status: "Due", balance: 50.00 },
+  { name: "Arjun", mobile: "9876543226", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid",balance: 0.00 },
+  { name: "Megha", mobile: "9876543227", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-01", status: "Due", balance: 250.00 },
+  { name: "Suman", mobile: "9876543228", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid",balance: 0.00 },
+  { name: "Deepak", mobile: "9876543229", plan: "Monthly", address:'Mahuli-1',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
+  { name: "Ritika", mobile: "9876543230", plan: "Monthly", address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid",balance: 0.00 }
+
+
   ],
-  totalRecord:12,
+  totalRecord:20,
 
 
 }
+
+dummyRecord:any;
 
 constructor(private route :ActivatedRoute, private router: Router, private modalService: NgbModal){}
 
@@ -102,7 +133,7 @@ ngOnInit() {
     console.log("path is ", path);
    
   let find=false
-
+  this.dummyRecord= this.userList
   this.tabs.filter((item)=>{
     if(item.path== path){
        this.active= item.path;
@@ -115,7 +146,10 @@ ngOnInit() {
 if(!find){
   this.router.navigate(['/admin/user-management/','active-user']);
 }
+  this.userList.userData = this.dummyRecord.userData.slice(+this.pageIndex, +this.pageSize)
 //  this.getOrderList()
+console.log('user list ',this.pageIndex, this.pageSize,this.userList.userData);
+
   });
 }
 changeTab(tabData:any){
@@ -129,8 +163,10 @@ onPageChange(event:any) {
 
   this.pageIndex = event.pageIndex
   this.pageSize = event.pageSize
- 
+ this.userList.userData = this.dummyRecord.userData.slice(+this.pageIndex + +this.pageSize, 10* +this.pageIndex)
 console.log('event ', event);
+console.log('user list page change',this.pageIndex, this.pageSize, this.userList.userData);
+
 
 }
 
@@ -151,7 +187,7 @@ const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'s
     (result) => {
       if (result) {
         console.log('User confirmed');
-        this.userList.userData[index].status= !data?.status
+        this.userList.userData[index].status= data?.status=="Due" ? "Paid" : "Due" 
      console.log('data is ', this.userList)
       }
     },

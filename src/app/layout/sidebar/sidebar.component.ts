@@ -27,7 +27,10 @@ constructor(private router:Router){}
       icon: 'fa-solid fa-users',
       label: 'User Mgmt.',
       expanded:false,
-       subLinks:[]
+      subLinks:[
+        {name:"All User", path:'admin/user-management'},
+        {name:'Add User', path:'admin/add-user'}
+      ]
     },
     {
       routeLink: 'admin/seat-management',
@@ -77,7 +80,17 @@ constructor(private router:Router){}
   }
   
   toggleDropdown(item: any) {
-    item.expanded = !item.expanded;
+    this.items=  this.items.map((i)=>{
+      if(i.label != item.label){
+
+        i.expanded=false;
+      }else{
+        i.expanded= !item.expanded
+      }
+      return i;
+    }) ;  
+    // item.expanded = !item.expanded;
+ 
   }
 
 

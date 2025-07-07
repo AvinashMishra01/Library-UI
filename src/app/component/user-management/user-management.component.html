@@ -69,43 +69,62 @@
                             <tr>
                         
                             <td
-                              class="name"
+                              class="details"
                               [ngClass]="{
                                 activeTab: !display_unshipped_columns[0].active
                               }"
                             >
-                             <p>{{data?.name}}</p>
+                             <p class="fw-bold">{{data?.name}}</p>
+                             <p>{{data?.mobile}}</p>
                             </td>
                             <td
-                              class="addrss"
+                              class="address"
                               [ngClass]="{
                                 activeTab: !display_unshipped_columns[1].active
                               }"
                             >
                              <p>{{data?.address}}</p>
                             </td>
+                            
                             <td
-                              class="name"
+                              class="plan"
                               [ngClass]="{
                                 activeTab: !display_unshipped_columns[2].active
                               }"
                             >
-                                    <span class="badge"
-                                            [ngClass]="{'text-bg-success':data?.status ,'text-bg-danger': !data?.status  }">
-                                            {{ data?.status ? 'Active' : 'Inactive' }}</span>
+                             <p>{{data?.plan}}</p>
                             </td>
                             <td
-                              class="activity"
+                              class="lastPaidMonth"
                               [ngClass]="{
                                 activeTab: !display_unshipped_columns[3].active
                               }"
                             >
-                               <p>{{data?.currentStatus}}</p>
+                             <p>{{data?.lastPaidMonth}}</p>
+                            </td>
+
+                            <td
+                              class="status"
+                              [ngClass]="{
+                                activeTab: !display_unshipped_columns[4].active
+                              }"
+                            >
+                                    <span class="badge"
+                                            [ngClass]="{'text-bg-success':data?.status=='Paid' ,'text-bg-danger': data?.status=='Due' }">
+                                            {{ data?.status}}</span>
+                            </td>
+                            <td
+                              class="balance"
+                              [ngClass]="{
+                                activeTab: !display_unshipped_columns[5].active
+                              }"
+                            >
+                               <p> {{ data?.balance | currency : 'INR'  }} <p>
                             </td>
                             <td
                               class="action text-center"
                               [ngClass]="{
-                                activeTab: !display_unshipped_columns[4].active
+                                activeTab: !display_unshipped_columns[6].active
                               }"
                             >
                               <button type="button" (click)="openConfirmation(data, i)" class="btn btn-light rounded-circle"><i
@@ -123,8 +142,8 @@
             <div class="col-md-12">
               <mat-paginator
                 [length]="userList.totalRecord"
-                [pageIndex]="1"
-                [pageSize]="10"
+                [pageIndex]="pageIndex"
+                [pageSize]="pageSize"
                 [pageSizeOptions]="[10, 25, 100]"
                 (page)="onPageChange($event)"
               >
