@@ -126,7 +126,8 @@
                               [ngClass]="{
                                 activeTab: !display_unshipped_columns[6].active
                               }"
-                            >
+                            > 
+                            <button (click)="openFeesModal(data, i )">Add Fee</button>
                               <button type="button" (click)="openConfirmation(data, i)" class="btn btn-light rounded-circle"><i
                                                 class="fa-solid fa-ellipsis-vertical"></i></button>
                             </td>

@@ -36,7 +36,7 @@ plans:{planId:number, planType:string, planPrice:number }[]=
       preferedTime: ['', Validators.required],
       planType: ['', Validators.required],
       startDate: ['', Validators.required],
-      seatNo: ['', Validators.required],
+      seatNo: [''],
 
     })
   }

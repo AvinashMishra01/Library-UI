@@ -1,35 +1,29 @@
-.seat-grid {
+.room-container {
+  margin-bottom: 2rem;
+}
+
+.seats-grid {
   display: grid;
-  gap: 4px;
-  user-select: none;
-  margin-top: 1rem;
+  grid-template-columns: repeat(auto-fill, 50px);
+  gap: 10px;
 }
 
-.seat-cell {
-  width: 30px;
-  height: 30px;
-  text-align: center;
-  font-size: 0.7rem;
-  border-radius: 4px;
-  line-height: 30px;
-}
-
-.seat-available {
-  background-color: #4ade80; /* Green */
-  color: black;
-}
-
-.seat-booked {
-  background-color: #f87171; /* Red */
-  color: white;
-}
-
-.door {
-  background-color: #facc15;
-  color: black;
+.seat {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
   font-weight: bold;
+  color: #fff;
 }
 
-.empty {
-  background-color: #e5e7eb;
+.seat.available {
+  background-color: #4caf50;
+}
+
+.seat.booked {
+  background-color: #f44336;
 }

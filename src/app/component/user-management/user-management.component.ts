@@ -5,7 +5,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NgbModal, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationPopUpComponent } from '../../shared-component/confirmation-pop-up/confirmation-pop-up.component';
-
+import { AddFeesComponent } from '../../shared-component/add-fees/add-fees.component';
 @Component({
   selector: 'app-user-management',
   imports: [CommonModule,MatPaginatorModule,NgbNavModule],
@@ -199,6 +199,19 @@ const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'s
 
 }
 
+openFeesModal(data:any, index:number)
+{
+  console.log("fees modal data", data, index);
+  let feeesModalRef= this.modalService.open(AddFeesComponent, {backdrop:'static', centered:true});
+    feeesModalRef.componentInstance.userData = data
+
+
+    feeesModalRef.result.then((result)=>{
+      console.log('message from modal', result);
+       this.userList.userData[index].status= data?.status=="Due" ? "Paid" : "Due" 
+      
+    })
+}
 
 
 

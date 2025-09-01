@@ -28,8 +28,8 @@ constructor(private router:Router){}
       label: 'User Mgmt.',
       expanded:false,
       subLinks:[
+        {name:'Add User', path:'admin/add-user'},
         {name:"All User", path:'admin/user-management'},
-        {name:'Add User', path:'admin/add-user'}
       ]
     },
     {

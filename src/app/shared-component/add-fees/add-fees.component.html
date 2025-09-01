@@ -1,0 +1,16 @@
+<div class="modal-header">
+<h4>Add User Fees</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+</div>
+<div class="modal-body text-center">
+ <h4>{{ userData.address }}</h4>
+  <h5 class="mt-2 fw-light">{{ userData.name }}</h5>
+  <div class="modal-buttons mt-4">
+    <button class="btn btn-primary me-2" (click)="confirm()">
+      {{ userData.name }}
+    </button>
+    <button class="btn btn-danger" (click)="cancel()">
+      {{ userData.mobile }}
+    </button>
+  </div>
+</div>

@@ -1,54 +1,65 @@
+
 <div class="container">
-  <div class="settings-panel">
-    <h2>Configure Room</h2>
-    <div class="input-group">
-      <label>Room Width: <input type="number" [(ngModel)]="roomTemplate.width" /></label>
-      <label>Room Height: <input type="number" [(ngModel)]="roomTemplate.height" /></label>
-    </div>
-    <div class="input-group">
-      <label>Left Seats: <input type="number" [(ngModel)]="seatConfigTemplate.left" /></label>
-      <label>Right Seats: <input type="number" [(ngModel)]="seatConfigTemplate.right" /></label>
-      <label>Back Seats: <input type="number" [(ngModel)]="seatConfigTemplate.back" /></label>
-      <label>Entry Left: <input type="number" [(ngModel)]="seatConfigTemplate.entryLeft" /></label>
-      <label>Entry Right: <input type="number" [(ngModel)]="seatConfigTemplate.entryRight" /></label>
-    </div>
+    <form [formGroup]="roomConfigForm">
+        <div class="row mb-3">
+            <!-- Room Name  -->
+            <div class="col-md-4">
+                <label>Room Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="roomName" [ngClass]="{'is-invalid': roomConfigForm?.get('roomName')?.invalid && (roomConfigForm?.get('roomName')?.touched || roomConfigForm?.get('roomName')?.dirty )} " />
+                @if (roomConfigForm?.get('roomName')?.invalid && roomConfigForm?.get('roomName')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+            </div>
 
-  </div>
+            <!-- total seat  -->
+            <div class="col-md-4">
+                <label>Total Seats <span class="text-danger">*</span></label>
+                <input formControlName="totalSeats" type="text" class="form-control" [ngClass]="{'is-invalid':roomConfigForm?.get('totalSeats')?.invalid && (roomConfigForm?.get('totalSeats')?.touched || roomConfigForm?.get('totalSeats')?.dirty)  }" />
+                @if (roomConfigForm?.get('totalSeats')?.invalid && roomConfigForm?.get('totalSeats')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+            </div>
+            <!-- room type  -->
+            <div class="col-md-4">
+                <label>Room Type <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="roomType" [ngClass]="{'is-invalid':roomConfigForm?.get('roomType')?.invalid && (roomConfigForm?.get('roomType')?.touched || roomConfigForm?.get('roomType')?.dirty)  }">
+                    <option value="Study Hall">Study Hall</option>
+                    <option value="Premium">Premium</option>
+                    <option value="Silent Zone">Silent Zone</option>
+                </select>
+                @if (roomConfigForm?.get('roomType')?.invalid && roomConfigForm?.get('roomType')?.touched) {
+                <div class="text-danger"> Required </div>
+                }
 
-  <button type="button" class="btn btn-primary" (click)="addRoom()">Add Room</button>
-
-  <div class="row g-3">
+            </div>
 
 
-    @for(room of rooms; track $index; let roomIndex= $index)
-    {
-    <div class="col-auto text-center">
-      <div class="row align-items-center mb-2">
-           <div class="col-md-6"> <span class="fs-4">Room {{ roomIndex + 1 }}</span></div>
-         <div class="col-md-6 ms-auto text-end">
-        <button type="button" class="btn rounded-circle btn-outline-secondary btn-sm me-2" ><i class="fa-solid fa-pen-to-square" title="Edit"></i></button>
-        <button type="button" class="btn btn-outline-danger rounded-circle btn-sm" title="Delete"><i class="fa-solid fa-trash" ></i></button>
-      </div>
-      </div>
-     
-
-      <div class="seat-grid" [style.gridTemplateColumns]="'repeat(' + room.width + ', 30px)'">
-        @for ( row of room.grid; track $index; let i = $index) {
-        @for(cell of row; track $index; let j= $index){
-        <div class="seat-cell" [ngClass]="{
-            'seat': cell && cell.type !== 'door',
-            'door': cell?.type === 'door',
-            'empty': !cell
-          }" (click)="onSeatMouseDown(i, j, roomIndex)">
-          {{ cell?.id || (cell?.type === 'door' ? 'Door' : '') }}
         </div>
-        }
-        }
-      </div>
-    </div>
-    }
+        <div formArrayName="seatLayout">
+            <div class="row">
+                <div class="col-md-4 mb-3" *ngFor="let seat of seatLayout?.controls; let i = index" [formGroupName]="i">
+                    <label>Seat No {{i+1}}</label>
 
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1 me-2">
+                            <input type="text" class="form-control" placeholder="Seat Name" formControlName="seatNo" 
+                            [ngClass]="{'is-invalid': seat?.get('seatNo')?.invalid &&  (seat?.get('seatNo')?.touched || seat?.get('seatNo')?.dirty) }"
+                             />
+                            @if(seat?.get('seatNo')?.invalid && seat?.get('seatNo')?.touched){
+                            <span class="text-danger small">Required</span>
+                            }
+                        </div>
 
-
-  </div>
+                        <div>
+                            <button type="button" class="btn btn-danger" (click)="removeSeat(i)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="button" class="btn btn-success" (click)="addSeat()">+ Add Seat</button>
+            <button type="button" class="btn btn-primary" (click)="saveRoom()">Save Room</button>
+        </div>
+    </form>
 </div>
