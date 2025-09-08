@@ -1,5 +1,4 @@
 import { Component, computed, HostListener, input, output, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './layout/footer/footer.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { MainComponent } from './layout/main/main.component';

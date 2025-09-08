@@ -64,8 +64,8 @@ constructor(private router:Router){}
         path: 'admin/room-management',
       },
       {
-        name: 'Our Plan',
-        path: 'dashboard',
+        name: 'Add Plan',
+        path: 'admin/add-plan',
       }
     ]
     },

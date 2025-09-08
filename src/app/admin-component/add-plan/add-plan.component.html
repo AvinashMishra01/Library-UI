@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row">
+   <div class="card">
+       <div class="card-body">
+      <h5 class="card-title">Add Plan</h5>
+    <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+     <form [formGroup]="addplanForm">
+        <div class="row">
+            <div class="col-md-6 my-2">
+                <label> Plan Name <span class="text-danger">*</span></label>
+                <input formControlName="planName" type="text" class="form-control"
+                    [ngClass]="{'is-invalid':addplanForm?.get('planName')?.invalid && (addplanForm?.get('planName')?.touched || addplanForm?.get('planName')?.dirty)  }" />
+                @if (addplanForm?.get('planName')?.invalid && addplanForm?.get('planName')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+
+            </div>
+            <div class="col-md-6 my-2">
+                <label> Plan Value <span class="text-danger">*</span></label>
+                <input formControlName="planRate" type="text" class="form-control"
+                    [ngClass]="{'is-invalid':addplanForm?.get('planRate')?.invalid && (addplanForm?.get('planRate')?.touched || addplanForm?.get('planRate')?.dirty)  }" />
+                @if (addplanForm?.get('planRate')?.invalid && addplanForm?.get('planRate')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+
+            </div>
+              </div>
+<div class="row">
+       <div class="col-md-12 text-end">
+        <button class="btn btn-primary" (click)="savePlanName()" >Save</button>
+</div>
+</div>
+     </form>
+    
+  </div>
+</div>
+    </div>
+  
+</div>
