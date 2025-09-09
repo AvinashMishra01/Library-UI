@@ -3,12 +3,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { NgbModal, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbNavModule, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationPopUpComponent } from '../../shared-component/confirmation-pop-up/confirmation-pop-up.component';
 import { AddFeesComponent } from '../../shared-component/add-fees/add-fees.component';
 @Component({
   selector: 'app-user-management',
-  imports: [CommonModule,MatPaginatorModule,NgbNavModule],
+  imports: [CommonModule,MatPaginatorModule,NgbNavModule], //NgbPopover
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css'
 })
@@ -66,23 +66,23 @@ display_unshipped_columns =[
       columnName : 'plan',
       active: true
     },
+    //   {
+    //   displayName : 'Last Paid', //4
+    //   columnName : 'lastPaidMonth',
+    //   active: true
+    // },
       {
-      displayName : 'Last Paid', //4
-      columnName : 'lastPaidMonth',
-      active: true
-    },
-      {
-      displayName : 'Status', //5
+      displayName : 'Status', //5 ,4 
       columnName : 'status',
       active: true
     },
+    //   {
+    //   displayName : 'Balance', //6
+    //   columnName : 'balance',
+    //   active: true
+    // },
       {
-      displayName : 'Balance', //6
-      columnName : 'balance',
-      active: true
-    },
-      {
-      displayName : 'Action', //7
+      displayName : 'Action', //7, 5 
       columnName : 'action',
       active: true
     },
@@ -95,7 +95,7 @@ pageIndex='0'
 userList:{userData:{name:string,mobile:string, plan:string, address?:string,lastPaidMonth:string|null, status:string, balance?:number}[], totalRecord:number} ={
   userData:[
 
-  { name: "Alice", mobile: "9876543211", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
+  { name: "Alice", mobile: "9876543211", plan: "Monthly",  address:'Mahuli-1 district sant kabir nagar pin code 272172',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
   { name: "John", mobile: "9876543212", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid", balance: 0.00 },
   { name: "Priya", mobile: "9876543213", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: null,      status: "Due", balance: 50.00 },
   { name: "Amit", mobile: "9876543214", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-04", status: "Due", balance: 100.00 },

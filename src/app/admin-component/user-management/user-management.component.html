@@ -94,42 +94,71 @@
                             >
                              <p>{{data?.plan}}</p>
                             </td>
-                            <td
+                            <!-- <td
                               class="lastPaidMonth"
                               [ngClass]="{
                                 activeTab: !display_unshipped_columns[3].active
                               }"
                             >
                              <p>{{data?.lastPaidMonth}}</p>
-                            </td>
+                            </td> -->
 
                             <td
                               class="status"
                               [ngClass]="{
-                                activeTab: !display_unshipped_columns[4].active
+                                activeTab: !display_unshipped_columns[3].active
                               }"
                             >
-                                    <span class="badge"
+                          
+                                    <span class="badge p-2"
                                             [ngClass]="{'text-bg-success':data?.status=='Paid' ,'text-bg-danger': data?.status=='Due' }">
-                                            {{ data?.status}}</span>
+                                 {{ data?.status}}        @if (data.balance!=0) {
+                             - ₹{{data?.balance | number:'1.2-2' }}
+                            }      </span> 
+                                       <!-- <p></p> -->
+
+                                <!-- <span triggers="mouseenter:mouseleave" #p1
+                                                                    [ngbPopover]="popContentConsignee" [placement]="'auto'"> <i class="fa fa-info-circle" aria-hidden="true"></i></span> -->                                     
+                                 <!-- <ng-template #popContentConsignee>
+                                <p>Avinash  </p>
+                               
+                              </ng-template> -->
                             </td>
-                            <td
+                            <!-- <td
                               class="balance"
                               [ngClass]="{
                                 activeTab: !display_unshipped_columns[5].active
                               }"
                             >
                                <p> {{ data?.balance | currency : 'INR'  }} <p>
-                            </td>
+                            </td> -->
                             <td
                               class="action text-center"
                               [ngClass]="{
-                                activeTab: !display_unshipped_columns[6].active
+                                activeTab: !display_unshipped_columns[4].active
                               }"
                             > 
-                            <button (click)="openFeesModal(data, i )">Add Fee</button>
+                            <!-- <button (click)="openFeesModal(data, i )">Add Fee</button>
                               <button type="button" (click)="openConfirmation(data, i)" class="btn btn-light rounded-circle"><i
-                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                                class="fa-solid fa-ellipsis-vertical"></i></button> -->
+
+
+ <div class="dropdown">
+  <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+    Action
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    <li><button class="dropdown-item" type="button" (click)="openFeesModal(data, i )">Add Fee</button></li>
+    <li><button class="dropdown-item" type="button" (click)="openConfirmation(data, i)">Update Status</button></li>
+    <li><button class="dropdown-item" type="button"> Payment History</button></li>
+  </ul>
+</div>
+
+
+
+
+
+
                             </td>
                           }
                        </tbody>
