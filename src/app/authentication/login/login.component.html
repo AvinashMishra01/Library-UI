@@ -1,0 +1,64 @@
+<!-- login.component.html -->
+
+    <div class="d-flex align-items-center justify-content-center vh-100 login_wrapper ">
+    <div class="card shadow-lg p-4 rounded-4 w-100 login_card "  [ngClass]="{'flip-scale-2-ver-right': admin}" >
+  
+    
+      <div class="card-front">
+           <!-- Header -->
+           <h2 class="text-center fw-bold mb-4 text-dark">📚 Library Login</h2>
+         
+    <!-- Role Toggle --> {{admin}}
+    <div class="mb-3 text-center">
+      <div class="btn-group" role="group" aria-label="Role selection">
+        <input type="radio" class="btn-check" name="role" id="user"  (click)="redirectTo('user')"  autocomplete="off" checked>
+        <label class="btn btn-outline-primary" for="user">User</label>
+
+        <input type="radio" class="btn-check" name="role" id="admin" (click)="redirectTo('admin')" autocomplete="off">
+        <label class="btn btn-outline-primary" for="admin">Admin</label>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm">
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label fw-semibold">Email</label>
+        <input type="text" class="form-control rounded-3" id="email" formControlName="email" placeholder="Enter your email"
+        [ngClass]="{'is-invalid':loginForm?.get('email')?.invalid && (loginForm?.get('email')?.touched || loginForm?.get('email')?.dirty)  }">
+          @if (loginForm?.get('email')?.invalid && loginForm?.get('email')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label fw-semibold">Password</label>
+        <input type="password" class="form-control rounded-3" id="password" formControlName="password" placeholder="Enter your password"
+         [ngClass]="{'is-invalid':loginForm?.get('password')?.invalid && (loginForm?.get('password')?.touched || loginForm?.get('password')?.dirty)  }">
+             @if (loginForm?.get('password')?.invalid && loginForm?.get('password')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+        </div>
+
+      <!-- Forgot Password -->
+      <div class="d-flex justify-content-between mb-3">
+        <a href="#" class="small text-decoration-none text-primary">Forgot Password?</a>
+      </div>
+
+      <!-- Login Button -->
+      <button type="submit" class="btn btn-primary w-100 rounded-3 fw-bold">Login</button>
+    </form>
+    </div>
+     <!-- BACK SIDE -->
+    <div class="card-back d-flex flex-column align-items-center justify-content-center">
+      <h2 class="fw-bold text-dark">🔑 Admin Login</h2>
+      <p class="text-muted">Now you’re logging in as <b>Admin</b>.</p>
+      <button class="btn btn-primary" (click)="redirectTo('user')">back</button>
+    </div>
+    </div>
+  
+</div>
+
+
+

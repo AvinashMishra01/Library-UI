@@ -2,10 +2,11 @@ import { Component, computed, HostListener, input, output, signal } from '@angul
 import { FooterComponent } from './layout/footer/footer.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { MainComponent } from './layout/main/main.component';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [FooterComponent,SidebarComponent,MainComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
