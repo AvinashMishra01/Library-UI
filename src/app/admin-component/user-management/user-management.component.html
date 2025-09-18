@@ -1,0 +1,192 @@
+
+
+<p> User Management <br>
+1. Enable/Disable Guest Access
+
+2. User Role Management (Admin, Staff, Viewer)
+
+3. Registration Settings (Approval Required, Auto-approve, etc.)
+
+4. Email Verification Toggle </p>
+
+ <div class="orders_wrapper d-none d-sm-none d-md-block">
+      <div class="row g-0">
+        <div class="col-md-auto col-sm-12 com-xs-12">
+          <div class="navbar-container">
+            <ul
+              ngbNav
+              #nav="ngbNav"
+              [activeId]="active"
+              class="nav-tabs d-lg-flex"
+            >
+              <!-- <li [ngbNavItem]="tab.path" *ngFor="let tab of tabs"> -->
+              <li [ngbNavItem]="tab.path" *ngFor="let tab of tabs">
+                <a
+                  ngbNavLink
+                  class="bg-wrapper-blue nav-link"
+                  (click)="changeTab(tab)"
+                >
+                  {{ tab.name }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        </div>
+</div>
+
+
+
+
+ <div
+              class="userdata-table-wrapper mt-2 d-none d-sm-none d-md-block"
+            >
+              <div class="row g-0 position-relative">
+                <div class="col-12">
+                  <div class="table-responsive datatable-contaner table-scroll">
+                    <table
+                      class="table table-striped table-hover align-middle table-fixed no-wrap"
+                    >
+                      <thead class="table_heading sticky-top">
+                        <tr>
+                          @for (list of display_unshipped_columns; track $index; let index= $index) {
+
+                                <th [ngClass]="{ activeTab:!display_unshipped_columns[index].active, 'text-center':$last}" >
+                                  {{ list?.displayName }}
+                          </th>
+                          }
+                        
+                      
+                        </tr>
+                      </thead>
+                       <tbody>
+
+                        @for (data of userList.userData; track $index; let i = $index) {
+
+
+                       
+                            <tr>
+                        
+                            <td
+                              class="details"
+                              [ngClass]="{
+                                activeTab: !display_unshipped_columns[0].active
+                              }"
+                            >
+                             <p class="fw-bold">{{data?.name}}</p>
+                             <p>{{data?.mobile}}</p>
+                            </td>
+                            <td
+                              class="address"
+                              [ngClass]="{
+                                activeTab: !display_unshipped_columns[1].active
+                              }"
+                            >
+                             <p>{{data?.address}}</p>
+                            </td>
+                            
+                            <td
+                              class="plan"
+                              [ngClass]="{
+                                activeTab: !display_unshipped_columns[2].active
+                              }"
+                            >
+                             <p>{{data?.plan}}</p>
+                            </td>
+                            <!-- <td
+                              class="lastPaidMonth"
+                              [ngClass]="{
+                                activeTab: !display_unshipped_columns[3].active
+                              }"
+                            >
+                             <p>{{data?.lastPaidMonth}}</p>
+                            </td> -->
+
+                            <td
+                              class="status"
+                              [ngClass]="{
+                                activeTab: !display_unshipped_columns[3].active
+                              }"
+                            >
+                          
+                                    <span class="badge p-2"
+                                            [ngClass]="{'text-bg-success':data?.status=='Paid' ,'text-bg-danger': data?.status=='Due' }">
+                                 {{ data?.status}}        @if (data.balance!=0) {
+                             - ₹{{data?.balance | number:'1.2-2' }}
+                            }      </span> 
+                                       <!-- <p></p> -->
+
+                                <!-- <span triggers="mouseenter:mouseleave" #p1
+                                                                    [ngbPopover]="popContentConsignee" [placement]="'auto'"> <i class="fa fa-info-circle" aria-hidden="true"></i></span> -->                                     
+                                 <!-- <ng-template #popContentConsignee>
+                                <p>Avinash  </p>
+                               
+                              </ng-template> -->
+                            </td>
+                            <!-- <td
+                              class="balance"
+                              [ngClass]="{
+                                activeTab: !display_unshipped_columns[5].active
+                              }"
+                            >
+                               <p> {{ data?.balance | currency : 'INR'  }} <p>
+                            </td> -->
+                            <td
+                              class="action text-center"
+                              [ngClass]="{
+                                activeTab: !display_unshipped_columns[4].active
+                              }"
+                            > 
+                            <!-- <button (click)="openFeesModal(data, i )">Add Fee</button>
+                              <button type="button" (click)="openConfirmation(data, i)" class="btn btn-light rounded-circle"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button> -->
+
+
+ <div class="dropdown">
+  <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+    Action
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    <li><button class="dropdown-item" type="button" (click)="openFeesModal(data, i )">Add Fee</button></li>
+    <li><button class="dropdown-item" type="button" (click)="openConfirmation(data, i)">Update Status</button></li>
+    <li><button class="dropdown-item" type="button"> Payment History</button></li>
+  </ul>
+</div>
+
+
+
+
+
+
+                            </td>
+                          }
+                       </tbody>
+                      </table>
+                      </div>
+                      </div>
+                    </div>
+                </div>
+  <!-- Pagination -->
+          <div class="row g-0" *ngIf="userList?.userData?.length !=0">
+            <div class="col-md-12">
+              <mat-paginator
+                [length]="userList.totalRecord"
+                [pageIndex]="pageIndex"
+                [pageSize]="pageSize"
+                [pageSizeOptions]="[10, 25, 100]"
+                (page)="onPageChange($event)"
+              >
+              </mat-paginator>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+

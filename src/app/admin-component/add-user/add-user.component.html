@@ -1,0 +1,110 @@
+<div class="container">
+    <p class="mb-4">Add User</p>
+    <form [formGroup]="userForm">
+        <div class="row">
+
+
+            <div class="col-md-3 my-2">
+                <label>Name <span class="text-danger">*</span></label>
+                <input formControlName="name" type="text" class="form-control"
+                    [ngClass]="{'is-invalid':userForm?.get('name')?.invalid && (userForm?.get('name')?.touched || userForm?.get('name')?.dirty)  }" />
+                @if (userForm?.get('name')?.invalid && userForm?.get('name')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+
+            </div>
+
+            <div class="col-md-3 my-2">
+                <label>Mobile No <span class="text-danger">*</span></label>
+                <input formControlName="mobileNo" type="text" class="form-control" maxlength="10"
+                    [ngClass]="{'is-invalid':userForm?.get('mobileNo')?.invalid && (userForm?.get('mobileNo')?.touched || userForm?.get('mobileNo')?.dirty)  }" />
+                @if (userForm?.get('mobileNo')?.errors && (userForm?.get('mobileNo')?.touched ||
+                userForm?.get('mobileNo')?.dirty)) {
+                <div class="text-danger" *ngIf="userForm?.get('mobileNo')?.errors?.['required']">
+                    Required
+                </div>
+                <div class="text-danger" *ngIf="userForm?.get('mobileNo')?.errors?.['pattern']">
+                    Enter a valid 10-digit mobile number
+                </div>
+                }
+
+            </div>
+
+            <div class="col-md-3 my-2">
+                <label>Email</label>
+                <input formControlName="email" type="email" class="form-control" />
+            </div>
+
+            <div class="col-md-3 my-2">
+                <label>Address <span class="text-danger">*</span></label>
+                <input formControlName="address" type="text" class="form-control"
+                    [ngClass]="{'is-invalid':userForm?.get('address')?.invalid && (userForm?.get('address')?.touched || userForm?.get('address')?.dirty)  }" />
+                @if ( userForm?.get('address')?.invalid && userForm?.get('address')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+
+            </div>
+
+            <div class="col-md-3 my-2">
+                <label>Alternate No</label>
+                <input formControlName="otherNo" type="text" class="form-control" />
+                <!-- <div *ngIf="userForm?.get('otherNo')?.invalid && userForm?.get('otherNo')?.touched" class="text-danger">
+      Alternate number is required
+    </div> -->
+            </div>
+
+            <div class="col-md-3 my-2">
+                <label>Preferred Time <span class="text-danger">*</span></label>
+                <input formControlName="preferedTime" type="time" class="form-control"
+                    [ngClass]="{'is-invalid':userForm?.get('preferedTime')?.invalid && (userForm?.get('preferedTime')?.touched || userForm?.get('preferedTime')?.dirty)  }" />
+                @if ( userForm?.get('preferedTime')?.invalid && userForm?.get('preferedTime')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+
+            </div>
+
+            <div class="col-md-3 my-2">
+                <label>Plan Type <span class="text-danger">*</span></label>
+                <select formControlName="planType" class="form-select "
+                    [ngClass]="{'is-invalid':userForm?.get('planType')?.invalid && (userForm?.get('planType')?.touched || userForm?.get('planType')?.dirty)  }">
+                    <option value="" disabled selected>Select a plan</option>
+                    @for (plan of plans; track $index) {
+                    <option [value]="plan?.planId">{{ plan?.planType }}</option>
+                    }
+
+                </select>
+                @if ( userForm?.get('planType')?.invalid && userForm?.get('planType')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+
+            </div>
+
+            <div class="col-md-3 my-2">
+                <label>Start Date <span class="text-danger">*</span></label>
+                <input formControlName="startDate" type="date" class="form-control"
+                    [ngClass]="{'is-invalid':userForm?.get('startDate')?.invalid && (userForm?.get('startDate')?.touched || userForm?.get('startDate')?.dirty)  }" />
+                @if ( userForm?.get('startDate')?.invalid && userForm?.get('startDate')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+
+            </div>
+
+            <div class="col-md-3 my-2">
+                <!-- <span class="text-danger">*</span> -->
+                <label>Seat No </label>
+                <input formControlName="seatNo" type="text" class="form-control"
+                    [ngClass]="{'is-invalid':userForm?.get('seatNo')?.invalid && (userForm?.get('seatNo')?.touched || userForm?.get('seatNo')?.dirty)  }" />
+                @if ( userForm?.get('seatNo')?.invalid && userForm?.get('seatNo')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+
+            </div>
+        </div>
+        <div class="col-md-12 text-center"> <button type="submit" class="btn btn-primary" [disabled]="userForm?.invalid"
+                (click)="saveUser()">Submit</button> </div>
+
+    </form>
+
+
+
+</div>

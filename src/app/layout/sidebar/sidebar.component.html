@@ -1,4 +1,4 @@
-<div
+<!-- <div
   class="sidenav"
   [ngClass]="isLeftSidebarCollapsed() ? 'sidenav-collapsed' : ''"
 >
@@ -9,7 +9,7 @@
     @if (!isLeftSidebarCollapsed()) {
       <div class="logo-text">App</div>
       <button class="btn-close" (click)="closeSidenav()">
-        <!-- <i class="fal fa-times close-icon"></i> -->
+      
         <i class="fa-solid fa-circle-xmark"></i>
       </button>
     }
@@ -31,4 +31,66 @@
       </li>
     }
   </div>
+</div> -->
+
+
+
+<div
+  class="sidenav"
+  [ngClass]="isLeftSidebarCollapsed() ? 'sidenav-collapsed' : ''"
+>
+  <div class="logo-container">
+    <button class="logo" (click)="toggleCollapse()">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    @if (!isLeftSidebarCollapsed()) {
+      <div class="logo-text">App</div>
+      <button class="btn-close" (click)="closeSidenav()">
+        <i class="fa-solid fa-circle-xmark"></i>
+      </button>
+    }
+  </div>
+
+  <div class="sidenav-nav scroll-custom ">
+    @for (item of items; track $index) {
+      <li class="sidenav-nav-item">
+        <a
+          class="sidenav-nav-link"
+          [routerLink]="!item.subLinks.length ? item.routeLink : null"
+          [class.has-dropdown]="item.subLinks.length"
+          (click)="item.subLinks.length ? toggleDropdown(item) : null"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: false }"
+          >
+          <!-- [class.active]="isParentActive(item)" -->
+          <i class="sidenav-link-icon" [class]="item.icon"></i>
+          @if (!isLeftSidebarCollapsed()) {
+            <span class="sidenav-link-text">{{ item.label }}</span>
+            @if (item.subLinks.length) {
+              <i
+                class="fa"
+                [class.fa-chevron-down]="!item.expanded"
+                [class.fa-chevron-up]="item.expanded"
+                style="margin-left: auto; margin-right: 2em;"
+              ></i>
+            }
+          }
+        </a>
+
+        @if (item.subLinks.length && item.expanded && !isLeftSidebarCollapsed()) {
+          <ul class="sidenav-subnav">
+            @for (sub of item.subLinks; track $index) {
+              <li class="subnsv-link-item">
+                <a class="sidenav-nav-link" (click)="activeSublink($index)" routerLinkActive="active" [routerLink]="sub.path">
+            
+                   <span class="subnav-link-text">{{ sub.name }}</span>
+                </a>
+              </li>
+            }
+          </ul>
+        }
+      </li>
+    }
+  </div>
 </div>
+

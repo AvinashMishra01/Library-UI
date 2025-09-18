@@ -1,0 +1,84 @@
+<div class="container">
+  <h2>Seat Management</h2>
+<!-- <div class="room-container">
+  @for (room of rooms; track room?.id) {
+
+    <h2>{{ room.name }}</h2>
+      <div class="seats-grid">
+  @for (seat of room.seats; track seat?.id) {
+   <div
+      class="seat"
+      [ngClass]="{ booked: seat.isBooked, available: !seat.isBooked }"
+      (click)="toggleSeat(room.id, seat.id)"
+    >
+      {{ seat.label }}
+    </div>
+   }
+    </div> 
+  }
+    </div> -->
+
+
+<div class="room-container">
+  @for (room of rooms; track room?.id) {
+    <h2>{{ room.name }}</h2>
+    <div class="seats-grid">
+      @for (seat of room.seats; track seat?.id) {
+        <div
+          class="seat"
+          [ngClass]="{ booked: seat.isBooked, available: !seat.isBooked }"
+            (click)="seat.isBooked ? openSeatModal(seat, detail) : toggleSeat(room.id, seat.id)"
+        >
+          {{ seat.label }}
+          <div *ngIf="seat.isBooked && seat.remainingTime" class="timer">
+            {{ seat.remainingTime }}
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+  </div>
+
+  
+<!-- Modal -->
+<ng-template #detail let="modal">
+    @if(showModal && selectedSeat) {
+
+ 
+   <div class="modal fade show d-block" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title">Seat {{ selectedSeat.label }} Details</h5>
+ <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button> 
+            <!-- <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button> -->
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body text-center">
+          <h4>{{ selectedSeat.bookedBy?.name }}</h4>
+          <h6 class="fw-light">📞 {{ selectedSeat.bookedBy?.mobile }}</h6>
+          <p class="text-muted mb-1">{{ selectedSeat.bookedBy?.email }}</p>
+          <p *ngIf="selectedSeat?.remainingTime">
+            ⏳ Remaining Time: <strong>{{ selectedSeat.remainingTime }}</strong>
+          </p>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button class="btn btn-primary" (click)="extendBooking(selectedSeat)">Extend</button>
+          <button class="btn btn-danger" (click)="unbookSeat(selectedSeat)">Unbook</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- <div class="modal-backdrop fade show"></div> -->
+
+}
+ </ng-template>
+

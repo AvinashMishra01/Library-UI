@@ -7,6 +7,34 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 :root {
   --bg-white: #ffffff;
   --bg-success: #d4edda; /* define this too if you're using it */
+  --default-color:#012a5b;
+}
+
+/* Tab Navbar Css */
+
+.navbar-container {
+    width: max-content;
+    background: #405173;
+    padding: 7px;
+    border-radius: 8px;
+}
+
+.navbar-container>.nav-tabs {
+    border-bottom: none;
+}
+
+.navbar-container>.nav-tabs .nav-link {
+    color: #ffff;
+    border: none;
+    border-radius: 50px;
+    padding: 0.3rem 1rem 0.2rem;
+    margin-bottom: 0px;
+}
+
+.navbar-container>.nav-tabs .nav-link.active {
+    border-radius: 50px;
+    border: none;
+    color: #31344F;
 }
 
 .userdata-table-wrapper {
@@ -77,11 +105,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
   font-size: 0.85rem !important;
 }
 
-/* Success button */
-.userdata-table-wrapper .datatable-contaner > table > tbody > tr > td .btn-success {
-  background-color: var(--bg-success) !important;
-  border-color: #01b81a !important;
-}
 
 /* Bordered table override */
 .userdata-table-wrapper .datatable-contaner > table.table-bordered > :not(caption) > * > * {
@@ -126,6 +149,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 .mat-paginator {
   background: transparent !important;
 }
+
+label{
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--default-color);
+  margin-bottom: 0.5rem;
+
+}
+
+
 
 
 
