@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, } from '@angular/core';
-import { Form, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { from } from 'rxjs';
-
+import {  FormBuilder,  ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from '../../services/admin-services/user.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-add-user',
   imports: [ReactiveFormsModule,CommonModule],
@@ -11,7 +11,7 @@ import { from } from 'rxjs';
 })
 export class AddUserComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private service: UserService, private toster:ToastrService) { }
 
   userForm:any;
 plans:{planId:number, planType:string, planPrice:number }[]=
@@ -45,7 +45,35 @@ plans:{planId:number, planType:string, planPrice:number }[]=
 
 saveUser()
 {
-  console.log('user add form ', this.userForm);
-  
+     console.log('user add form ', this.userForm.value);
+     this.service.createUser(this.userForm.value).subscribe({
+      next:(res:any)=>
+      {
+         this.toster.success(res.message)
+          console.log("saved succesfully ",res);
+          this.userFormReset()
+      },
+      error:(err:any)=> 
+      {
+        console.log("error is ", err)
+          this.toster.error(err.error.message)
+      }
+     })
 }
+
+
+ userFormReset(){
+  this.userForm.reset({
+      name:'',
+      mobileNo:'',
+      email:'',
+      address:'',
+      otherNo:'',
+      preferedTime:'',
+      planType:'',
+      startDate:'',
+      seatNo:'',
+  })
+ }
+
 }

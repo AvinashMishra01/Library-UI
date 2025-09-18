@@ -60,6 +60,10 @@ constructor(private router:Router){}
       expanded:false,
        subLinks: [
       {
+        name: 'Create Library',
+        path: 'admin/create-library',
+      },
+      {
         name: 'Add Room',
         path: 'admin/room-management',
       },

@@ -20,6 +20,7 @@ roomConfigForm: any;
 
 ngOnInit(): void {
 this.roomConfigForm = this.fb.group({
+  libraryName:['', Validators.required],
   roomName: ['', Validators.required],
   totalSeats: [1, [Validators.required, Validators.min(1)]],
   seatLayout: this.fb.array([]), // for dynamic seat configs

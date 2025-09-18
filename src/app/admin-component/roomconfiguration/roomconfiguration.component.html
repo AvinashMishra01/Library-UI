@@ -1,6 +1,14 @@
 
 <div class="container">
-    <form [formGroup]="roomConfigForm">
+    <form [formGroup]="roomConfigForm"> 
+         <div class="row d-flex justify-content-center text-center ">
+            <div class="col-md-4">
+                  <label>Libraary Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="libraryName" [ngClass]="{'is-invalid': roomConfigForm?.get('libraryName')?.invalid && (roomConfigForm?.get('libraryName')?.touched || roomConfigForm?.get('libraryName')?.dirty )} " />
+                @if (roomConfigForm?.get('libraryName')?.invalid && roomConfigForm?.get('libraryName')?.touched ) {
+                <div class="text-danger"> Required </div>
+                } </div>
+         </div>
         <div class="row mb-3">
             <!-- Room Name  -->
             <div class="col-md-4">

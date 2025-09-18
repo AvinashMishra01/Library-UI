@@ -1,0 +1,25 @@
+
+<div class="container">
+
+<h5>Create Library</h5>
+    <form [formGroup]="libraryFrom"> 
+         <div class="row d-flex justify-content-center text-center ">
+            <div class="col-md-4">
+                  <label>Libraary Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': libraryFrom?.get('name')?.invalid && (libraryFrom?.get('name')?.touched || libraryFrom?.get('name')?.dirty )} " />
+                @if (libraryFrom?.get('name')?.invalid && libraryFrom?.get('name')?.touched ) {
+                <div class="text-danger"> Required </div>
+                } </div>
+            <div class="col-md-4">
+                  <label> Address <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="address" [ngClass]="{'is-invalid': libraryFrom?.get('address')?.invalid && (libraryFrom?.get('address')?.touched || libraryFrom?.get('address')?.dirty )} " />
+                @if (libraryFrom?.get('address')?.invalid && libraryFrom?.get('address')?.touched ) {
+                <div class="text-danger"> Required </div>
+                } </div>
+         </div>
+
+         </form>
+       <div class="row text-center">
+         <button class="btn btn-primary" (click)="createLibrary()">Create</button>
+       </div>
+</div>
