@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryService } from '../../services/admin-services/library/library.service';
 import { ToastrService } from 'ngx-toastr';
-import { RoomconfigurationComponent } from '../roomconfiguration/roomconfiguration.component';
+import { AddRoomComponent } from '../add-room/add-room';
 
 @Component({
   selector: 'app-add-library',
-  imports: [CommonModule, ReactiveFormsModule,FormsModule, RoomconfigurationComponent],
+  imports: [CommonModule, ReactiveFormsModule,FormsModule, AddRoomComponent],
   templateUrl: './add-library.component.html',
   styleUrl: './add-library.component.css'
 })

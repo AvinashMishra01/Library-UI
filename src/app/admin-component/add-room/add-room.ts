@@ -1,6 +1,6 @@
 
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { RoomService } from '../../services/admin-services/room/room.service';
@@ -8,12 +8,12 @@ import { SeatService } from '../../services/admin-services/seat/seat.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-roomconfiguration',
+  selector: 'app-add-room',
   imports: [CommonModule,FormsModule, ReactiveFormsModule],
-  templateUrl: './roomconfiguration.component.html',
-  styleUrl: './roomconfiguration.component.css'
+  templateUrl: './add-room.html',
+  styleUrl: './add-room.css'
 })
-export class RoomconfigurationComponent implements OnInit {
+export class AddRoomComponent implements OnInit {
 constructor(private fb:FormBuilder, private roomServeice: RoomService, private seatSearvice: SeatService,
   private toster: ToastrService
 ){}
