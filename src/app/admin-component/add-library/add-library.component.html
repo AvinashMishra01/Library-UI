@@ -17,9 +17,14 @@
                 <div class="text-danger"> Required </div>
                 } </div>
          </div>
-
-         </form>
-       <div class="row text-center">
-         <button class="btn btn-primary" (click)="createLibrary()">Create</button>
+ <div class="row text-center d-flex">
+        <div class="col-md-2"> <button class="btn btn-primary" (click)="createLibrary()">Create</button></div>
        </div>
+         </form>
+    
+@if (isLibraryCreated) {
+  <app-roomconfiguration [libraryId]="selectedLibraryId"></app-roomconfiguration>
+}
+
+      
 </div>
