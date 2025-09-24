@@ -64,10 +64,6 @@ constructor(private router:Router){}
         path: 'admin/create-library',
       },
       {
-        name: 'Add Room',
-        path: 'admin/room-management',
-      },
-      {
         name: 'Add Plan',
         path: 'admin/add-plan',
       }

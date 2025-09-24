@@ -16,6 +16,10 @@ saveRoom(body:any)
   return this.http.post(`${this.baseURL}/rooms/create/${body?.libraryId}`, body)
 }
 
+getAllRoom(libraryId:String)
+{
+  return this.http.get(`${this.baseURL}/library/${libraryId}`)
+}
 
 
 }

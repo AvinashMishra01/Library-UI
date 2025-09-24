@@ -1,11 +1,13 @@
 
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { RoomService } from '../../services/admin-services/room/room.service';
 import { SeatService } from '../../services/admin-services/seat/seat.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-add-room',
@@ -15,87 +17,83 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AddRoomComponent implements OnInit {
 constructor(private fb:FormBuilder, private roomServeice: RoomService, private seatSearvice: SeatService,
-  private toster: ToastrService
+  private toster: ToastrService, private modalService : NgbModal
 ){}
-
+@ViewChild('addSeatModal') addSeatModal:any
 @Input() libraryId : String =''
-seatNoChange:Subject<String>= new Subject()
-roomConfigForm: any;
-selectedRoomId:String="68cdac8bb2ee713ddc6f849d"
+@Input() roomArray: any;
+@Input() parentAccordionId!: string;
 
+seatList:any[]=[]
+
+
+seatNoChange:Subject<String>= new Subject()
+seatForm: any;
+selectedRoomId:String=''
+ seatCount: number = 0;
+  seatInputs: string[] = [];
 
 ngOnInit(): void {
-this.roomConfigForm = this.fb.group({
-  roomName: ['', Validators.required],
-  totalSeats: [1, [Validators.required, Validators.min(1)]],
-  seatLayout: this.fb.array([]), // for dynamic seat configs
-  roomType: ['', Validators.required], // e.g. Study Hall, Premium, Silent Zone
-  isActive: [true],
-});
-   this.changeSeatNo();
+ this.seatForm = this.fb.group({
+  seatCount:['', Validators.required],
+  seats: this.fb.array([])
+ })
 }
 
-get seatLayout(): FormArray {
-  return this.roomConfigForm?.get('seatLayout') as FormArray;
-}
-
-addSeat() {
-  const seatGroup = this.fb.group({
-    seatNo: ['', Validators.required],
-  });
-
-  this.seatLayout.push(seatGroup);
-}
-
-removeSeat(index: number) {
-  this.seatLayout.removeAt(index);
-}
-
-
-changeSeatNo()
-{
-  let count=0;
-   this.seatNoChange.subscribe((val:any)=>{
-      let previousLeng= this.roomConfigForm?.get('seatLayout')?.controls.length;
-      let newLen = val - previousLeng
-      if(newLen > 1){
-       
-      }
-
-   })
-}
-
-saveRoom()
-{
-
-  console.log("seat data", this.roomConfigForm.value);
-  let obj = {
-    libraryId : this.libraryId,
-    totalSeats: this.roomConfigForm.get('totalSeats').value,
-    roomName: this.roomConfigForm.get('roomName').value,
-    roomType: this.roomConfigForm.get('roomType').value
+  get seats(): FormArray {
+    return this.seatForm.get('seats') as FormArray;
   }
-    this.roomServeice.saveRoom(obj).subscribe({
-      next:(res:any)=>{
-        this.toster.success(res.message)
-        console.log("room created success", res);
-      },error:(err:any)=>{
-        console.log('error in createiong room ', err)
-      }
-    })
 
-  // localStorage.setItem("roomData",JSON.stringify(this.roomConfigForm.value))
+
+getSeats(roomId:String)
+{
+  this.seatSearvice.getSeats(roomId).subscribe({
+    next:(res:any)=>{
+      console.log("seat list", res);
+      this.seatList= res?.data
+      
+    },
+    error:(err:any)=>{
+      console.log("error in seat list", err);
+      
+    }
+  })
 }
+
+
+  generateSeatInputs() {
+ const count = this.seatForm.get('seatCount')?.value || 0;
+
+    // reset seats array first
+    this.seats.clear();
+
+    for (let i = 0; i < count; i++) {
+      this.seats.push(
+        this.fb.group({
+          name: ['', Validators.required]
+        })
+      );
+    }
+    }
+
+
+
 
 saveSeats(){
 
-   console.log('seats are ', this.roomConfigForm.value)
+    if (this.seatForm.invalid) return;
+    console.log('seat form', this.seatForm, this.seatForm.invalid)
+    const newSeats = this.seatForm.value.seats;
+    console.log('New Seats:', newSeats);
+
    let obj={
-    totalSeats: this.roomConfigForm.get('seatLayout').value,
+    totalSeats: this.seatForm.get('seats').value,
    }
    this.seatSearvice.addSeat(obj, this.selectedRoomId).subscribe({
     next:(res:any)=>{
       this.toster.success("Success",res.message)
+      this.getSeats(this.selectedRoomId);
+      this.cancelSeatModal();
     console.log('seat added successfully', res)
     },
     error:(err:any)=>{
@@ -105,5 +103,21 @@ saveSeats(){
    })
 
 }
+
+
+openSeatAddForm(roomId:String){
+  this.modalService.open(this.addSeatModal, { backdrop:'static', centered:true})
+  this.selectedRoomId=roomId;
+}
+
+cancelSeatModal(){
+  this.seatForm.reset();
+  this.modalService.dismissAll();
+
+}
+
+
+
+
 
 }

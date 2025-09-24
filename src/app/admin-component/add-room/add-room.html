@@ -1,9 +1,133 @@
 
-<div class="container">
+
+             <div class="accordion-item mb-2">
+                      <h2 class="accordion-header" id="flush-heading-seat-{{ roomArray?._id }}">
+                        <button 
+                          class="accordion-button collapsed" 
+                          type="button" 
+                          data-bs-toggle="collapse" 
+                          [attr.data-bs-target]="'#flush-collapse-seat-' + roomArray?._id"
+                          aria-expanded="false" 
+                          [attr.aria-controls]="'flush-collapse-seat-' + roomArray?._id"
+                          (click)="getSeats(roomArray?._id )"
+                          >
+                          {{ roomArray?.name }}
+                        </button>
+                      </h2>
+                                
+                      <div 
+                        id="flush-collapse-seat-{{ roomArray?._id }}" 
+                        class="accordion-collapse collapse" 
+                        [attr.aria-labelledby]="'flush-heading-seat-' + roomArray?._id" 
+                       [attr.data-bs-parent]="'#' + parentAccordionId">
+                        <div class="accordion-body"> 
+                     <div class="row text-end">
+                        <div class="col-md-12 ms-auto mb-2"> <button type="button" class="btn btn-outline-primary" (click)="openSeatAddForm(roomArray?._id)">Add Seat </button> </div>
+                     </div>
+
+                           <div class="row g-2">
+                             @for (seat of seatList; track seat._id) {
+                               <div class="col">
+                                 <div
+                                   class="p-3 text-white text-center rounded cursor-pointer"
+                                   [ngClass]="{
+                                     'bg-success': seat.status === 'available',
+                                     'bg-danger': seat.status === 'booked'
+                                   }"
+                                 >
+                                   {{ seat.name }}
+                                 </div>
+                               </div>
+                             }
+                             @empty {
+                               <p>Room Not Added</p>
+                             }
+                           </div>
+                      
+                         </div>
+                         </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Add seat Modal -->
+ <ng-template #addSeatModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="addLibraryModalLabel">Add Seat's</h4>
+          <button type="button" class="btn-close" aria-label="Close" (click)="cancelSeatModal()"></button>
+      </div>
+    <div class="modal-body">
+        <form [formGroup]="seatForm" >
+        <div class="mb-3">
+          <label for="seatCount" class="form-label">How many seats?</label>
+          <input
+              type="number"
+              id="seatCount"
+              class="form-control"
+               [ngClass]="{'is-invalid':seatForm?.get('seatCount')?.invalid && (seatForm?.get('seatCount')?.touched || seatForm?.get('seatCount')?.dirty)  }"
+              formControlName="seatCount"
+              (change)="generateSeatInputs()"
+              min="1"
+            />
+                @if (seatForm?.get('seatCount')?.invalid && seatForm?.get('seatCount')?.touched ) {
+                <div class="text-danger"> * Required </div>
+                }
+        </div>
+
+            <div formArrayName="seats">
+            <div
+              class="mb-2"
+              *ngFor="let seat of seats.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <label class="form-label">Seat {{ i + 1 }} Name</label>
+              <input
+                type="text"
+                class="form-control"
+                [ngClass]="{'is-invalid':seat?.get('name')?.invalid && (seat?.get('name')?.touched || seat?.get('name')?.dirty)  }"
+                formControlName="name"
+                placeholder="Enter seat name"
+              />
+                  @if (seat?.get('name')?.invalid && seat?.get('name')?.touched ) {
+                <div class="text-danger"> * Required </div>
+                }
+            </div>
+          </div>
+          </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelSeatModal()" >Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveSeats()">Save Seat</button>
+      </div>
+
+
+ </ng-template>
+
+@if(false)
+{
+<!-- <div class="container">
     <form [formGroup]="roomConfigForm"> 
          
         <div class="row mb-3">
-            <!-- Room Name  -->
+       
             <div class="col-md-4">
                 <label>Room Name <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="roomName" [ngClass]="{'is-invalid': roomConfigForm?.get('roomName')?.invalid && (roomConfigForm?.get('roomName')?.touched || roomConfigForm?.get('roomName')?.dirty )} " />
@@ -12,7 +136,7 @@
                 }
             </div>
 
-            <!-- total seat  -->
+           
             <div class="col-md-4">
                 <label>Total Seats <span class="text-danger">*</span></label>
                 <input formControlName="totalSeats" type="text" class="form-control" [ngClass]="{'is-invalid':roomConfigForm?.get('totalSeats')?.invalid && (roomConfigForm?.get('totalSeats')?.touched || roomConfigForm?.get('totalSeats')?.dirty)  }" />
@@ -20,7 +144,7 @@
                 <div class="text-danger"> Required </div>
                 }
             </div>
-            <!-- room type  -->
+       
             <div class="col-md-4">
                 <label>Room Type <span class="text-danger">*</span></label>
                 <select class="form-select" formControlName="roomType" [ngClass]="{'is-invalid':roomConfigForm?.get('roomType')?.invalid && (roomConfigForm?.get('roomType')?.touched || roomConfigForm?.get('roomType')?.dirty)  }">
@@ -65,9 +189,11 @@
             </div>
         </div>
         <div class="text-center">
-            <!-- <button type="button" class="btn btn-success" (click)="addSeat()">+ Add Seat</button> -->
-            <!-- <button type="button" class="btn btn-primary" (click)="saveRoom()">Save Room</button> -->
             <button type="button" class="btn btn-primary" (click)="saveSeats()">Save Seat</button>
         </div>
     </form>
-</div>
+</div> -->
+}
+
+
+

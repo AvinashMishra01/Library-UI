@@ -14,5 +14,10 @@ addSeat(body:any, roomId:String)
    return this.http.post(`${this.baseUrl}/seats/add/${roomId}`, body)
 }
 
+getSeats(roomId:any)
+{
+  return this.http.get(`${this.baseUrl}/seats/${roomId}`)
+}
+
 
 }

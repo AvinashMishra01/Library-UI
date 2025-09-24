@@ -1,30 +1,236 @@
+<!-- <div class="container">
 
-<div class="container">
-
-<h5>Create Library</h5>
-    <form [formGroup]="libraryFrom"> 
-         <div class="row d-flex justify-content-center text-center ">
+    <h5>Create Library</h5>
+    <form [formGroup]="libraryFrom">
+        <div class="row d-flex justify-content-center text-center ">
             <div class="col-md-4">
-                  <label>Libraary Name <span class="text-danger">*</span></label>
+                <label>Libraary Name <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': libraryFrom?.get('name')?.invalid && (libraryFrom?.get('name')?.touched || libraryFrom?.get('name')?.dirty )} " />
                 @if (libraryFrom?.get('name')?.invalid && libraryFrom?.get('name')?.touched ) {
                 <div class="text-danger"> Required </div>
-                } </div>
+                }
+            </div>
             <div class="col-md-4">
-                  <label> Address <span class="text-danger">*</span></label>
+                <label> Address <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="address" [ngClass]="{'is-invalid': libraryFrom?.get('address')?.invalid && (libraryFrom?.get('address')?.touched || libraryFrom?.get('address')?.dirty )} " />
                 @if (libraryFrom?.get('address')?.invalid && libraryFrom?.get('address')?.touched ) {
                 <div class="text-danger"> Required </div>
-                } </div>
-         </div>
- <div class="row text-center d-flex">
-        <div class="col-md-2"> <button class="btn btn-primary" (click)="createLibrary()">Create</button></div>
-       </div>
-         </form>
-    
-@if (isLibraryCreated) {
-  <app-add-room [libraryId]="selectedLibraryId"></app-add-room>
+                }
+            </div>
+        </div>
+        <div class="row text-center d-flex">
+            <div class="col-md-2"> <button class="btn btn-primary" (click)="createLibrary()">Create</button></div>
+        </div>
+    </form>
+
+    @if (isLibraryCreated) {
+    <app-add-room [libraryId]="selectedLibraryId"></app-add-room>
+    }
+
+
+</div> -->
+
+
+
+
+@if (libraryListArr.length==0) {
+
+<p>No Library Added Yet, Add your first library</p>
+<button class="btn btn-primary">Add Library</button>
+}
+@else {
+
+<div class="row d-flex justify-content-end mb-2">
+  <div class="col-md-2"> <button type="button" class="btn btn-primary mb-3" (click)="addNewLibrary()">Add New Library</button> </div>
+</div>
+
+<div class="accordion accordion-flush" id="accordionFlushExample">
+
+    @for (item of libraryListArr; track $index; let libIndex = $index) {
+    <div class="accordion-item mb-2">
+        <h2 class="accordion-header" id="flush-heading-{{ libIndex }}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#flush-collapse-' + libIndex" aria-expanded="false" [attr.aria-controls]="'flush-collapse-' + libIndex"  (click)="showAllRooms(item?._id)">
+                {{ item?.name }}
+            </button>
+        </h2>
+
+        <div id="flush-collapse-{{ libIndex }}" class="accordion-collapse collapse" [attr.aria-labelledby]="'flush-heading-' + libIndex" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                Address: {{ item?.address }} <br />
+                Created On: {{ item?.createdAt | date }}
+
+                <div class="accordion accordion-flush" [id]="'accordionRoom-' + libIndex">
+                       <div class="row text-end">
+                   <div class="col-md-4 ms-auto mb-2"> <button class="btn btn-primary"  (click)="openAddRoomModal()" >Add Room</button>  </div>
+                       </div>
+                    @for (room of item.rooms; track room._id; let roomIndex =$index ) {
+
+                       <app-add-room [roomArray]="room" [parentAccordionId]="'accordionRoom-' + libIndex" ></app-add-room>
+                    <!-- <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-heading-room-{{ roomIndex }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#flush-collapse-room-' + roomIndex" aria-expanded="false" [attr.aria-controls]="'flush-collapse-room-' + roomIndex">
+                                {{ room?.name || 'Name not found' }}
+                            </button>
+                        </h2>
+
+                        <div id="flush-collapse-room-{{ roomIndex }}" class="accordion-collapse collapse" [attr.aria-labelledby]="'flush-heading-room-' + roomIndex" data-bs-parent="#accordionFlushExampleRoom">
+                            <div class="accordion-body">
+                              <p>i am in room </p>
+
+                                <div class="accordion accordion-flush" id="accordionFlushExampleSeat">
+                              @for (seat of room.seats; track seat?._id; let seatIndex= $index) {
+                                      
+                                 <app-add-room [seatArray]="seat" ></app-add-room>
+                                                                     
+                                  }
+                                     @empty {
+                                  <p>No seat found add seat <button class="btn btn-primary">Add Seat</button> </p>
+                                 }
+                           </div>
+
+                            </div>
+                        </div>
+                    </div> -->
+
+                    }
+                    @empty {
+                    <p>No room added yet please add room first  <button class="btn btn-primary" (click)="openAddRoomModal()">Add Room</button></p>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+    }
+</div>
 }
 
-      
+
+
+<!-- Add Library Modal -->
+ <ng-template #addLibraryModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="addLibraryModalLabel">Create Library</h4>
+          <button type="button" class="btn-close" aria-label="Close" (click)="cancelLibModal()"></button>
+      </div>
+    <div class="modal-body">
+        <form [formGroup]="libraryFrom">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label>Library Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control"
+                formControlName="name"
+                [ngClass]="{'is-invalid': libraryFrom.get('name')?.invalid && libraryFrom.get('name')?.touched}" />
+              <div *ngIf="libraryFrom.get('name')?.invalid && libraryFrom.get('name')?.touched"
+                class="text-danger small">Required</div>
+            </div>
+
+            <div class="col-md-6">
+              <label>Address <span class="text-danger">*</span></label>
+              <input type="text" class="form-control"
+                formControlName="address"
+                [ngClass]="{'is-invalid': libraryFrom.get('address')?.invalid && libraryFrom.get('address')?.touched}" />
+              <div *ngIf="libraryFrom.get('address')?.invalid && libraryFrom.get('address')?.touched"
+                class="text-danger small">Required</div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelLibModal()" >Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="createLibrary()">Save</button>
+      </div>
+
+
+ </ng-template>
+
+
+ <ng-template #addRoomModal let-modal >
+   <div class="modal-header">
+        <h4 class="modal-title" id="addLibraryModalLabel">Create Library</h4>
+          <button type="button" class="btn-close" aria-label="Close" (click)="cancelRoomModal()"></button>
+      </div>
+    <div class="modal-body">
+     
+<div class="container">
+    <form [formGroup]="roomConfigForm"> 
+         
+        <div class="row mb-3">
+            <!-- Room Name  -->
+            <div class="col-md-4">
+                <label>Room Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="roomName" [ngClass]="{'is-invalid': roomConfigForm?.get('roomName')?.invalid && (roomConfigForm?.get('roomName')?.touched || roomConfigForm?.get('roomName')?.dirty )} " />
+                @if (roomConfigForm?.get('roomName')?.invalid && roomConfigForm?.get('roomName')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+            </div>
+
+            <!-- total seat  -->
+            <div class="col-md-4">
+                <label>Total Seats <span class="text-danger">*</span></label>
+                <input formControlName="totalSeats" type="text" class="form-control" [ngClass]="{'is-invalid':roomConfigForm?.get('totalSeats')?.invalid && (roomConfigForm?.get('totalSeats')?.touched || roomConfigForm?.get('totalSeats')?.dirty)  }" />
+                @if (roomConfigForm?.get('totalSeats')?.invalid && roomConfigForm?.get('totalSeats')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+            </div>
+            <!-- room type  -->
+            <div class="col-md-4">
+                <label>Room Type <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="roomType" [ngClass]="{'is-invalid':roomConfigForm?.get('roomType')?.invalid && (roomConfigForm?.get('roomType')?.touched || roomConfigForm?.get('roomType')?.dirty)  }">
+                    <option value="Study Hall">Study Hall</option>
+                    <option value="Premium">Premium</option>
+                    <option value="Silent Zone">Silent Zone</option>
+                </select>
+                @if (roomConfigForm?.get('roomType')?.invalid && roomConfigForm?.get('roomType')?.touched) {
+                <div class="text-danger"> Required </div>
+                }
+
+            </div>
+          <div class="col-md-4 ms-auto mt-2">
+
+              <button type="button" class="btn btn-primary" (click)="saveRoom()">Save Room</button>
+          </div>  
+<!-- <div class="col-md-3">
+                <button type="button" class="btn btn-success" (click)="addSeat()">+ Add Seat</button>
+</div> -->
+
+        </div>
+        <!-- <div formArrayName="seatLayout">
+            <div class="row">
+                <div class="col-md-4 mb-3" *ngFor="let seat of seatLayout?.controls; let i = index" [formGroupName]="i">
+                    <label>Seat No {{i+1}}</label>
+
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1 me-2">
+                            <input type="text" class="form-control" placeholder="Seat Name" formControlName="seatNo" 
+                            [ngClass]="{'is-invalid': seat?.get('seatNo')?.invalid &&  (seat?.get('seatNo')?.touched || seat?.get('seatNo')?.dirty) }"
+                             />
+                            @if(seat?.get('seatNo')?.invalid && seat?.get('seatNo')?.touched){
+                            <span class="text-danger small">Required</span>
+                            }
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn btn-danger" (click)="removeSeat(i)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="text-center"> -->
+            <!-- <button type="button" class="btn btn-success" (click)="addSeat()">+ Add Seat</button> -->
+            <!-- <button type="button" class="btn btn-primary" (click)="saveRoom()">Save Room</button> -->
+            <!-- <button type="button" class="btn btn-primary" (click)="saveSeats()">Save Seat</button> -->
+        <!-- </div> -->
+    </form>
 </div>
+
+
+    
+    
+    </div>
+
+
+ </ng-template>
+

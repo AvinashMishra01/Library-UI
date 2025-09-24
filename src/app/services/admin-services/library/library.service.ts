@@ -15,5 +15,10 @@ createLibrary(body:any)
 }
 
 
+getAllLibrary()
+{
+  return this.http.get(`${this.baseUrl}/library/admin/libraries`);
+}
+
 
 }
