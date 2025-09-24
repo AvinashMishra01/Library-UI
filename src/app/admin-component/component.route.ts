@@ -9,7 +9,7 @@ export const componentRoute: Routes = [
   {path:'create-library', loadComponent:()=>import('./add-library/add-library.component').then((c)=>c.AddLibraryComponent)  },
  
   {path:'seat-management', loadComponent: () => import('./seat-management/seat-management.component').then((c) => c.SeatManagementComponent)},
-  {path:'room-management', loadComponent:()=> import('./roomconfiguration/roomconfiguration.component').then((c)=>c.RoomconfigurationComponent)},
+  // {path:'room-management', loadComponent:()=> import('./add-room/add-room').then((c)=>c.AddRoomComponent)},
   {path:'add-user', loadComponent:()=> import('./add-user/add-user.component').then((c)=>c.AddUserComponent)},
   {path:'add-plan', loadComponent:()=>import('./add-plan/add-plan.component').then((c)=>c.AddPlanComponent) }
 ];
