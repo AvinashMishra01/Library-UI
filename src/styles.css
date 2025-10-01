@@ -179,3 +179,15 @@ label{
 }
 
 
+/* modal  */
+
+:root .modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.4); /* dark overlay */
+  backdrop-filter: blur(8px);            /* blur effect */
+  -webkit-backdrop-filter: blur(8px);    /* Safari support */
+}
+
+
+
+
+
