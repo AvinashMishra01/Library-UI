@@ -189,5 +189,12 @@ label{
 
 
 
+/* badge  */
+
+.active-plan-bg {
+   color: #000 !important;
+    background-color: rgb(180 239 170) !important;
+}
+
 
 

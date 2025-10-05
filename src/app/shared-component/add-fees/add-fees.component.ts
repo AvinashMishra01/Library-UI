@@ -11,8 +11,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 export class AddFeesComponent {
 
-@Input() userData : {name:string,mobile:string, plan:string, address?:string,lastPaidMonth:string|null, status:string, balance?:number} = 
-     {name: '', mobile:'', plan:'', address:'', lastPaidMonth:null, status:"paid", balance:50}
+@Input() userData : {name:string,mobile:string, dueAmount?:number} = 
+     {name: '', mobile:'', dueAmount:0}
 
   constructor(private activeModal : NgbActiveModal){}
 

@@ -1,9 +1,9 @@
 <div class="container">
     <p class="mb-4">Add User</p>
     <form [formGroup]="userForm">
+
+        <!-- user details  -->
         <div class="row">
-
-
             <div class="col-md-3 my-2">
                 <label>Name <span class="text-danger">*</span></label>
                 <input formControlName="name" type="text" class="form-control"
@@ -16,7 +16,7 @@
 
             <div class="col-md-3 my-2">
                 <label>Mobile No <span class="text-danger">*</span></label>
-                <input formControlName="mobileNo" type="text" class="form-control" maxlength="10"
+                <input  formControlName="mobileNo" type="text" appInputDigitOnly class="form-control" maxlength="10"
                     [ngClass]="{'is-invalid':userForm?.get('mobileNo')?.invalid && (userForm?.get('mobileNo')?.touched || userForm?.get('mobileNo')?.dirty)  }" />
                 @if (userForm?.get('mobileNo')?.errors && (userForm?.get('mobileNo')?.touched ||
                 userForm?.get('mobileNo')?.dirty)) {
@@ -25,6 +25,19 @@
                 </div>
                 <div class="text-danger" *ngIf="userForm?.get('mobileNo')?.errors?.['pattern']">
                     Enter a valid 10-digit mobile number
+                </div>
+                }
+
+            </div>
+
+            <div class="col-md-3 my-2">
+                <label>Default Password <span class="text-danger">*</span></label>
+                <input formControlName="password" type="text" class="form-control" maxlength="10"
+                    [ngClass]="{'is-invalid':userForm?.get('password')?.invalid && (userForm?.get('password')?.touched || userForm?.get('password')?.dirty)  }" />
+                @if (userForm?.get('password')?.errors && (userForm?.get('password')?.touched ||
+                userForm?.get('password')?.dirty)) {
+                <div class="text-danger" *ngIf="userForm?.get('password')?.errors?.['required']">
+                    Required
                 </div>
                 }
 
@@ -53,27 +66,54 @@
     </div> -->
             </div>
 
+          </div>
+
+
+          <!-- library details  -->
+        <div class="row">
+             <!-- library list -->
             <div class="col-md-3 my-2">
-                <label>Preferred Time <span class="text-danger">*</span></label>
-                <input formControlName="preferedTime" type="time" class="form-control"
-                    [ngClass]="{'is-invalid':userForm?.get('preferedTime')?.invalid && (userForm?.get('preferedTime')?.touched || userForm?.get('preferedTime')?.dirty)  }" />
-                @if ( userForm?.get('preferedTime')?.invalid && userForm?.get('preferedTime')?.touched ) {
+                <label>Library Name <span class="text-danger">*</span></label>
+              <select class="form-select" formControlName="libraryId"  (change)="getLibPlan($event)"
+               [ngClass]="{'is-invalid':userForm?.get('libraryId')?.invalid && (userForm?.get('libraryId')?.touched || userForm?.get('libraryId')?.dirty)  }" 
+              >
+                <option value="">Select library</option>
+                @for (library of libraryListArr; track $index) {
+                    <option [value]="library?._id">{{ library?.name }}</option>
+                }
+              </select>
+                @if (userForm?.get('libraryId')?.invalid && userForm?.get('libraryId')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+            </div>
+
+            <div class="col-md-3 my-2">
+                <label>Plan Type <span class="text-danger">*</span></label>
+                <select formControlName="planId" class="form-select "
+                    [ngClass]="{'is-invalid':userForm?.get('planId')?.invalid && (userForm?.get('planId')?.touched || userForm?.get('planId')?.dirty)  }"
+                     (change)="planAmountSet($event)"
+                    >
+                    <option value="" disabled selected>Select a plan</option>
+                    @for (plan of plansArray; track $index) {
+                    <option [value]="plan?._id">{{ plan?.name}}  ₹{{plan?.price}} / {{plan?.durationInDays || 0}}Day's  </option>
+                    }
+                    @empty {
+                       <option value="" disabled>No plan found</option>
+                    }
+
+                </select>
+                @if ( userForm?.get('planId')?.invalid && userForm?.get('planId')?.touched ) {
                 <div class="text-danger"> Required </div>
                 }
 
             </div>
 
+            
             <div class="col-md-3 my-2">
-                <label>Plan Type <span class="text-danger">*</span></label>
-                <select formControlName="planType" class="form-select "
-                    [ngClass]="{'is-invalid':userForm?.get('planType')?.invalid && (userForm?.get('planType')?.touched || userForm?.get('planType')?.dirty)  }">
-                    <option value="" disabled selected>Select a plan</option>
-                    @for (plan of plans; track $index) {
-                    <option [value]="plan?.planId">{{ plan?.planType }}</option>
-                    }
-
-                </select>
-                @if ( userForm?.get('planType')?.invalid && userForm?.get('planType')?.touched ) {
+                <label>Preferred Time <span class="text-danger">*</span></label>
+                <input formControlName="preferredTime" type="time" class="form-control"
+                    [ngClass]="{'is-invalid':userForm?.get('preferredTime')?.invalid && (userForm?.get('preferredTime')?.touched || userForm?.get('preferredTime')?.dirty)  }" />
+                @if ( userForm?.get('preferredTime')?.invalid && userForm?.get('preferredTime')?.touched ) {
                 <div class="text-danger"> Required </div>
                 }
 
@@ -87,6 +127,40 @@
                 <div class="text-danger"> Required </div>
                 }
 
+            </div>
+
+            <div class="col-md-3 my-2">
+                <label>Payment Mode <span class="text-danger">*</span></label>
+           <select formControlName="paymentMode" class="form-select "
+                    [ngClass]="{'is-invalid':userForm?.get('paymentMode')?.invalid && (userForm?.get('paymentMode')?.touched || userForm?.get('paymentMode')?.dirty)  }">
+                    <option value="" disabled selected>Select Payment</option>
+                    <option value="cash">CASH</option>
+                    <option value="upi">UPI</option>
+                    <option value="card">CARD</option>
+                  
+            </select>
+             
+                @if ( userForm?.get('paymentMode')?.invalid && userForm?.get('paymentMode')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+
+            </div>
+
+            <div class="col-md-3 my-2">
+                <label>Amount <span class="text-danger">*</span></label>
+                 <input type="text" appInputDigitOnly class="form-control" formControlName="amountPaid" 
+                 [ngClass]="{'is-invalid':userForm?.get('amountPaid')?.invalid && (userForm?.get('amountPaid')?.touched || userForm?.get('amountPaid')?.dirty)  }">
+                @if ( userForm?.get('amountPaid')?.invalid && userForm?.get('amountPaid')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+            </div>
+            <div class="col-md-3 my-2">
+                <label>Due Amount <span class="text-danger">*</span></label>
+                 <input type="text"  class="form-control" formControlName="remainingDue"  readonly
+                 [ngClass]="{'is-invalid':userForm?.get('remainingDue')?.invalid && (userForm?.get('remainingDue')?.touched || userForm?.get('remainingDue')?.dirty)  }">
+                @if ( userForm?.get('remainingDue')?.invalid && userForm?.get('remainingDue')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
             </div>
 
             <div class="col-md-3 my-2">

@@ -36,6 +36,8 @@ interface JwtPayload {
         setHeaders: { Authorization: `Bearer ${token}` },
       });
     } catch (err:any) {
+      console.log("error while get the token ");
+      
         if (err.status == 401) {   // Unauthorized
         localStorage.removeItem('token');
         router.navigate(['login']);
@@ -47,7 +49,7 @@ interface JwtPayload {
     //   return next(req);
     // }
   }
-  console.log('token not found ');
+  // console.log('token not found ');
   
   return next(req);
 };

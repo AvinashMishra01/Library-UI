@@ -92,16 +92,12 @@
                                 activeTab: !display_unshipped_columns[2].active
                               }"
                             >
-                             <p>{{data?.plan}}</p>
+                             <p>{{data?.planName}} <span class="badge"
+                                  [ngClass]="{'active-plan-bg':data?.planStatus ,'text-bg-danger': !data?.planStatus }">
+                                 {{ data?.planStatus ? "Active" : "Expired"}}  </span> </p>
+                              
                             </td>
-                            <!-- <td
-                              class="lastPaidMonth"
-                              [ngClass]="{
-                                activeTab: !display_unshipped_columns[3].active
-                              }"
-                            >
-                             <p>{{data?.lastPaidMonth}}</p>
-                            </td> -->
+                       
 
                             <td
                               class="status"
@@ -111,46 +107,31 @@
                             >
                           
                                     <span class="badge p-2"
-                                            [ngClass]="{'text-bg-success':data?.status=='Paid' ,'text-bg-danger': data?.status=='Due' }">
-                                 {{ data?.status}}        @if (data.balance!=0) {
-                             - ₹{{data?.balance | number:'1.2-2' }}
+                                  [ngClass]="{'text-bg-success':data?.dueAmount==0 ,'text-bg-danger': data?.dueAmount !=0  }">
+                                 {{ data?.dueAmount == 0 ? "All Paid" : "Due"}} @if (data.dueAmount!=0) {
+                             - ₹{{data.dueAmount | number:'1.2-2' }}
                             }      </span> 
-                                       <!-- <p></p> -->
-
-                                <!-- <span triggers="mouseenter:mouseleave" #p1
-                                                                    [ngbPopover]="popContentConsignee" [placement]="'auto'"> <i class="fa fa-info-circle" aria-hidden="true"></i></span> -->                                     
-                                 <!-- <ng-template #popContentConsignee>
-                                <p>Avinash  </p>
-                               
-                              </ng-template> -->
+                                   
                             </td>
-                            <!-- <td
-                              class="balance"
-                              [ngClass]="{
-                                activeTab: !display_unshipped_columns[5].active
-                              }"
-                            >
-                               <p> {{ data?.balance | currency : 'INR'  }} <p>
-                            </td> -->
+                          
                             <td
                               class="action text-center"
                               [ngClass]="{
                                 activeTab: !display_unshipped_columns[4].active
                               }"
                             > 
-                            <!-- <button (click)="openFeesModal(data, i )">Add Fee</button>
-                              <button type="button" (click)="openConfirmation(data, i)" class="btn btn-light rounded-circle"><i
-                                                class="fa-solid fa-ellipsis-vertical"></i></button> -->
-
+                         
 
  <div class="dropdown">
   <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
     Action
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    <li><button class="dropdown-item" type="button" (click)="openFeesModal(data, i )">Add Fee</button></li>
-    <li><button class="dropdown-item" type="button" (click)="openConfirmation(data, i)">Update Status</button></li>
-    <li><button class="dropdown-item" type="button"> Payment History</button></li>
+    @if (data?.dueAmount!=0) {
+      <li><button class="dropdown-item" type="button" (click)="openFeesModal(data, i )">Clear Due</button></li>
+    }
+    <li><button class="dropdown-item" type="button" (click)="openConfirmation(data, i)">Update Plan</button></li>
+    <li><button class="dropdown-item" type="button" (click)="openPaymentHitory(data)" > Payment History</button></li>
   </ul>
 </div>
 
