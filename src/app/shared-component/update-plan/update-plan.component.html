@@ -1,0 +1,96 @@
+<div class="modal-header">
+    Upgrade Plan
+    <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+</div>
+<div class="modal-body">
+
+    <!-- plan cards  -->
+     @if(paymentModal){
+         <div class="alert alert-primary" role="alert">
+              You have to pay <b>{{selectedPlanData?.price | number  :'1.2-2'}} </b> for continue this plan
+        </div>
+      <form [formGroup]="paymentForm">
+  <div class="row">
+      <div class="col-md-4 my-2">
+       
+                <label>Payment Mode <span class="text-danger">*</span></label>
+           <select formControlName="paymentMode" class="form-select "
+                    [ngClass]="{'is-invalid':paymentForm?.get('paymentMode')?.invalid && (paymentForm?.get('paymentMode')?.touched || paymentForm?.get('paymentMode')?.dirty)  }">
+                    <option value="" disabled selected>Select Payment</option>
+                    <option value="cash">CASH</option>
+                    <option value="upi">UPI</option>
+                    <option value="card">CARD</option>
+                  
+            </select>
+             
+                @if ( paymentForm?.get('paymentMode')?.invalid && paymentForm?.get('paymentMode')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+
+            </div>
+              <div class="col-md-4 my-2">
+                <label>Amount <span class="text-danger">*</span></label>
+                 <input type="text" appInputDigitOnly class="form-control" formControlName="amountPaid" placeholder="Amount"
+                 [ngClass]="{'is-invalid':paymentForm?.get('amountPaid')?.invalid && (paymentForm?.get('amountPaid')?.touched || paymentForm?.get('amountPaid')?.dirty)  }">
+                @if ( paymentForm?.get('amountPaid')?.errors?.['required'] && (paymentForm?.get('amountPaid')?.touched ||  paymentForm?.get('amountPaid')?.dirty)) {
+                <div class="text-danger"> Required </div>
+                }
+                @if ( paymentForm.get('amountPaid')?.errors?.['min'] && (paymentForm?.get('amountPaid')?.touched ||  paymentForm?.get('amountPaid')?.dirty) ) {
+                <div class="text-danger">  Amount cann't be less than 1 </div>
+                }
+            </div>
+            <div class="col-md-4 my-2">
+                <label>Due Amount <span class="text-danger">*</span></label>
+                 <input type="text"  class="form-control" formControlName="remainingDue"  readonly
+                 [ngClass]="{'is-invalid':paymentForm?.get('remainingDue')?.invalid && (paymentForm?.get('remainingDue')?.touched || paymentForm?.get('remainingDue')?.dirty)  }">
+                @if ( paymentForm?.get('remainingDue')?.invalid && paymentForm?.get('remainingDue')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+            </div>
+
+       </div>
+      </form>
+     
+     }
+     @else {
+          <label>Library Name <span class="text-danger">*</span></label>
+    <select class="form-select" [(ngModel)]="selectedLibId" (change)="getLibPlan('',$event)">
+        <option value="">Select library</option>
+        @for (library of libraryListArr; track $index) {
+        <option [value]="library?._id">{{ library?.name }}</option>
+        }
+    </select>
+  <div class="row">
+        @for (plan of planListArray; track $index) {
+        <div class="col-md-4 my-2 d-flex">
+            <div class="card plan-card cursor-pointer h-100 flex-fill" [ngClass]="{'active-plan':selectedPlanId==plan?._id }"
+             (click)="selectPlan(plan)"
+            >
+                <div class="card-header">{{plan?.name}} 
+                  @if(userData.subscriptions.planId==plan?._id){
+                    <p class="mb-0">Previous Plan</p>
+                  }
+                </div>
+                <div class="card-body">
+                    <p class="fw-light">{{plan?.description}}</p>
+                    <p class="mb-0">₹{{plan?.price}} for {{plan?.durationInDays}}</p>
+
+                </div>
+            </div>
+        </div>
+        }
+        @empty {
+          <p class="text-center">No plan found please add plan frist... <a routerLink="/admin/add-plan" >Add Plan</a> </p>
+        }
+    </div>
+     }
+</div>
+
+<div class="p-1 text-center">
+    <button class="btn btn-primary me-2" (click)="confirm(paymentModal ? 'pay': 'upgrade')">
+        {{ paymentModal ?  'Pay' :'Upgrade'}}
+    </button>
+    <button class="btn btn-danger" (click)="cancel()">
+        Cancel
+    </button>
+</div>

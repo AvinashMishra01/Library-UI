@@ -1,46 +1,37 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NgbModal, NgbNavModule, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationPopUpComponent } from '../../shared-component/confirmation-pop-up/confirmation-pop-up.component';
 import { AddFeesComponent } from '../../shared-component/add-fees/add-fees.component';
+import { UserService } from '../../services/admin-services/user.service';
+import { PaymentHistoryComponent } from '../../shared-component/payment-history/payment-history.component';
+import { UpdatePlanComponent } from '../../shared-component/update-plan/update-plan.component';
+
+
 @Component({
   selector: 'app-user-management',
-  imports: [CommonModule,MatPaginatorModule,NgbNavModule], //NgbPopover
+  imports: [CommonModule,MatPaginatorModule,NgbNavModule,NgbPopover], //
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css'
 })
-export class UserManagementComponent implements OnInit {
+export class UserManagementComponent implements OnInit, OnDestroy {
   selctedTabMob: any;
   active: any;
   activeTabType:any;
   tabs = [
-    // {
-    //   name: "Monthly Sub",
-    //   path: "monthly-subscription",
-    //   type:7
-    // },
-    // {
-    //   name: "Yearly Sub",
-    //   path: "yearly-subscription",
-    //   type:7
-    // },
+  
     {
       name: "Active User",
       path: "active-user",
-      type:7
+      userActive: true
     },
     {
       name: "Inactive User",
       path: "inactive-user",
-      type:9
-    },
-    {
-      name: "Guest User",
-      path: "guest-user",
-      type:10
+      userActive: false
     },
     
   ];
@@ -72,7 +63,7 @@ display_unshipped_columns =[
     //   active: true
     // },
       {
-      displayName : 'Status', //5 ,4 
+      displayName : 'Payment Status', //5 ,4 
       columnName : 'status',
       active: true
     },
@@ -90,42 +81,14 @@ display_unshipped_columns =[
 ]
 
 pageSize='10';
-pageIndex='0'
+pageIndex=0
 
-userList:{userData:{name:string,mobile:string, plan:string, address?:string,lastPaidMonth:string|null, status:string, balance?:number}[], totalRecord:number} ={
-  userData:[
-
-  { name: "Alice", mobile: "9876543211", plan: "Monthly",  address:'Mahuli-1 district sant kabir nagar pin code 272172',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
-  { name: "John", mobile: "9876543212", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid", balance: 0.00 },
-  { name: "Priya", mobile: "9876543213", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: null,      status: "Due", balance: 50.00 },
-  { name: "Amit", mobile: "9876543214", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-04", status: "Due", balance: 100.00 },
-  { name: "Sara", mobile: "9876543215", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid", balance: 0.00 },
-  { name: "Ravi", mobile: "9876543216", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
-  { name: "Neha", mobile: "9876543217", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid", balance: 0.00 },
-  { name: "Karan", mobile: "9876543218", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-03", status: "Due", balance: 150.00 },
-  { name: "Divya", mobile: "9876543219", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: null,      status: "Due", balance: 50.00 },
-  { name: "Mohit", mobile: "9876543220", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
-  { name: "Tina", mobile: "9876543221", plan: "Monthly",   address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid",balance: 0.00 },
-  { name: "Vikram", mobile: "9876543222", plan: "Monthly", address:'Mahuli-1',  lastPaidMonth: "2024-02", status: "Due", balance: 200.00 },
-  { name: "Sneha", mobile: "9876543223", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid",balance: 0.00 },
-  { name: "Rohit", mobile: "9876543224", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
-  { name: "Anjali", mobile: "9876543225", plan: "Monthly", address:'Mahuli-1',  lastPaidMonth: null,      status: "Due", balance: 50.00 },
-  { name: "Arjun", mobile: "9876543226", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid",balance: 0.00 },
-  { name: "Megha", mobile: "9876543227", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-01", status: "Due", balance: 250.00 },
-  { name: "Suman", mobile: "9876543228", plan: "Monthly",  address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid",balance: 0.00 },
-  { name: "Deepak", mobile: "9876543229", plan: "Monthly", address:'Mahuli-1',  lastPaidMonth: "2024-05", status: "Due", balance: 50.00 },
-  { name: "Ritika", mobile: "9876543230", plan: "Monthly", address:'Mahuli-1',  lastPaidMonth: "2024-06", status: "Paid",balance: 0.00 }
-
-
-  ],
-  totalRecord:20,
-
-
+userList:{userData:{name:string,mobile:string,  address?:string, subscriptions:{planName:string,lastPaidMonth:string|null, planStatus:Boolean, balance?:number, dueAmount:number,planExpireOn:Date} }[], totalRecord:number} ={ userData:[], totalRecord:0
 }
 
 dummyRecord:any;
 
-constructor(private route :ActivatedRoute, private router: Router, private modalService: NgbModal){}
+constructor(private route :ActivatedRoute, private router: Router, private modalService: NgbModal, private userService:UserService){}
 
 ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -137,7 +100,7 @@ ngOnInit() {
   this.tabs.filter((item)=>{
     if(item.path== path){
        this.active= item.path;
-       this.activeTabType= item.type
+       this.activeTabType= item.userActive
        find=true;
     }
   })
@@ -146,18 +109,43 @@ ngOnInit() {
 if(!find){
   this.router.navigate(['/admin/user-management/','active-user']);
 }
-  this.userList.userData = this.dummyRecord.userData.slice(+this.pageIndex, +this.pageSize)
-//  this.getOrderList()
-console.log('user list ',this.pageIndex, this.pageSize,this.userList.userData);
+//   this.userList.userData = this.dummyRecord.userData.slice(+this.pageIndex, +this.pageSize)
+// //  this.getOrderList()
+// console.log('user list ',this.pageIndex, this.pageSize,this.userList.userData);
+
+this.getUserList()
 
   });
 }
 changeTab(tabData:any){
   console.log('tab data', tabData)
   this.active= tabData.path;
-       this.activeTabType= tabData.type;
-        this.router.navigate(['/admin/user-management/', this.active]);
+       this.activeTabType= tabData.userActive;
+       this.router.navigate(['/admin/user-management/', this.active]);
+
 }
+
+
+
+getUserList()
+{
+  let body= {
+    limit: this.pageSize,
+    page: this.pageIndex + 1,
+    userActive: this.activeTabType
+  }
+    this.userService.getAllUser(body).subscribe({
+      next:(res:any)=>{
+        console.log("user data is like ", res);
+         this.userList.userData= res.users;
+         this.userList.totalRecord = res.total;
+      },
+      error:(err:any)=>{
+       console.log("error in get user data ", err)
+      }
+    })
+}
+
 
 onPageChange(event:any) {
 
@@ -176,7 +164,7 @@ openConfirmation(data:any, index:number)
  
 const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'static', centered:true});
   modalRef.componentInstance.confirmationMessage = {
-    mainHeading:'Confirmation',
+    mainHeading:'Confirmation / We will update latter',
     heading: 'Status will be change!',
     message: 'Do you really want to change the status?',
     yesBtn: 'Yes',
@@ -187,7 +175,7 @@ const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'s
     (result) => {
       if (result) {
         console.log('User confirmed');
-        this.userList.userData[index].status= data?.status=="Due" ? "Paid" : "Due" 
+        this.userList.userData[index].subscriptions.dueAmount= 0 
      console.log('data is ', this.userList)
       }
     },
@@ -208,12 +196,39 @@ openFeesModal(data:any, index:number)
 
     feeesModalRef.result.then((result)=>{
       console.log('message from modal', result);
-       this.userList.userData[index].status= data?.status=="Due" ? "Paid" : "Due" 
+       this.userList.userData[index].subscriptions.planStatus= data?.planStatus==false ? true : false;
       
     })
 }
 
+openPaymentHitory(data:any){
+  this.modalService.open(PaymentHistoryComponent, {backdrop:'static', centered:true, scrollable:true})
+}
+
+openUpdatePlan(data:any, i:number){
+console.log("data is ", data);
+
+ const modalRef=  this.modalService.open(UpdatePlanComponent, { size:'md' , backdrop:'static', centered:true, scrollable:true } );
+ modalRef.componentInstance.userData= data
+
+ modalRef.result.then(
+    (result) => {
+      if (result) {
+        console.log('User confirmed');
+        this.getUserList();
+     console.log('data is ', this.userList)
+      }
+    },
+    (dismissed) => {
+      console.log('User cancelled');
+    }
+  );
+
+}
 
 
+ngOnDestroy() {
+  this.modalService.dismissAll();
+}
 
 }

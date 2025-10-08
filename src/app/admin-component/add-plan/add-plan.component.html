@@ -32,17 +32,31 @@
 
             </div>
             <!-- plan value  -->
-            <div class="col-md-6 my-2">
+            <div class="col-md-4 my-2">
                 <label> Plan Value <span class="text-danger">*</span></label>
                 <input formControlName="price" type="text" class="form-control" placeholder="Enter plan value"
                     [ngClass]="{'is-invalid':addplanForm?.get('price')?.invalid && (addplanForm?.get('price')?.touched || addplanForm?.get('price')?.dirty)  }" />
                 @if (addplanForm?.get('price')?.invalid && addplanForm?.get('price')?.touched ) {
                 <div class="text-danger"> Required </div>
                 }
+            </div>
+            <div class="col-md-4 my-2">
+                <label> Plan Duration <span class="text-danger">*</span></label>
+                <input formControlName="durationInDays" type="text" class="form-control" placeholder="Enter Duration in Day's"
+                    [ngClass]="{'is-invalid':addplanForm?.get('durationInDays')?.invalid && (addplanForm?.get('durationInDays')?.touched || addplanForm?.get('durationInDays')?.dirty)  }" />
+             
+             @if (addplanForm?.get('durationInDays')?.errors?.['required'] 
+             && addplanForm?.get('durationInDays')?.touched) {
+             <div class="text-danger">Required</div>
+             }
 
+  @if (addplanForm?.get('durationInDays')?.errors?.['min'] 
+        && addplanForm?.get('durationInDays')?.touched) {
+    <div class="text-danger">Duration cannot be less than 1 day</div>
+  }
             </div>
             <!-- description  -->
-            <div class="col-md-6 my-2">
+            <div class="col-md-4 my-2">
                 <label> Description </label>
                 <input formControlName="description" type="text" class="form-control" placeholder="Write description"
                     [ngClass]="{'is-invalid':addplanForm?.get('description')?.invalid && (addplanForm?.get('description')?.touched || addplanForm?.get('description')?.dirty)  }" />

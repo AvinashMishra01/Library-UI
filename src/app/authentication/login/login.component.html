@@ -15,14 +15,12 @@
       </div>
     </div>
 
-       @if(!admin)
+       @if(!admin )
        {
-          
-      <div class="card-front">
-           <!-- Header -->
-        
+          @if(!admin && loginForm){
 
-    <!-- Login Form User -->
+              <!-- Login Form User -->
+      <div class="card-front">
     <form [formGroup]="userLoginForm">
       <!-- Email -->
       <div class="mb-3">
@@ -50,9 +48,69 @@
       </div>
 
       <!-- Login Button -->
-      <button type="submit" class="btn btn-primary w-100 rounded-3 fw-bold">Login</button>
+       <div class="row">
+        <div class="col-md-6 text-end"  ><button type="button" class="btn btn-primary rounded-3 fw-bold" (click)="loginAsUser()" >Login</button></div>
+        <div class="col-md-6"> <button type="button" class="btn btn-secondary  rounded-3 fw-bold" (click)="gotoSignupForm()">Signup</button></div>
+       </div>
+      
+     
+
     </form>
     </div>
+          }
+          @else {
+
+                  <form [formGroup]="userSignUpForm">
+      <!-- Name -->
+      <div class="mb-3">
+        <label for="email" class="form-label fw-semibold">Name</label>
+        <input type="text" class="form-control rounded-3" id="name" formControlName="name" placeholder="Enter your name"
+        [ngClass]="{'is-invalid':userSignUpForm?.get('name')?.invalid && (userSignUpForm?.get('name')?.touched || userSignUpForm?.get('name')?.dirty)  }">
+          @if (userSignUpForm?.get('name')?.invalid && userSignUpForm?.get('name')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+      </div>
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label fw-semibold">Email</label>
+        <input type="text" class="form-control rounded-3" id="email" formControlName="email" placeholder="Enter your email"
+        [ngClass]="{'is-invalid':userSignUpForm?.get('email')?.invalid && (userSignUpForm?.get('email')?.touched || userSignUpForm?.get('email')?.dirty)  }">
+          @if (userSignUpForm?.get('email')?.invalid && userSignUpForm?.get('email')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label fw-semibold">Password</label>
+        <input type="password" class="form-control rounded-3" id="password" formControlName="password" placeholder="Enter your password"
+         [ngClass]="{'is-invalid':userSignUpForm?.get('password')?.invalid && (userSignUpForm?.get('password')?.touched || userSignUpForm?.get('password')?.dirty)  }">
+             @if (userSignUpForm?.get('password')?.invalid && userSignUpForm?.get('password')?.touched ) {
+                <div class="text-danger"> Required </div>
+                }
+        </div>
+
+      <!-- Forgot Password -->
+      <div class="d-flex justify-content-between mb-3">
+        <a href="#" class="small text-decoration-none text-primary">Forgot Password?</a>
+      </div>
+
+      <!-- Create account Button -->
+    <!-- Login Button -->
+       <div class="row">
+        <div class="col-md-6 text-end">
+      <button type="button" class="btn btn-primary rounded-3 fw-bold" (click)="loginAsUser()">Create Account</button>
+         </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-secondary rounded-3 fw-light" (click)="gotoSignupForm()">SignUp</button>
+        </div>
+       </div>
+   
+   
+    </form>
+
+          }
+       
        }
   
      <!-- BACK SIDE -->
@@ -138,7 +196,7 @@
         <a href="#" class="small text-decoration-none text-primary">Forgot Password?</a>
       </div>
 
-      <!-- Login Button -->
+      <!-- Create account Button -->
       <button type="submit" class="btn btn-primary w-100 rounded-3 fw-bold" (click)="adminSignUp()">Create Account</button>
     </form>
 

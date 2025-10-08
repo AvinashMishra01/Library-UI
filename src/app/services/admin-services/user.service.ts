@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
  import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,9 +12,14 @@ export class UserService {
 
 
 
-getAllUser()
+getAllUser(body:any)
 {
-  this.http.get(`${this.baseUrl}/users`)
+  let reqParams = new HttpParams()
+  .append('limit', body.limit)
+  .append('page', body.page)
+  .append('userActive', body.userActive)
+
+  return this.http.get(`${this.baseUrl}/users`, {params :reqParams})
 }
 
 getUserById(body:number)

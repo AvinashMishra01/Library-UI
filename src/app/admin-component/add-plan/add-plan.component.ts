@@ -80,7 +80,8 @@ plan_columns =[
   this.addplanForm= this.fb.group({
       libraryId: ['', Validators.required],
       name: ['', Validators.required],
-      price: ['', Validators.required],
+      price: ['', [Validators.required, Validators.min(1)]],
+      durationInDays: ["",[Validators.required, Validators.min(1)]],
       description: [''],
 
     })

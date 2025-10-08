@@ -1,13 +1,5 @@
 
 
-<p> User Management <br>
-1. Enable/Disable Guest Access
-
-2. User Role Management (Admin, Staff, Viewer)
-
-3. Registration Settings (Approval Required, Auto-approve, etc.)
-
-4. Email Verification Toggle </p>
 
  <div class="orders_wrapper d-none d-sm-none d-md-block">
       <div class="row g-0">
@@ -92,16 +84,25 @@
                                 activeTab: !display_unshipped_columns[2].active
                               }"
                             >
-                             <p>{{data?.plan}}</p>
+                             <p>
+                              {{data?.subscriptions?.planName}}
+                              
+                              <span class="badge" [ngbPopover]="popCharges" placement="auto"   triggers="mouseenter:mouseleave"
+                                  [ngClass]="{'active-plan-bg':data?.subscriptions?.planStatus ,'text-bg-danger': !data?.subscriptions?.planStatus }">
+                                 {{ data?.subscriptions?.planStatus ? "Active" : "Expired"}}  </span>
+                                
+                                  <ng-template #popCharges>
+                                    <ng-container>
+                                     <p> <b>{{ data?.subscriptions?.planStatus ? 'Expiry Date':'Expired On' }}: </b> {{data?.subscriptions?.planExpireOn | date:'mediumDate' }} {{data?.subscriptions?.planExpireOn | date:'shortTime' }} </p>
+                                  
+
+                                    </ng-container>
+                                  </ng-template>
+                                        </p>
+
+
                             </td>
-                            <!-- <td
-                              class="lastPaidMonth"
-                              [ngClass]="{
-                                activeTab: !display_unshipped_columns[3].active
-                              }"
-                            >
-                             <p>{{data?.lastPaidMonth}}</p>
-                            </td> -->
+                       
 
                             <td
                               class="status"
@@ -111,46 +112,32 @@
                             >
                           
                                     <span class="badge p-2"
-                                            [ngClass]="{'text-bg-success':data?.status=='Paid' ,'text-bg-danger': data?.status=='Due' }">
-                                 {{ data?.status}}        @if (data.balance!=0) {
-                             - ₹{{data?.balance | number:'1.2-2' }}
+                                  [ngClass]="{'text-bg-success':data?.subscriptions?.dueAmount==0 ,'text-bg-danger': data?.subscriptions?.dueAmount !=0  }">
+                                 {{ data?.subscriptions?.dueAmount == 0 ? "All Clear" : "Due"}} @if (data?.subscriptions?.dueAmount!=0) {
+                             - ₹{{data?.subscriptions?.dueAmount | number:'1.2-2' }}
                             }      </span> 
-                                       <!-- <p></p> -->
-
-                                <!-- <span triggers="mouseenter:mouseleave" #p1
-                                                                    [ngbPopover]="popContentConsignee" [placement]="'auto'"> <i class="fa fa-info-circle" aria-hidden="true"></i></span> -->                                     
-                                 <!-- <ng-template #popContentConsignee>
-                                <p>Avinash  </p>
-                               
-                              </ng-template> -->
+                                   
                             </td>
-                            <!-- <td
-                              class="balance"
-                              [ngClass]="{
-                                activeTab: !display_unshipped_columns[5].active
-                              }"
-                            >
-                               <p> {{ data?.balance | currency : 'INR'  }} <p>
-                            </td> -->
+                          
                             <td
                               class="action text-center"
                               [ngClass]="{
                                 activeTab: !display_unshipped_columns[4].active
                               }"
                             > 
-                            <!-- <button (click)="openFeesModal(data, i )">Add Fee</button>
-                              <button type="button" (click)="openConfirmation(data, i)" class="btn btn-light rounded-circle"><i
-                                                class="fa-solid fa-ellipsis-vertical"></i></button> -->
-
+                         
 
  <div class="dropdown">
   <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
     Action
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    <li><button class="dropdown-item" type="button" (click)="openFeesModal(data, i )">Add Fee</button></li>
-    <li><button class="dropdown-item" type="button" (click)="openConfirmation(data, i)">Update Status</button></li>
-    <li><button class="dropdown-item" type="button"> Payment History</button></li>
+    @if (data?.subscriptions?.dueAmount!=0) {
+      <li><button class="dropdown-item" type="button" (click)="openFeesModal(data, i )">Clear Due</button></li>
+    }
+    <li><button class="dropdown-item" type="button" (click)="openUpdatePlan(data, i)">Update Plan</button></li>
+    <li><button class="dropdown-item" type="button" (click)="openPaymentHitory(data)" > Payment History</button></li>
+    <li><button class="dropdown-item" type="button" (click)="openPaymentHitory(data)" > Inactive User</button></li>
   </ul>
 </div>
 
