@@ -1,13 +1,5 @@
 
 
-<p> User Management <br>
-1. Enable/Disable Guest Access
-
-2. User Role Management (Admin, Staff, Viewer)
-
-3. Registration Settings (Approval Required, Auto-approve, etc.)
-
-4. Email Verification Toggle </p>
 
  <div class="orders_wrapper d-none d-sm-none d-md-block">
       <div class="row g-0">
@@ -92,10 +84,23 @@
                                 activeTab: !display_unshipped_columns[2].active
                               }"
                             >
-                             <p>{{data?.planName}} <span class="badge"
-                                  [ngClass]="{'active-plan-bg':data?.planStatus ,'text-bg-danger': !data?.planStatus }">
-                                 {{ data?.planStatus ? "Active" : "Expired"}}  </span> </p>
+                             <p>
+                              {{data?.subscriptions?.planName}}
                               
+                              <span class="badge" [ngbPopover]="popCharges" placement="auto"   triggers="mouseenter:mouseleave"
+                                  [ngClass]="{'active-plan-bg':data?.subscriptions?.planStatus ,'text-bg-danger': !data?.subscriptions?.planStatus }">
+                                 {{ data?.subscriptions?.planStatus ? "Active" : "Expired"}}  </span>
+                                
+                                  <ng-template #popCharges>
+                                    <ng-container>
+                                     <p> <b>{{ data?.subscriptions?.planStatus ? 'Expiry Date':'Expired On' }}: </b> {{data?.subscriptions?.planExpireOn | date:'mediumDate' }} {{data?.subscriptions?.planExpireOn | date:'shortTime' }} </p>
+                                  
+
+                                    </ng-container>
+                                  </ng-template>
+                                        </p>
+
+
                             </td>
                        
 
@@ -107,9 +112,9 @@
                             >
                           
                                     <span class="badge p-2"
-                                  [ngClass]="{'text-bg-success':data?.dueAmount==0 ,'text-bg-danger': data?.dueAmount !=0  }">
-                                 {{ data?.dueAmount == 0 ? "All Paid" : "Due"}} @if (data.dueAmount!=0) {
-                             - ₹{{data.dueAmount | number:'1.2-2' }}
+                                  [ngClass]="{'text-bg-success':data?.subscriptions?.dueAmount==0 ,'text-bg-danger': data?.subscriptions?.dueAmount !=0  }">
+                                 {{ data?.subscriptions?.dueAmount == 0 ? "All Clear" : "Due"}} @if (data?.subscriptions?.dueAmount!=0) {
+                             - ₹{{data?.subscriptions?.dueAmount | number:'1.2-2' }}
                             }      </span> 
                                    
                             </td>
@@ -127,11 +132,12 @@
     Action
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    @if (data?.dueAmount!=0) {
+    @if (data?.subscriptions?.dueAmount!=0) {
       <li><button class="dropdown-item" type="button" (click)="openFeesModal(data, i )">Clear Due</button></li>
     }
-    <li><button class="dropdown-item" type="button" (click)="openConfirmation(data, i)">Update Plan</button></li>
+    <li><button class="dropdown-item" type="button" (click)="openUpdatePlan(data, i)">Update Plan</button></li>
     <li><button class="dropdown-item" type="button" (click)="openPaymentHitory(data)" > Payment History</button></li>
+    <li><button class="dropdown-item" type="button" (click)="openPaymentHitory(data)" > Inactive User</button></li>
   </ul>
 </div>
 

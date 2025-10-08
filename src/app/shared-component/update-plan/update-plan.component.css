@@ -1,0 +1,23 @@
+
+
+
+.active-plan {
+       background: #c7ffc7;
+    color: #000000;
+    box-shadow: 0 0px 16px -3px #c2c2c2;
+}
+
+.card.plan-card:hover {
+    box-shadow: 0 0px 16px -3px #c2c2c2;
+}
+
+
+
+
+
+
+
+
+
+
+

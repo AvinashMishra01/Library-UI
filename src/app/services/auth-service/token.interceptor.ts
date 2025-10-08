@@ -12,14 +12,14 @@ interface JwtPayload {
 }
  const router = inject(Router);
   const token = localStorage.getItem('token');
-   console.log("token get from the local ")
+  //  console.log("token get from the local ")
   if (token) {
     try {
       // ✅ decode token
       const decoded = jwtDecode<JwtPayload>(token);
-        console.log("id of loging user/admin ",decoded.id);   // user/admin id
-       console.log("role of user or admin ",decoded.role); // role
-      console.log("token expire in ",decoded.exp);  // expiry timestamp
+        // console.log("id of loging user/admin ",decoded.id);   // user/admin id
+      //  console.log("role of user or admin ",decoded.role); // role
+      // console.log("token expire in ",decoded.exp);  // expiry timestamp
       const now = Date.now().valueOf() / 1000;
 
       // ✅ check expiry

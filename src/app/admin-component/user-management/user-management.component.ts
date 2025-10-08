@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -8,13 +8,16 @@ import { ConfirmationPopUpComponent } from '../../shared-component/confirmation-
 import { AddFeesComponent } from '../../shared-component/add-fees/add-fees.component';
 import { UserService } from '../../services/admin-services/user.service';
 import { PaymentHistoryComponent } from '../../shared-component/payment-history/payment-history.component';
+import { UpdatePlanComponent } from '../../shared-component/update-plan/update-plan.component';
+
+
 @Component({
   selector: 'app-user-management',
-  imports: [CommonModule,MatPaginatorModule,NgbNavModule], //NgbPopover
+  imports: [CommonModule,MatPaginatorModule,NgbNavModule,NgbPopover], //
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css'
 })
-export class UserManagementComponent implements OnInit {
+export class UserManagementComponent implements OnInit, OnDestroy {
   selctedTabMob: any;
   active: any;
   activeTabType:any;
@@ -60,7 +63,7 @@ display_unshipped_columns =[
     //   active: true
     // },
       {
-      displayName : 'Status', //5 ,4 
+      displayName : 'Payment Status', //5 ,4 
       columnName : 'status',
       active: true
     },
@@ -80,7 +83,7 @@ display_unshipped_columns =[
 pageSize='10';
 pageIndex=0
 
-userList:{userData:{name:string,mobile:string, planName:string, address?:string,lastPaidMonth:string|null, planStatus:Boolean, balance?:number, dueAmount?:number}[], totalRecord:number} ={ userData:[], totalRecord:0
+userList:{userData:{name:string,mobile:string,  address?:string, subscriptions:{planName:string,lastPaidMonth:string|null, planStatus:Boolean, balance?:number, dueAmount:number,planExpireOn:Date} }[], totalRecord:number} ={ userData:[], totalRecord:0
 }
 
 dummyRecord:any;
@@ -144,9 +147,6 @@ getUserList()
 }
 
 
-
-
-
 onPageChange(event:any) {
 
   this.pageIndex = event.pageIndex
@@ -175,7 +175,7 @@ const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'s
     (result) => {
       if (result) {
         console.log('User confirmed');
-        this.userList.userData[index].dueAmount= 0 
+        this.userList.userData[index].subscriptions.dueAmount= 0 
      console.log('data is ', this.userList)
       }
     },
@@ -196,7 +196,7 @@ openFeesModal(data:any, index:number)
 
     feeesModalRef.result.then((result)=>{
       console.log('message from modal', result);
-       this.userList.userData[index].planStatus= data?.planStatus==false ? true : false;
+       this.userList.userData[index].subscriptions.planStatus= data?.planStatus==false ? true : false;
       
     })
 }
@@ -205,6 +205,30 @@ openPaymentHitory(data:any){
   this.modalService.open(PaymentHistoryComponent, {backdrop:'static', centered:true, scrollable:true})
 }
 
+openUpdatePlan(data:any, i:number){
+console.log("data is ", data);
 
+ const modalRef=  this.modalService.open(UpdatePlanComponent, { size:'md' , backdrop:'static', centered:true, scrollable:true } );
+ modalRef.componentInstance.userData= data
+
+ modalRef.result.then(
+    (result) => {
+      if (result) {
+        console.log('User confirmed');
+        this.getUserList();
+     console.log('data is ', this.userList)
+      }
+    },
+    (dismissed) => {
+      console.log('User cancelled');
+    }
+  );
+
+}
+
+
+ngOnDestroy() {
+  this.modalService.dismissAll();
+}
 
 }

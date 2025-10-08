@@ -10,6 +10,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
   --default-color:#012a5b;
 }
 
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
 /* Tab Navbar Css */
 
 .navbar-container {
