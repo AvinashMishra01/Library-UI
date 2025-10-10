@@ -12,8 +12,18 @@ export class PaymentService {
  savePayment(body:any)
  {
   console.log(body);
-
   return this.http.post(`${this.baseUrl}/payment/update-plan`, body)
+ }
+
+
+ getUserDueHistory(body:{paymentIds:string[]})
+ {
+     return this.http.post(`${this.baseUrl}/payment/user-due-history`, body)
+ }
+
+
+ clearUserDueAmount(body:{userId:string, paymentIds:string[]}){
+  return this.http.post(`${this.baseUrl}/payment/clear-all-due`, body)
  }
 
 }

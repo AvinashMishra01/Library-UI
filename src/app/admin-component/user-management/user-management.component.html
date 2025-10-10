@@ -133,7 +133,7 @@
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
     @if (data?.subscriptions?.dueAmount!=0) {
-      <li><button class="dropdown-item" type="button" (click)="openFeesModal(data, i )">Clear Due</button></li>
+      <li><button class="dropdown-item" type="button" (click)="openClearDueModal(data, i )">Clear Due</button></li>
     }
     <li><button class="dropdown-item" type="button" (click)="openUpdatePlan(data, i)">Update Plan</button></li>
     <li><button class="dropdown-item" type="button" (click)="openPaymentHitory(data)" > Payment History</button></li>

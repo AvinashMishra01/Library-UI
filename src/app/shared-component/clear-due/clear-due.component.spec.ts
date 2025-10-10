@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddFeesComponent } from './add-fees.component';
+import { ClearDueComponent } from './clear-due.component';
 
-describe('AddFeesComponent', () => {
-  let component: AddFeesComponent;
-  let fixture: ComponentFixture<AddFeesComponent>;
+describe('ClearDueComponent', () => {
+  let component: ClearDueComponent;
+  let fixture: ComponentFixture<ClearDueComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddFeesComponent]
+      imports: [ClearDueComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddFeesComponent);
+    fixture = TestBed.createComponent(ClearDueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

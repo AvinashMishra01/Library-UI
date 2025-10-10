@@ -1,0 +1,15 @@
+.custom-table th {
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.custom-table td {
+  font-size: 14px;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}

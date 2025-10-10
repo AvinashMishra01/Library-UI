@@ -5,10 +5,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NgbModal, NgbNavModule, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationPopUpComponent } from '../../shared-component/confirmation-pop-up/confirmation-pop-up.component';
-import { AddFeesComponent } from '../../shared-component/add-fees/add-fees.component';
 import { UserService } from '../../services/admin-services/user.service';
 import { PaymentHistoryComponent } from '../../shared-component/payment-history/payment-history.component';
 import { UpdatePlanComponent } from '../../shared-component/update-plan/update-plan.component';
+import { ClearDueComponent } from '../../shared-component/clear-due/clear-due.component';
 
 
 @Component({
@@ -187,23 +187,17 @@ const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'s
 
 }
 
-openFeesModal(data:any, index:number)
+openClearDueModal(data:any, index:number)
 {
   console.log("fees modal data", data, index);
-  let feeesModalRef= this.modalService.open(AddFeesComponent, {backdrop:'static', centered:true});
-    feeesModalRef.componentInstance.userData = data
-
-
-    feeesModalRef.result.then((result)=>{
+  let dueModalRef= this.modalService.open(ClearDueComponent, {size:'lg' ,backdrop:'static', centered:true,  scrollable:true });
+    dueModalRef.componentInstance.userData = data
+    dueModalRef.result.then((result)=>{
       console.log('message from modal', result);
-       this.userList.userData[index].subscriptions.planStatus= data?.planStatus==false ? true : false;
       
     })
 }
 
-openPaymentHitory(data:any){
-  this.modalService.open(PaymentHistoryComponent, {backdrop:'static', centered:true, scrollable:true})
-}
 
 openUpdatePlan(data:any, i:number){
 console.log("data is ", data);
@@ -226,6 +220,9 @@ console.log("data is ", data);
 
 }
 
+openPaymentHitory(data:any){
+  this.modalService.open(PaymentHistoryComponent, {backdrop:'static', centered:true, scrollable:true})
+}
 
 ngOnDestroy() {
   this.modalService.dismissAll();

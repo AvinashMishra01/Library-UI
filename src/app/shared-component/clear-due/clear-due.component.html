@@ -1,0 +1,113 @@
+<div class="modal-header">
+<h4>Clear Due Amount</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+</div>
+<div class="modal-body text-center">
+  <h5 class="mt-2 fw-light">Payment for the  <b>{{userData.name}} - {{userData.mobile}} </b> total due is  <b class="text-danger">₹{{userData.subscriptions.dueAmount}}</b> 
+    <a href="javascript:void(0)" class="fs-6 fw-light" (click)="showHistory()">{{isHistoryOpen ? 'Hide' : 'See'  }}Details <i class="fa-solid fa-clock-rotate-left fa-flip-horizontal text-warning"></i></a>
+  </h5>
+  
+  @if(dueHistoryArray && isHistoryOpen){
+ <div class="container my-3">
+  <div class="card shadow-sm rounded-3">
+    <div class="card-header bg-primary text-white fw-bold">
+      Payment Details
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 custom-table">
+          <thead class="table-light">
+      <th> Library Name </th>
+      <th> Plan Details </th>
+      <th> Plan Start </th>
+      <th> Plan End </th>
+      <th> Paid Amount </th>
+      <th> Due Amount </th>
+      <th> Action </th>
+    </thead>
+    <tbody>
+  @for (history of dueHistoryArray; track $index;) {
+  <tr>
+    <td>{{history?.library?.name}}</td>
+    <td>{{history?.plan?.name}} {{history?.plan?.price}} {{history?.plan?.durationInDays}}</td>
+    <td>{{history?.startDate | date:'mediumDate'}}</td>
+    <td>{{history?.endDate | date:'mediumDate'}}</td>
+    <td class="text-success"> ₹{{history?.amountPaid }}</td>
+    <td class="text-danger"> ₹{{history?.dueAmount}}</td>
+    <td>
+      @if(selectedDuePay?.paymentId== history?.paymentId ){
+            <select class="form-select" (change)="payDueConfOpen( $event,history,$index )">
+        <option value="">Select Mode</option>
+        <option value="cash">Cash</option>
+        <option value="upi">UPI</option>
+        <option value="card">Card</option>
+    </select>
+      }@else {
+        <button type="button" class="btn btn-sm btn-outline-success" (click)="payDueOptionOpen(history)" >Pay</button>
+      }
+      
+      </td>
+    
+    
+    <!-- <td> <button type="button" class="btn btn-sm btn-outline-success" (click)="payDueOpen(payDue, history)" >Pay</button></td> -->
+  </tr>
+}
+@empty {
+  <p>All dues are clear</p>
+}
+<tr>
+  <td colspan="5" class="px-4 text-start">Total : </td>
+  <td><b> ₹{{userData.subscriptions.dueAmount}}</b> </td>
+  <td > 
+    @if (!allDueSelected) {
+
+      <button type="button" class="btn btn-sm btn-outline-dark" (click)="payAllDues()">Pay All</button> 
+    }
+  @else {
+    <select class="form-select" (change)="payDueConfOpen($event)">
+        <option value="">Select Mode</option>
+        <option value="cash">Cash</option>
+        <option value="upi">UPI</option>
+        <option value="card">Card</option>
+        </select>
+  }
+  
+  </td>
+</tr>
+</tbody>
+
+</table>
+
+ </div>
+    </div>
+  </div>
+</div>
+  }
+
+</div>
+@if (!isHistoryOpen) {
+  <div class="text-center  d-flex justify-content-center p-2">
+     @if (!allDueSelected) {
+
+      <button type="button" class="btn btn-primary" (click)="payAllDues()">Clear All Due</button> 
+    }
+  @else {
+    <div class="col-md-3 ">
+       <select class="form-select" (change)="payDueConfOpen($event)">
+        <option value="">Select Mode</option>
+        <option value="cash">Cash</option>
+        <option value="upi">UPI</option>
+        <option value="card">Card</option>
+        </select>
+    </div>
+   
+  }
+
+  <button class="btn btn-danger ms-2" (click)="cancel()">
+   Cancel
+  </button>
+</div>
+}
+
+
+
