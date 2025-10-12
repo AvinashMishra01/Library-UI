@@ -221,7 +221,10 @@ console.log("data is ", data);
 }
 
 openPaymentHitory(data:any){
-  this.modalService.open(PaymentHistoryComponent, {backdrop:'static', centered:true, scrollable:true})
+ const paymentModalRef =  this.modalService.open(PaymentHistoryComponent, {backdrop:'static', centered:true, scrollable:true});
+  paymentModalRef.componentInstance.userData= data
+
+
 }
 
 ngOnDestroy() {

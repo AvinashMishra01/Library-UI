@@ -1,16 +1,125 @@
 <div class="modal-header">
-<h4>Payment History</h4>
-  <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+    <h4>Payment History</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
 </div>
 <div class="modal-body text-center">
- <h4>Add Due Payment</h4>
-  <h5 class="mt-2 fw-light">Payment for the </h5>
-  <div class="modal-buttons mt-4">
+
+    @if(paymentHistoryArray.length>0){
+
+
+<div class="accordion accordion-flush" id="accordionFlushExample">
+
+    @for (history of paymentHistoryArray; track $index; let i = $index) {
+  <div class="accordion-item">
+    <!-- Accordion Header -->
+    <h2 class="accordion-header" [id]="'flush-heading' + i">
+      <button 
+        class="accordion-button collapsed" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        [attr.data-bs-target]="'#flush-collapse' + i"
+        aria-expanded="false" 
+        [attr.aria-controls]="'flush-collapse' + i">
+     
+         {{ history?.library?.name }} 
+    
+       
+            <span [ngbPopover]="planDetails" placement="auto" class="mx-2 text-warning" triggers="mouseenter:mouseleave">
+                        <i class="fa fa-info-circle"></i>
+                    </span>
+                      <ng-template #planDetails>
+                        <ng-container>
+                         <p><b>Plan Name :</b> {{history?.planName}} </p>
+                         <p><b>Plan Price :</b>  ₹ {{history?.planPrice}} </p>
+                         <p><b>Duration :</b> {{history?.durationInDays}} Day </p>
+                        </ng-container>
+                    </ng-template>
+
+        <!-- due or patd tag  -->
+       <span class="badge rounded-pill" [ngClass]="{'bg-danger': history?.totalDue !=0, 'bg-success':history?.totalDue ==0 }" >
+       {{history?.totalDue !=0? 'Due  ₹'+ history?.totalDue  : 'All Clear  ₹' + history?.totalPaid  }}
+       </span>
+
+      </button>
+    </h2>
+
+    <!-- Accordion Body -->
+    <div 
+      [id]="'flush-collapse' + i" 
+      class="accordion-collapse collapse" 
+      [attr.aria-labelledby]="'flush-heading' + i" 
+      data-bs-parent="#accordionFlushExample">
+      
+      <div class="accordion-body">
+    
+    <div class="history-tl-container">
+        <ul class="tl">
+            @for (payment of history?.payments; track $index; ) {
+            <li class="tl-item">
+                <div class="time_stamp d-flex flex-column align-items-center justify-content-center pt-1">
+                    <span>{{ (payment?.lastUpdated ? payment?.lastUpdated : payment?.createdAt) | date : "mediumDate"  }}</span>
+                    <span>{{ (payment?.lastUpdated ? payment?.lastUpdated : payment?.createdAt)| date : "shortTime" }}</span>
+                </div>
+                <div class="item-title"> {{(payment.paymentMode).toUpperCase()}} </div>
+                <!-- <div class="item-title"><b>Library Name : </b> {{payment?.library?.name}} 
+                       <span [ngbPopover]="libraryDetail" placement="auto" class="ms-1 text-warning" triggers="mouseenter:mouseleave">
+                        <i class="fa fa-info-circle"></i>
+                    </span>
+                      <ng-template #libraryDetail>
+                        <ng-container>
+                         <p><b> Name :</b> {{payment?.library?.name}} </p>
+                         <p><b> Address :</b> {{payment?.library?.address}} </p>
+                        </ng-container>
+                    </ng-template>
+
+                 </div> -->
+
+                <!-- <div  class="item-title"> <b>Plan Name :  {{payment?.plan?.name}} </b>
+                   <span [ngbPopover]="planDetails" placement="auto" class="ms-1 text-warning" triggers="mouseenter:mouseleave">
+                        <i class="fa fa-info-circle"></i>
+                    </span>
+                      <ng-template #planDetails>
+                        <ng-container>
+                         <p><b>Plan Name :</b> {{payment?.plan?.name}} </p>
+                         <p><b> Price :</b> {{payment?.plan?.price}} </p>
+                         <p><b> Duration :</b> {{payment?.plan?.durationInDays}} </p>
+                        </ng-container>
+                    </ng-template>
+                
+                </div> -->
+                <div class="item-detail">Paid Amount:  ₹ {{payment?.amountPaid}}
+
+                </div>
+            </li>
+        }
+        </ul>
+
+    </div>
+    
+      
+      </div>
+
+    </div>
+  </div>
+}
+</div>
+
+
+ 
+  
+
+
+
+}
+    @else{
+    <p>History not found...</p>
+    }
+</div>
+<!-- <div class="modal-buttons mt-4">
     <button class="btn btn-primary me-2" (click)="confirm()">
-     Yes
+        Yes
     </button>
     <button class="btn btn-danger" (click)="cancel()">
-     No
+        No
     </button>
-  </div>
-</div>
+</div> -->

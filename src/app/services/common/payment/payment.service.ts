@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 @Injectable({
@@ -25,5 +25,12 @@ export class PaymentService {
  clearUserDueAmount(body:{userId:string, paymentIds:string[]}){
   return this.http.post(`${this.baseUrl}/payment/clear-all-due`, body)
  }
+
+
+getUserPaymentHistory(body:{userId:string}){
+  let params = new HttpParams()
+  .append('userId', body.userId)
+  return this.http.get(`${this.baseUrl}/payment/get-user-history`,{params})
+}
 
 }
