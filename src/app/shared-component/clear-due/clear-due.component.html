@@ -3,7 +3,7 @@
   <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
 </div>
 <div class="modal-body text-center">
-  <h5 class="mt-2 fw-light">Payment for the  <b>{{userData.name}} - {{userData.mobile}} </b> total due is  <b class="text-danger">₹{{userData.subscriptions.dueAmount}}</b> 
+  <h5 class="mt-2 fw-light">Payment for the  <b>{{userData.name}} - {{userData.mobile}} </b> total due is  <b class="text-danger">₹{{userData.totalDue}}</b> 
     <a href="javascript:void(0)" class="fs-6 fw-light" (click)="showHistory()">{{isHistoryOpen ? 'Hide' : 'See'  }}Details <i class="fa-solid fa-clock-rotate-left fa-flip-horizontal text-warning"></i></a>
   </h5>
   
@@ -57,7 +57,7 @@
 }
 <tr>
   <td colspan="5" class="px-4 text-start">Total : </td>
-  <td><b> ₹{{userData.subscriptions.dueAmount}}</b> </td>
+  <td><b> ₹{{userData.totalDue}}</b> </td>
   <td > 
     @if (!allDueSelected) {
 

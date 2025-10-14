@@ -3,17 +3,19 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { NgbModal, NgbNavModule, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbNavModule, NgbPopover, NgbToast, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationPopUpComponent } from '../../shared-component/confirmation-pop-up/confirmation-pop-up.component';
 import { UserService } from '../../services/admin-services/user.service';
 import { PaymentHistoryComponent } from '../../shared-component/payment-history/payment-history.component';
 import { UpdatePlanComponent } from '../../shared-component/update-plan/update-plan.component';
 import { ClearDueComponent } from '../../shared-component/clear-due/clear-due.component';
+import { ToastrService } from 'ngx-toastr';
+import { LayoutRoutingModule } from "../../layout/layout-routing.module";
 
 
 @Component({
   selector: 'app-user-management',
-  imports: [CommonModule,MatPaginatorModule,NgbNavModule,NgbPopover], //
+  imports: [CommonModule, MatPaginatorModule, NgbNavModule, NgbPopover, LayoutRoutingModule], //
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css'
 })
@@ -83,12 +85,12 @@ display_unshipped_columns =[
 pageSize='10';
 pageIndex=0
 
-userList:{userData:{name:string,mobile:string,  address?:string, subscriptions:{planName:string,lastPaidMonth:string|null, planStatus:Boolean, balance?:number, dueAmount:number,planExpireOn:Date} }[], totalRecord:number} ={ userData:[], totalRecord:0
+userList:{userData:{name:string,mobile:string,  address?:string, totalDue:number, subscriptions:{planName:string,lastPaidMonth:string|null, planStatus:Boolean, balance?:number, dueAmount:number,planExpireOn:Date} }[], totalRecord:number} ={ userData:[], totalRecord:0
 }
 
 dummyRecord:any;
 
-constructor(private route :ActivatedRoute, private router: Router, private modalService: NgbModal, private userService:UserService){}
+constructor(private route :ActivatedRoute, private router: Router, private modalService: NgbModal, private userService:UserService, private toaster: ToastrService){}
 
 ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -164,9 +166,13 @@ openConfirmation(data:any, index:number)
  
 const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'static', centered:true});
   modalRef.componentInstance.confirmationMessage = {
-    mainHeading:'Confirmation / We will update latter',
+    mainHeading:'Confirmation ',
     heading: 'Status will be change!',
-    message: 'Do you really want to change the status?',
+    message: `Do you really want to 
+  <span class="${this.active === 'inactive-user' ? 'text-success' : 'text-danger'} fw-bold">
+    ${this.active === 'inactive-user' ? 'Active' : 'Inactive'}
+  </span> 
+  the user?`,
     yesBtn: 'Yes',
     noBtn: 'Cancel'
   };
@@ -175,8 +181,21 @@ const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'s
     (result) => {
       if (result) {
         console.log('User confirmed');
-        this.userList.userData[index].subscriptions.dueAmount= 0 
-     console.log('data is ', this.userList)
+        let body= {
+          userId:data?.userId
+        }
+        this.userService.inactiveUser(body).subscribe({
+          next:(res:any)=>{
+        console.log('inactive user' , res)
+        this.getUserList()
+       this.toaster.success(res.message)
+          },
+          error:(err:any)=>{
+            console.log('error while inactive user', err);
+            
+          }
+        })
+        console.log('data is ', this.userList)
       }
     },
     (dismissed) => {

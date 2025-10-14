@@ -33,4 +33,9 @@ createUser(body:Object)
 
 }
 
+inactiveUser(body:{userId:string})
+{
+  return this.http.post(`${this.baseUrl}/users/inactive-user`, body);
+}
+
 }

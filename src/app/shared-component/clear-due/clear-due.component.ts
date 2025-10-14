@@ -14,7 +14,7 @@ import { ConfirmationPopUpComponent } from '../confirmation-pop-up/confirmation-
 })
 export class ClearDueComponent implements OnInit {
 
-@Input() userData!:{name:string,mobile:string,  address?:string,userId:string, subscriptions:{libraryId:string,planId:string, planName:string,lastPaidMonth:string|null, planStatus:Boolean,  dueAmount:number,planExpireOn:Date,duePayments:{paymentId:string, dueAmount:number}[]}}
+@Input() userData!:{name:string,mobile:string,  address?:string,userId:string, totalDue:number, subscriptions:{libraryId:string,planId:string, planName:string,lastPaidMonth:string|null, planStatus:Boolean,planExpireOn:Date,duePayments:{paymentId:string, dueAmount:number}[]}}
 
   constructor(private paymentService: PaymentService ,private activeModal : NgbActiveModal, private toaster: ToastrService, private modalService: NgbModal, private fb: FormBuilder){}
 paymentIds:string[]=[];
@@ -97,7 +97,7 @@ payDueConfOpen(event:Event,data?:any, index?:number ){
          if(this.allDueSelected)
          {
           this.userData.subscriptions.duePayments=[];
-          this.userData.subscriptions.dueAmount=0
+          this.userData.totalDue=0
             console.log('all dues are cleared', this.paymentIds, this.userData?.userId);
             
          }
@@ -142,7 +142,7 @@ clearDuePayment(){
  {
    this.dueHistoryArray=  this.dueHistoryArray.filter((item)=>item.paymentId != this.selectedDuePay.paymentId)
    this.userData.subscriptions.duePayments= this.userData.subscriptions.duePayments.filter((item)=>item.paymentId != this.selectedDuePay.paymentId);
-   this.userData.subscriptions.dueAmount -= this.selectedDuePay.dueAmount
+   this.userData.totalDue -= this.selectedDuePay.dueAmount
 
    if(this.dueHistoryArray.length==0)
    {

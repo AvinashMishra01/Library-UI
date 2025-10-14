@@ -112,9 +112,9 @@
                             >
                           
                                     <span class="badge p-2"
-                                  [ngClass]="{'text-bg-success':data?.subscriptions?.dueAmount==0 ,'text-bg-danger': data?.subscriptions?.dueAmount !=0  }">
-                                 {{ data?.subscriptions?.dueAmount == 0 ? "All Clear" : "Due"}} @if (data?.subscriptions?.dueAmount!=0) {
-                             - ₹{{data?.subscriptions?.dueAmount | number:'1.2-2' }}
+                                  [ngClass]="{'text-bg-success':data?.totalDue==0 ,'text-bg-danger': data?.totalDue !=0  }">
+                                 {{ data?.totalDue == 0 ? "All Clear" : "Due"}} @if (data?.totalDue!=0) {
+                             - ₹{{data?.totalDue | number:'1.2-2' }}
                             }      </span> 
                                    
                             </td>
@@ -132,12 +132,12 @@
     Action
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    @if (data?.subscriptions?.dueAmount!=0) {
+    @if (data?.totalDue!=0) {
       <li><button class="dropdown-item" type="button" (click)="openClearDueModal(data, i )">Clear Due</button></li>
     }
     <li><button class="dropdown-item" type="button" (click)="openUpdatePlan(data, i)">Update Plan</button></li>
     <li><button class="dropdown-item" type="button" (click)="openPaymentHitory(data)" > Payment History</button></li>
-    <li><button class="dropdown-item" type="button" (click)="openPaymentHitory(data)" > Inactive User</button></li>
+    <li><button class="dropdown-item" type="button" (click)="openConfirmation(data, i)" > {{ active == 'inactive-user' ? 'Active User' : 'Inactive User'}} </button></li>
   </ul>
 </div>
 
@@ -147,6 +147,13 @@
 
 
                             </td>
+                          }
+                          @empty {
+                           <tr>
+                            <td colspan="5">
+                            <p class="text-center">No user found please add users <a class="text-primary" routerLink="/admin/add-user">Add User</a></p>
+                            </td>
+                           </tr> 
                           }
                        </tbody>
                       </table>

@@ -60,7 +60,11 @@
                     <span>{{ (payment?.lastUpdated ? payment?.lastUpdated : payment?.createdAt) | date : "mediumDate"  }}</span>
                     <span>{{ (payment?.lastUpdated ? payment?.lastUpdated : payment?.createdAt)| date : "shortTime" }}</span>
                 </div>
-                <div class="item-title"> {{(payment.paymentMode).toUpperCase()}} </div>
+                <div class="item-title"> {{(payment.paymentMode).toUpperCase()}} 
+                  <span class="badge rounded-pill" [ngClass]="{'bg-danger': payment?.remainingDue !=0, 'bg-success':payment?.remainingDue ==0 }" >
+           {{payment?.remainingDue !=0? 'Due  ₹'+ payment?.remainingDue  : 'All Clear' }}
+             </span>  
+                </div>
                 <!-- <div class="item-title"><b>Library Name : </b> {{payment?.library?.name}} 
                        <span [ngbPopover]="libraryDetail" placement="auto" class="ms-1 text-warning" triggers="mouseenter:mouseleave">
                         <i class="fa fa-info-circle"></i>

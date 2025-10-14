@@ -135,7 +135,7 @@ getLibPlan(libraryId:String= "",event?:Event, ){
     }
     let body = {
       userId: this.userData?.userId,
-      libraryId: this.userData?.subscriptions?.libraryId,
+      libraryId: this.selectedLibId,
       planId:this.selectedPlanData?._id,
       paymentMode:this.paymentForm.get('paymentMode').value,
       amountPaid: this.paymentForm.get('amountPaid').value,
