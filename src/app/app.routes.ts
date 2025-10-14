@@ -10,7 +10,7 @@ export const routes: Routes = [
     path:'',
     component:MainComponent,
     children:[
-     {path:'dashboard',canActivate:[authgaurdGuard], component:DashboardComponent},
+    //  {path:'dashboard',canActivate:[authgaurdGuard], component:DashboardComponent},
      {path:"admin",  canActivate:[authgaurdGuard], loadChildren: () => import('./admin-component/component.route').then((a) => a.componentRoute)}
     ]
   },

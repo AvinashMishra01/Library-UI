@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 export const componentRoute: Routes = [
-
+  {path: "dashboard", loadComponent:()=> import('./dashboard/dashboard.component').then((c)=>c.DashboardComponent)},
   {path:'user-management', redirectTo:'user-management/active-user', pathMatch:'full'},
   {path:'create-plan', loadComponent: () => import('./plan/plan.component').then((c) => c.PlanComponent)},
   {path:'user-management/:id', loadComponent:()=>import('./user-management/user-management.component').then((c)=>c.UserManagementComponent)},

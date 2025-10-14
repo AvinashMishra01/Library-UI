@@ -61,7 +61,7 @@ loginAsAdmin(){
         // console.log("login resp", res)
         localStorage.setItem('token', res?.data?.token);
         localStorage.setItem("role", res?.data?.role)
-        this.router.navigate(['/dashboard']);    
+        this.router.navigate(['/admin/dashboard']);    
     },
     error:(err:any)=>
     {
@@ -112,7 +112,7 @@ userSignUp(){
 loginAsUser(){
   console.log("user", this.userSignUpForm.value);
 
-  this.userService.userSignUp
+  // this.userService.userSignUp
   
 }
 

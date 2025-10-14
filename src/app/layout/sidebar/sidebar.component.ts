@@ -16,7 +16,7 @@ constructor(private router:Router){}
 
   items = [
     {
-      routeLink: 'dashboard',
+      routeLink: 'admin/dashboard',
       icon: 'fa-solid fa-house',
       label: 'Dashboard',
       expanded:false,
