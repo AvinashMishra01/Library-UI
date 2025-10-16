@@ -6,8 +6,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 
 :root {
   --bg-white: #ffffff;
-  --bg-success: #d4edda; /* define this too if you're using it */
+  --bg-success: #d4edda; 
   --default-color:#012a5b;
+  --transition: all 0.5s ease;
 }
 
 

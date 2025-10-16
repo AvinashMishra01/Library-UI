@@ -34,7 +34,7 @@ ngOnInit() {
    })  
 
   this.userLoginForm= this.fb.group({
-        email:['', Validators.required],
+        mobileNo:['', Validators.required],
         password:['', Validators.required]
 })
   this.adminSignUpForm= this.fb.group({
@@ -98,7 +98,7 @@ userSignUp(){
       this.toaster.success("SUccess", res.message)
         localStorage.setItem('token', res?.data?.token);
         localStorage.setItem("role", res?.data?.role)
-        this.router.navigate(['/dashboard']);  
+        this.router.navigate(['/admin/dashboard']);  
     },
     error:(err:any)=>{
       console.log("error in login user ", err);
@@ -110,9 +110,20 @@ userSignUp(){
 
 
 loginAsUser(){
-  console.log("user", this.userSignUpForm.value);
-
-  // this.userService.userSignUp
+  console.log("user", this.userLoginForm.value);
+  this.userService.userLogin(this.userLoginForm.value).subscribe({
+    next:(res:any)=>{
+           console.log("login successfully", res);
+            this.toaster.success("SUccess", res.message)
+        localStorage.setItem('token', res?.data?.token);
+        localStorage.setItem("role", res?.data?.role)
+        this.router.navigate(['/user/dashboard']);  
+    },
+    error:(err:any)=>{
+      console.log("error in login user", err);
+      
+    }
+  })
   
 }
 

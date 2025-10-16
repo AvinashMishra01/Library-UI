@@ -5,7 +5,7 @@ import { LibraryService } from '../../services/admin-services/library/library.se
 import { ToastrService } from 'ngx-toastr';
 import { PlanService } from '../../services/admin-services/plan/plan.service';
 import { TimeScale } from 'chart.js';
-import { FormateDatePipe } from "../../utils/pipes/formate-date.pipe";
+import { FormateDatePipe } from "../../utils/pipes/date-pipe/formate-date.pipe";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationPopUpComponent } from '../../shared-component/confirmation-pop-up/confirmation-pop-up.component';
 

@@ -26,10 +26,12 @@ ngOnInit() {
 
 getPaymentHistory()
 {
-   let body= {
+  let body;
+   if(this.userData){
+   body= {
     userId: this.userData?.userId
    }
-
+}
   this.paymentService.getUserPaymentHistory(body).subscribe({
     next:(res:any)=>{
       this.paymentHistoryArray= res.history

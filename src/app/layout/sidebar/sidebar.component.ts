@@ -1,46 +1,59 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, OnInit, output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
+interface Sidebar {
+ routeLink: string,
+      icon: string,
+      label: string,
+      expanded:boolean,
+      subLinks:Sublink[]
+}[]
+
+interface Sublink {
+  name:string,
+  path:string
+}[]
 @Component({
   selector: 'app-sidebar',
   imports: [ RouterModule, CommonModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
  isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
   
 constructor(private router:Router){}
 
-  items = [
+mainSidebar:Sidebar[]=[]
+  adminSidebar: Sidebar[] = [
     {
-      routeLink: 'admin/dashboard',
+      routeLink: 'dashboard',
       icon: 'fa-solid fa-house',
       label: 'Dashboard',
       expanded:false,
       subLinks:[]
     },
     {
-      routeLink: 'admin/user-management',
+      routeLink: 'user-management',
       icon: 'fa-solid fa-users',
       label: 'User Mgmt.',
       expanded:false,
       subLinks:[
-        {name:'Add User', path:'admin/add-user'},
-        {name:"All User", path:'admin/user-management'},
+        {name:'Add User', path:'add-user'},
+        {name:"All User", path:'user-management'},
       ]
     },
     {
-      routeLink: 'admin/seat-management',
+      routeLink: 'seat-management',
       icon: 'fa-solid fa-chair',
       label: 'Seat Mgmt.',
       expanded:false,
        subLinks:[]
     },
     {
-      routeLink: 'admin/create-plan',
+      routeLink: 'create-plan',
       icon: 'fa-brands fa-product-hunt',
       label: 'Active Plan',
       expanded:false,
@@ -61,15 +74,45 @@ constructor(private router:Router){}
        subLinks: [
       {
         name: 'Create Library',
-        path: 'admin/create-library',
+        path: 'create-library',
       },
       {
         name: 'Add Plan',
-        path: 'admin/add-plan',
+        path: 'add-plan',
       }
     ]
     },
   ];
+
+  userSidebar:Sidebar[]=[
+    {
+      routeLink: 'dashboard',
+      icon: 'fa-solid fa-house',
+      label: 'Dashboard',
+      expanded:false,
+      subLinks:[]
+    },
+    {
+      routeLink: 'change-library',
+      icon: 'fa-solid fa-subscript',
+      label: 'Change Library',
+      expanded:false,
+      subLinks:[]
+    }
+  ]
+
+
+ngOnInit() {
+  
+  let role = localStorage.getItem('role')
+   if(role=='admin')
+   {
+    this.mainSidebar= this.adminSidebar
+   }else{
+    this.mainSidebar= this.userSidebar
+   }
+
+}
 
   toggleCollapse(): void {
     this.changeIsLeftSidebarCollapsed.emit(!this.isLeftSidebarCollapsed());
@@ -80,7 +123,7 @@ constructor(private router:Router){}
   }
   
   toggleDropdown(item: any) {
-    this.items=  this.items.map((i)=>{
+    this.mainSidebar=  this.mainSidebar.map((i)=>{
       if(i.label != item.label){
 
         i.expanded=false;

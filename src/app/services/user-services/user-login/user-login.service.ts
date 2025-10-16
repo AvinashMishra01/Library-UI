@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 interface UserSignUpBody {
  name?:String,
-  email:String,
+  mobileNo:String,
   passward:string
 }
 

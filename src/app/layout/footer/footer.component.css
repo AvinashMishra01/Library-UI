@@ -2,13 +2,13 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    padding: 14px 0 10px 280px;
+        /* transition: all 0.5s ease; */
+    /* padding: 14px 0 10px 280px; */
     /* width: 100%; */
 
   width: calc(100% - 5rem);
   margin-left: 5rem;
-  
-    background: var(--color-white);
+    background: var(--bg-white);
     -webkit-transition: var(--transition);
     -o-transition: var(--transition);
     transition: var(--transition);

@@ -1,0 +1,92 @@
+
+
+
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="mb-4">
+    <h4 class="fw-semibold text-dark">
+      Welcome back, {{userDetails?.name }} 👋
+    </h4>
+    <p class="text-muted mb-0">Here’s an overview of your library activity</p>
+  </div>
+
+  <!-- Top Summary Cards -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <h6 class="text-muted mb-2">Active Library</h6>
+          <h5 class="mb-0" [ngClass]="{'text-primary':userDetails?.latestSubscription?.status, 'text-danger':!userDetails?.latestSubscription?.status}" >{{  userDetails?.latestSubscription?.libraryDetail?.name   }}</h5>
+        </div>
+         <div class="card-footer text-end">
+        <button type="button" class="btn btn-sm btn-warning" (click)="openPaymentHitory()">Change Library</button>
+      </div>
+      </div>
+      
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <h6 class="text-muted mb-2">Current Plan</h6>
+          <p>
+             <span class="text-success mb-0 fw-semibold"   [ngClass]="{'text-primary':userDetails?.latestSubscription?.status, 'text-danger':!userDetails?.latestSubscription?.status}" >
+            {{ userDetails?.latestSubscription?.planDetail?.name || 'Name not found' }}
+          </span> 
+          <span class="badge rounded-pill bg-primary" [ngClass]="{'bg-success':userDetails?.latestSubscription?.status, 'bg-danger':!userDetails?.latestSubscription?.status}">
+                  {{userDetails?.latestSubscription?.status ? 'Active' : 'Expired'}}
+            </span>
+          </p>
+         
+          <small class="text-secondary">{{ userDetails?.latestSubscription?.planStartOn | date :'mediumDate' }} {{ userDetails?.latestSubscription?.planStartOn | date :'shortTime'}} → {{ userDetails?.latestSubscription?.planExpireOn | date:'mediumDate' }} {{userDetails?.latestSubscription?.planExpireOn | date:'shortTime'}} </small>
+        </div>
+         <div class="card-footer text-end">
+        <button type="button" class="btn btn-sm btn-warning" (click)="openPaymentHitory()">Update Plan</button>
+      </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <h6 class="text-muted mb-2">Due Amount</h6>
+          <h5 [ngClass]="userDetails?.totalDue > 0 ? 'text-danger' : 'text-success'">
+            ₹ {{ userDetails?.totalDue }}
+          </h5>
+        </div>
+         <div class="card-footer text-end">
+       <button type="button" class="btn btn-sm btn-primary" (click)="openPaymentHitory()" >Payment History</button>
+       <button type="button" class="btn btn-sm btn-success ms-2" (click)="openClearDueModal()">Clear Due</button>
+
+  </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seat Info -->
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+      <div>
+        <h6 class="text-muted mb-1">Your Seat</h6>
+        <h5 class="text-primary fw-semibold mb-1">{{ userDetails?.latestSubscription?.seat || 'No Seat Assign Yet' }}</h5>
+        <p class="mb-0 text-secondary">Time: {{ userDetails?.preferredTime | formateTime }}</p>
+      </div>
+      <button class="btn btn-primary mt-3 mt-md-0">
+        Extend Time
+      </button>
+    </div>
+  </div>
+
+  <!-- Notifications -->
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <h6 class="fw-semibold text-dark mb-3">Recent Notifications</h6>
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let n of notifications" class="list-group-item d-flex justify-content-between align-items-center px-0 border-0 border-bottom">
+          <span class="text-secondary">{{ n.message }}</span>
+          <small class="text-muted">{{ n.time }}</small>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

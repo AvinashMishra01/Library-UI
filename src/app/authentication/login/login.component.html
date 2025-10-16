@@ -24,10 +24,10 @@
     <form [formGroup]="userLoginForm">
       <!-- Email -->
       <div class="mb-3">
-        <label for="email" class="form-label fw-semibold">Email</label>
-        <input type="text" class="form-control rounded-3" id="email" formControlName="email" placeholder="Enter your email"
-        [ngClass]="{'is-invalid':userLoginForm?.get('email')?.invalid && (userLoginForm?.get('email')?.touched || userLoginForm?.get('email')?.dirty)  }">
-          @if (userLoginForm?.get('email')?.invalid && userLoginForm?.get('email')?.touched ) {
+        <label for="mobileNo" class="form-label fw-semibold">Mobile No</label>
+        <input type="text" class="form-control rounded-3" id="mobileNo" formControlName="mobileNo" placeholder="Enter your mobileNo"
+        [ngClass]="{'is-invalid':userLoginForm?.get('mobileNo')?.invalid && (userLoginForm?.get('mobileNo')?.touched || userLoginForm?.get('mobileNo')?.dirty)  }">
+          @if (userLoginForm?.get('mobileNo')?.invalid && userLoginForm?.get('mobileNo')?.touched ) {
                 <div class="text-danger"> Required </div>
                 }
       </div>

@@ -27,10 +27,17 @@ export class PaymentService {
  }
 
 
-getUserPaymentHistory(body:{userId:string}){
+getUserPaymentHistory(body?:{userId:string}){
+
+
+  if(body){     
   let params = new HttpParams()
   .append('userId', body.userId)
   return this.http.get(`${this.baseUrl}/payment/get-user-history`,{params})
+  }
+
+  return  this.http.get(`${this.baseUrl}/payment/get-user-history`)
+
 }
 
 }

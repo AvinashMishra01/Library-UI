@@ -206,9 +206,9 @@ const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'s
 
 }
 
-openClearDueModal(data:any, index:number)
+openClearDueModal(data:any)
 {
-  console.log("fees modal data", data, index);
+  console.log("fees modal data", data);
   let dueModalRef= this.modalService.open(ClearDueComponent, {size:'lg' ,backdrop:'static', centered:true,  scrollable:true });
     dueModalRef.componentInstance.userData = data
     dueModalRef.result.then((result)=>{
@@ -218,7 +218,7 @@ openClearDueModal(data:any, index:number)
 }
 
 
-openUpdatePlan(data:any, i:number){
+openUpdatePlan(data?:any){
 console.log("data is ", data);
 
  const modalRef=  this.modalService.open(UpdatePlanComponent, { size:'md' , backdrop:'static', centered:true, scrollable:true } );
