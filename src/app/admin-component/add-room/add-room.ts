@@ -32,12 +32,15 @@ seatForm: any;
 selectedRoomId:String=''
  seatCount: number = 0;
   seatInputs: string[] = [];
-
+isAdmin:boolean=false;
 ngOnInit(): void {
  this.seatForm = this.fb.group({
   seatCount:['', Validators.required],
   seats: this.fb.array([])
  })
+
+this.isAdmin= localStorage.getItem('role') == 'admin'
+
 }
 
   get seats(): FormArray {

@@ -15,10 +15,13 @@ createLibrary(body:any)
 }
 
 
-getAllLibrary()
+getAllAdminLibrary()
 {
   return this.http.get(`${this.baseUrl}/library/admin/libraries`);
 }
 
+getNearByLibrary(body:any){
+  return this.http.post(`${this.baseUrl}/library/nearbyLibrary`,body )
+}
 
 }

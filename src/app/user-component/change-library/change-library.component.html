@@ -1,1 +1,41 @@
-<p>change-library works!</p>
+@if (libraryListArr.length==0) {
+
+<p>No Library Added Yet, Add your first library</p>
+<button class="btn btn-primary">Add Library</button>
+}
+@else {
+
+
+<div class="accordion accordion-flush" id="accordionFlushExample">
+
+    @for (item of libraryListArr; track $index; let libIndex = $index) {
+    <div class="accordion-item mb-2">
+        <h2 class="accordion-header" id="flush-heading-{{ libIndex }}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#flush-collapse-' + libIndex" aria-expanded="false" [attr.aria-controls]="'flush-collapse-' + libIndex"  (click)="showAllRooms(item?._id)">
+                {{ item?.name }}
+            </button>
+        </h2>
+
+        <div id="flush-collapse-{{ libIndex }}" class="accordion-collapse collapse" [attr.aria-labelledby]="'flush-heading-' + libIndex" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                Address: {{ item?.address }} <br />
+                Created On: {{ item?.createdAt | date }}
+
+                <div class="accordion accordion-flush" [id]="'accordionRoom-' + libIndex">
+                        
+                    @for (room of item.rooms; track room._id;  ) {
+
+                       <app-add-room [roomArray]="room" [parentAccordionId]="'accordionRoom-' + libIndex" ></app-add-room>
+
+                    }
+                    @empty {
+                    <p>No Room Found in this library</p>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+    }
+</div>
+}

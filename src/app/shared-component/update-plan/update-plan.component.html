@@ -9,6 +9,18 @@
          <div class="alert alert-primary" role="alert">
               You have to pay <b>{{selectedPlanData?.price | number  :'1.2-2'}} </b> for continue this plan
         </div>
+         <div class="alert alert-warning" role="alert">
+             Plan will be start from the  
+             @if (isChangeDate) {
+                    <input type="date" class="form-control" [(ngModel)]="planStartDate" (ngModelChange)="startDateChange($event)">
+             
+             }@else{
+
+                 <b>{{planStartDate | date:'mediumDate' }} </b> 
+             }
+             
+             and end on  <b>{{planEndDate | date:'mediumDate'}}</b> <a href="javascript:void(0)" (click)="changeDate()">Change date</a>
+        </div>
       <form [formGroup]="paymentForm">
   <div class="row">
       <div class="col-md-4 my-2">
@@ -53,6 +65,7 @@
      
      }
      @else {
+        @if (role=="admin") {
           <label>Library Name <span class="text-danger">*</span></label>
     <select class="form-select" [(ngModel)]="selectedLibId" (change)="getLibPlan('',$event)">
         <option value="">Select library</option>
@@ -60,6 +73,7 @@
         <option [value]="library?._id">{{ library?.name }}</option>
         }
     </select>
+}
   <div class="row">
         @for (plan of planListArray; track $index) {
         <div class="col-md-4 my-2 d-flex">

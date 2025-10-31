@@ -121,7 +121,7 @@ this.getLibraryList();
 
 getLibraryList()
 {
-  this.libService.getAllLibrary().subscribe({
+  this.libService.getAllAdminLibrary().subscribe({
     next:(res:any)=>{
       this.libraryListArr= res.data;
   

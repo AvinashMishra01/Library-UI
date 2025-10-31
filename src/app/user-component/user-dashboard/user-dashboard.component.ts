@@ -7,6 +7,8 @@ import { PaymentService } from '../../services/common/payment/payment.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PaymentHistoryComponent } from '../../shared-component/payment-history/payment-history.component';
 import { ClearDueComponent } from '../../shared-component/clear-due/clear-due.component';
+import { Router } from '@angular/router';
+import { UpdatePlanComponent } from '../../shared-component/update-plan/update-plan.component';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -36,11 +38,15 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 userDetails:any
 
 
-  constructor(private toaster:ToastrService,private modalService:NgbModal, private dashboardService: UserDashboardService, private paymentService: PaymentService){}
+  constructor(private toaster:ToastrService,private modalService:NgbModal, private dashboardService: UserDashboardService, private paymentService: PaymentService, private router: Router){}
 ngOnInit() {
   this.getDashboardData();
 }
 
+goToChangeLibrary()
+{
+  this.router.navigateByUrl('/user/change-library')
+}
 
 getDashboardData()
 {
@@ -71,14 +77,46 @@ getPaymentHistory(){
   })
 }
 
+
+async openUpdatePlan( ){
+ 
+  const formattedUser = await this.formatedData()
+ const modalRef=  this.modalService.open(UpdatePlanComponent, { size:'md' , backdrop:'static', centered:true, scrollable:true } );
+ modalRef.componentInstance.userData= formattedUser
+
+ modalRef.result.then(
+    (result) => {
+      if (result) {
+        console.log('User confirmed');
+
+      }
+    },
+    (dismissed) => {
+      console.log('User cancelled');
+    }
+  );
+
+}
+
 openPaymentHitory(){
  this.modalService.open(PaymentHistoryComponent, {backdrop:'static', centered:true, scrollable:true});
 }
 
-openClearDueModal()
+async openClearDueModal()
 {
 
-  const formattedUser = {
+  const formattedUser = await this.formatedData();
+    let dueModalRef= this.modalService.open(ClearDueComponent, {size:'lg' ,backdrop:'static', centered:true,  scrollable:true });
+      dueModalRef.componentInstance.userData= formattedUser;
+      dueModalRef.result.then((result)=>{
+        console.log('message from modal', result);
+      })
+}
+
+
+async formatedData()
+{
+   const formattedUser = {
   name: this.userDetails.name,
   mobile: this.userDetails.mobile,
   address: this.userDetails.address,
@@ -95,11 +133,8 @@ openClearDueModal()
   },
 };
 
-    let dueModalRef= this.modalService.open(ClearDueComponent, {size:'lg' ,backdrop:'static', centered:true,  scrollable:true });
-      dueModalRef.componentInstance.userData= formattedUser;
-      dueModalRef.result.then((result)=>{
-        console.log('message from modal', result);
-      })
+
+return formattedUser
 }
 
 ngOnDestroy() {

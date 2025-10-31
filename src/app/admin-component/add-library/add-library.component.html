@@ -66,31 +66,6 @@
                     @for (room of item.rooms; track room._id; let roomIndex =$index ) {
 
                        <app-add-room [roomArray]="room" [parentAccordionId]="'accordionRoom-' + libIndex" ></app-add-room>
-                    <!-- <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-heading-room-{{ roomIndex }}">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#flush-collapse-room-' + roomIndex" aria-expanded="false" [attr.aria-controls]="'flush-collapse-room-' + roomIndex">
-                                {{ room?.name || 'Name not found' }}
-                            </button>
-                        </h2>
-
-                        <div id="flush-collapse-room-{{ roomIndex }}" class="accordion-collapse collapse" [attr.aria-labelledby]="'flush-heading-room-' + roomIndex" data-bs-parent="#accordionFlushExampleRoom">
-                            <div class="accordion-body">
-                              <p>i am in room </p>
-
-                                <div class="accordion accordion-flush" id="accordionFlushExampleSeat">
-                              @for (seat of room.seats; track seat?._id; let seatIndex= $index) {
-                                      
-                                 <app-add-room [seatArray]="seat" ></app-add-room>
-                                                                     
-                                  }
-                                     @empty {
-                                  <p>No seat found add seat <button class="btn btn-primary">Add Seat</button> </p>
-                                 }
-                           </div>
-
-                            </div>
-                        </div>
-                    </div> -->
 
                     }
                     @empty {

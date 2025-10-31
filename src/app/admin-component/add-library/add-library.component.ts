@@ -45,7 +45,7 @@ ngOnInit() {
 
 getLibraryList()
 {
-    this.libService.getAllLibrary().subscribe({
+    this.libService.getAllAdminLibrary().subscribe({
       next:(res:any)=>{
         console.log('lib list', res)
         this.libraryListArr= res?.data;

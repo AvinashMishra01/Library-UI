@@ -21,9 +21,12 @@
                         [attr.aria-labelledby]="'flush-heading-seat-' + roomArray?._id" 
                        [attr.data-bs-parent]="'#' + parentAccordionId">
                         <div class="accordion-body"> 
-                     <div class="row text-end">
+                          @if (isAdmin) {
+                              <div class="row text-end">
                         <div class="col-md-12 ms-auto mb-2"> <button type="button" class="btn btn-outline-primary" (click)="openSeatAddForm(roomArray?._id)">Add Seat </button> </div>
                      </div>
+                          }
+                   
 
                            <div class="row g-2">
                              @for (seat of seatList; track seat._id) {

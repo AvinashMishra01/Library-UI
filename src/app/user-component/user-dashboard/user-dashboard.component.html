@@ -20,7 +20,7 @@
           <h5 class="mb-0" [ngClass]="{'text-primary':userDetails?.latestSubscription?.status, 'text-danger':!userDetails?.latestSubscription?.status}" >{{  userDetails?.latestSubscription?.libraryDetail?.name   }}</h5>
         </div>
          <div class="card-footer text-end">
-        <button type="button" class="btn btn-sm btn-warning" (click)="openPaymentHitory()">Change Library</button>
+        <button type="button" class="btn btn-sm btn-warning" (click)="goToChangeLibrary()">Change Library</button>
       </div>
       </div>
       
@@ -42,7 +42,7 @@
           <small class="text-secondary">{{ userDetails?.latestSubscription?.planStartOn | date :'mediumDate' }} {{ userDetails?.latestSubscription?.planStartOn | date :'shortTime'}} → {{ userDetails?.latestSubscription?.planExpireOn | date:'mediumDate' }} {{userDetails?.latestSubscription?.planExpireOn | date:'shortTime'}} </small>
         </div>
          <div class="card-footer text-end">
-        <button type="button" class="btn btn-sm btn-warning" (click)="openPaymentHitory()">Update Plan</button>
+        <button type="button" class="btn btn-sm btn-warning" (click)="openUpdatePlan()">Update Plan</button>
       </div>
       </div>
     </div>
@@ -70,7 +70,7 @@
       <div>
         <h6 class="text-muted mb-1">Your Seat</h6>
         <h5 class="text-primary fw-semibold mb-1">{{ userDetails?.latestSubscription?.seat || 'No Seat Assign Yet' }}</h5>
-        <p class="mb-0 text-secondary">Time: {{ userDetails?.preferredTime | formateTime }}</p>
+        <p class="mb-0 text-secondary"> Preferred Time: {{ userDetails?.preferredTime | formateTime }}</p>
       </div>
       <button class="btn btn-primary mt-3 mt-md-0">
         Extend Time

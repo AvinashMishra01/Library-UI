@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
   
 })
 export class UpdatePlanComponent implements OnInit {
-@Input() userData! :{name:string,mobile:string,  address?:string,userId:string, subscriptions:{libraryId:string,planId:string, planName:string,lastPaidMonth:string|null, planStatus:Boolean, balance?:number, dueAmount:number,planExpireOn:Date}}
+@Input() userData! :{name:string,mobile:string,  address?:string,userId:string, subscriptions:{libraryId:string,planId:string, planName:string,lastPaidMonth:string|null, planStatus:Boolean, balance?:number, dueAmount:number,planExpireOn:string}}
 @Output() modalResponce = new EventEmitter<boolean>();
 
 
@@ -34,15 +34,28 @@ selectedPlanData:any;
 selectedLibId:String="";
 
  paymentModal:boolean= false;
-
  paymentForm:any;
+ 
+ role:string | null=""
+ 
+ planStartDate:string='';
+ planEndDate:Date= new Date();
+isChangeDate:boolean=false;
+
 ngOnInit() {
   console.log("data ins update plan ", this.userData);
+  this.planStartDate= (this.userData.subscriptions.planExpireOn).split('T')[0] || (JSON.stringify(new Date())).split('T')[0]
   this.selectedLibId= this.userData?.subscriptions?.libraryId;
   this.selectedPlanId=  this.userData?.subscriptions?.planId;
   this.selectedPlanData= this.userData;
-   this.getAllLibrary();
-
+ this.role= localStorage.getItem('role');
+ if(this.role=="admin")
+ {
+   this.getAllAdminLibrary();
+ }else{
+  this.getLibPlan(this.selectedLibId);
+ }
+  
 this.paymentForm= this.fb.group({
   paymentMode: ['', Validators.required],
   amountPaid: ['', [Validators.required, Validators.min(1)]],
@@ -71,10 +84,11 @@ this.paymentForm.get('amountPaid').valueChanges.subscribe((res:number)=>{
 
 }
 
-getAllLibrary(){
-  this.libService.getAllLibrary().subscribe({
+getAllAdminLibrary(){
+  this.libService.getAllAdminLibrary().subscribe({
     next:(res:any)=>{
-      this.libraryListArr= res.data
+      this.libraryListArr= res.data;
+      console.log('library list arr', this.libraryListArr)
       this.getLibPlan(this.selectedLibId);
     },
     error:(err:any)=>{
@@ -116,7 +130,8 @@ getLibPlan(libraryId:String= "",event?:Event, ){
    this.selectedPlanId= data?._id;
    this.selectedPlanData= data;
    console.log("selected plan data", data);
-   
+this.planEndDate = new Date(this.planStartDate);
+this.planEndDate.setDate(this.planEndDate.getDate() + this.selectedPlanData?.durationInDays);
  }
 
 
@@ -139,7 +154,7 @@ getLibPlan(libraryId:String= "",event?:Event, ){
       planId:this.selectedPlanData?._id,
       paymentMode:this.paymentForm.get('paymentMode').value,
       amountPaid: this.paymentForm.get('amountPaid').value,
-      startDate: this.userData.subscriptions?.planExpireOn || Date.now(),
+      startDate: this.planStartDate || Date.now(),
       remainingDue:this.paymentForm.get('remainingDue').getRawValue(),
     }
     console.log("body is ", body);
@@ -152,6 +167,7 @@ getLibPlan(libraryId:String= "",event?:Event, ){
       },
       error:(err:any)=>{
         console.log('error in payment doing', err)
+          this.toaster.error(err.error.message);
       }
      })
   }
@@ -159,12 +175,24 @@ getLibPlan(libraryId:String= "",event?:Event, ){
 
 
   }
-
   cancel() {
     this.modalResponce.emit(false);
     this.activeModal.dismiss('false');
   }
 
+  changeDate()
+  {
+     this.isChangeDate= !this.isChangeDate
+  }
+
+  startDateChange(newDate:string)
+  {
+    console.log('start date change', newDate);
+    this.planEndDate = new Date(this.planStartDate);
+    this.planEndDate.setDate(this.planEndDate.getDate() + this.selectedPlanData?.durationInDays);
+
+    
+  }
 
 
 }

@@ -85,8 +85,7 @@ display_unshipped_columns =[
 pageSize='10';
 pageIndex=0
 
-userList:{userData:{name:string,mobile:string,  address?:string, totalDue:number, subscriptions:{planName:string,lastPaidMonth:string|null, planStatus:Boolean, balance?:number, dueAmount:number,planExpireOn:Date} }[], totalRecord:number} ={ userData:[], totalRecord:0
-}
+userList:{userData:{name:string,mobile:string,  address?:string, totalDue:number, subscriptions:{planName:string,lastPaidMonth:string|null, planStatus:Boolean, balance?:number, dueAmount:number,planExpireOn:Date} }[], totalRecord:number} ={ userData:[], totalRecord:0}
 
 dummyRecord:any;
 
@@ -150,21 +149,17 @@ getUserList()
 
 
 onPageChange(event:any) {
-
   this.pageIndex = event.pageIndex
   this.pageSize = event.pageSize
- this.userList.userData = this.dummyRecord.userData.slice(+this.pageIndex + +this.pageSize, 10* +this.pageIndex)
-console.log('event ', event);
-console.log('user list page change',this.pageIndex, this.pageSize, this.userList.userData);
-
-
+  this.getUserList();
+  console.log('user list page change',this.pageIndex, this.pageSize, this.userList.userData);
 }
 
 openConfirmation(data:any, index:number)
 {
  console.log('data is ', data, index);
  
-const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'static', centered:true});
+  const modalRef = this.modalService.open(ConfirmationPopUpComponent, {backdrop:'static', centered:true});
   modalRef.componentInstance.confirmationMessage = {
     mainHeading:'Confirmation ',
     heading: 'Status will be change!',
